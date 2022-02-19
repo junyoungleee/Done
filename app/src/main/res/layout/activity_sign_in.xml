@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.signin.SignInActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:tint="@color/black"
+            android:src="@drawable/ic_back"
+            android:background="@null"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in"
+            android:layout_gravity="center"
+            style="@style/all_toolbar_text"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="0dp"
+        android:layout_marginTop="168dp"
+        android:hint="@string/login_hint_email"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/all_edittext"/>
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_width="0dp"
+        android:layout_marginTop="22dp"
+        android:hint="@string/login_hint_pwd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        style="@style/all_edittext_pwd"/>
+
+    <TextView
+        android:id="@+id/tv_wrong_sign"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_pwd"
+        app:layout_constraintBottom_toTopOf="@id/ll_all_agree"
+        style="@style/all_wrong_pattern_text"/>
+
+    <LinearLayout
+        android:id="@+id/ll_all_agree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_wrong_sign"
+        style="@style/all_layout">
+
+        <ImageView
+            android:id="@+id/iv_all_agree"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginRight="8dp"
+            android:clickable="true"
+            android:background="@drawable/signin_iv_check_selector"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_in_agree"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_first_agree"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="18dp"
+        app:layout_constraintLeft_toLeftOf="@id/ll_all_agree"
+        app:layout_constraintRight_toRightOf="@id/ll_all_agree"
+        app:layout_constraintTop_toBottomOf="@id/ll_all_agree">
+
+        <ImageView
+            android:id="@+id/iv_first_agree"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/signin_iv_check_selector"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_in_agree1"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sing_in_watch"
+            android:layout_marginRight="2dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_second_agree"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="13dp"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@id/ll_first_agree"
+        app:layout_constraintRight_toRightOf="@id/ll_first_agree"
+        app:layout_constraintTop_toBottomOf="@id/ll_first_agree">
+
+        <ImageView
+            android:id="@+id/iv_second_agree"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/signin_iv_check_selector" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_in_agree2"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sing_in_watch"
+            android:layout_marginRight="2dp"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sign_in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/sign_in"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_second_agree"
+        android:enabled="false"
+        style="@style/all_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,11 +24,17 @@
     <string name="login_signup">회원가입</string>
 
     <!-- 비밀번호 찾기 페이지 -->
-    <string name="find">비밀번호 찾기</string>
-    <string name="find_hint_email">이메일 주소 입력</string>
-    <string name="find_send_email">비밀번호 찾기</string>
-    <string name="find_check_email">지금 메일함을 확인해보세요 :)</string>
-    <string name="find_back">로그인으로 돌아가기</string>
+    <string name="find_pwd">비밀번호 찾기</string>
+    <string name="find_pwd_hint_email">이메일 주소 입력</string>
+    <string name="find_pwd_send_email">비밀번호 재설정</string>
+    <string name="find_pwd_check_email">지금 메일함을 확인해보세요 :)</string>
+    <string name="find_pwd_back">로그인으로 돌아가기</string>
+    <string name="find_pwd_explain_tmp_pwd">임시 비밀번호</string>
+    <string name="find_pwd_explain_by">를</string>
+    <string name="find_pwd_explain_send_email">가입하신 이메일로 발송</string>
+    <string name="find_pwd_explain_before">합니다.</string>
+    <string name="find_pwd_explain_after">했어요!</string>
+    <string name="find_pwd_go_to_email">지금 메일함을 확인해보세요 :)</string>
 
     <!-- 회원가입 페이지 -->
     <string name="sign_in">회원가입</string>

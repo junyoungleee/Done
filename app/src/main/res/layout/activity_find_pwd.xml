@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.login.FindPwdActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_back"
+            android:tint="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find_pwd"
+            android:layout_gravity="center"
+            style="@style/all_toolbar_text"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/ll_explain_text1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/all_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find_pwd_explain_tmp_pwd"
+            style="@style/find_pwd_explain_bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find_pwd_explain_by"
+            style="@style/find_pwd_explain"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_explain_text2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/ll_explain_text1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/all_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find_pwd_explain_send_email"
+            style="@style/find_pwd_explain_bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find_pwd_explain_before"
+            style="@style/find_pwd_explain"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="0dp"
+        android:hint="@string/login_hint_email"
+        android:layout_marginTop="61dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_explain_text2"
+        style="@style/all_edittext"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_send_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/find_pwd_send_email"
+        android:layout_marginTop="68dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        android:enabled="false"
+        style="@style/all_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
