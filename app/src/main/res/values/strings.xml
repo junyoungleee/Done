@@ -8,6 +8,16 @@
     <string name="all_wrong_email">이메일 형식으로 입력해주세요</string>
     <string name="all_wrong_pwd">비밀번호를 잘못 입력하셨습니다.</string>
 
+    <string name="type_j">계획러</string>
+    <string name="type_j_content">계획러만의 특별 기능!\n플랜리스트를 이용하여\n계획을 메모해두세요.</string>
+    <string name="type_j_subtitle">먼저 계획을 세워야해요!</string>
+    <string name="type_p">즉흥러</string>
+    <string name="type_p_subtitle">즉흥적으로 움직여요!</string>
+    <string name="type_p_content">기록에 대한 부담은 Down!\n바로 던리스트를\n작성해보세요.</string>
+
+    <string name="alarm_time">시간</string>
+    <string name="alarm_week">주기</string>
+
     <!-- 랜딩페이지 -->
     <string name="landing_start">시작하기</string>
     <string name="start_login">로그인</string>
@@ -42,4 +52,16 @@
     <string name="sign_in_agree1">이용약관 동의</string>
     <string name="sign_in_agree2">개인정보 수집 및 이용 동의</string>
     <string name="sing_in_watch">보기</string>
+
+    <!-- 온보딩 페이지 -->
+    <string name="ob_title_nickname">해내미의 이름을 정해주세요!</string>
+    <string name="ob_hint_nickname">닉네임 (다섯글자 이하)</string>
+    <string name="ob_next_nickname">정했어요!</string>
+    <string name="ob_title_type_hi">, 반가워요!</string>
+    <string name="ob_title_type_question">평소 기록할 때 어떤 유형인가요?</string>
+    <string name="ob_hint_type">MY해냄 - 프로필수정에서 유형을 바꿀 수 있어요.</string>
+    <string name="ob_next">선택완료</string>
+    <string name="ob_title_alarm">마지막으로,\n알림 시간을 정해주세요!</string>
+    <string name="ob_hint_alarm">MY해냄에서 설정을 변경할 수 있어요.</string>
+
 </resources>

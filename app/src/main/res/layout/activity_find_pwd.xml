@@ -37,9 +37,8 @@
         android:layout_marginTop="130dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        style="@style/all_layout">
+        app:layout_constraintLeft_toRightOf="@id/left_margin"
+        app:layout_constraintRight_toLeftOf="@id/right_margin">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,15 +58,13 @@
         android:layout_marginTop="5sp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/ll_explain_text1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        style="@style/all_layout">
+        app:layout_constraintLeft_toRightOf="@id/left_margin"
+        app:layout_constraintRight_toLeftOf="@id/right_margin">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/find_pwd_explain_send_email"
-            style="@style/find_pwd_explain_bold"
-            />
+            style="@style/find_pwd_explain_bold" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,8 +77,8 @@
         android:layout_width="0dp"
         android:hint="@string/login_hint_email"
         android:layout_marginTop="61dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/left_margin"
+        app:layout_constraintRight_toLeftOf="@id/right_margin"
         app:layout_constraintTop_toBottomOf="@id/ll_explain_text2"
         style="@style/all_edittext"/>
 
@@ -91,10 +88,24 @@
         android:layout_height="wrap_content"
         android:text="@string/find_pwd_send_email"
         android:layout_marginTop="68dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/left_margin"
+        app:layout_constraintRight_toLeftOf="@id/right_margin"
         app:layout_constraintTop_toBottomOf="@id/et_email"
         android:enabled="false"
         style="@style/all_button" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

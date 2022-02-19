@@ -28,6 +28,21 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="all_content_mini_text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:translateY">-3.6sp</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+    <style name="ob_title_text">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/contextColor</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:translationY">-2.4sp</item>
+        <item name="android:layout_marginTop">58dp</item>
+    </style>
+
     <style name="find_pwd_explain">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/black</item>
@@ -39,15 +54,10 @@
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
-    <!-- layout -->
-    <style name="all_layout">
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-    </style>
 
 
     <!-- EditText -->
-    <style name="all_edittext" parent="all_layout">
+    <style name="all_edittext">
         <item name="android:layout_height">45dp</item>
         <item name="android:background">@drawable/all_et_background_selector</item>
         <item name="android:textCursorDrawable">@drawable/all_et_cursor_background</item>
@@ -62,11 +72,7 @@
     </style>
 
     <!-- Button -->
-    <style name="all_button_layout" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-    </style>
-    <style name="all_button" parent="all_button_layout">
+    <style name="all_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">54dp</item>
         <item name="android:background">@drawable/all_btn_round_selector</item>
         <item name="android:textColor">@drawable/all_btn_text_selector</item>

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="contextColor">#212325</color>
     <color name="errorColor">#FF0000</color>
     <color name="hintColor">#C4C4C4</color>
     <color name="disableColor">#F4F4F4</color>
