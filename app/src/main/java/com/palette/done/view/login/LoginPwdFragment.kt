@@ -14,6 +14,7 @@ import com.palette.done.R
 import com.palette.done.databinding.FragmentLoginPwdBinding
 import com.palette.done.databinding.FragmentObAlarmBinding
 import com.palette.done.view.MainActivity
+import com.palette.done.view.StartActivity
 import com.palette.done.view.signin.OnBoardingActivity
 import com.palette.done.viewmodel.PatternCheckViewModel
 
@@ -23,7 +24,7 @@ class LoginPwdFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val patternVM: PatternCheckViewModel by viewModels()
-    private var isNew: Boolean = true // 신규 or 기존 유저
+    private var isNew: Boolean = false // 신규 or 기존 유저
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,20 +41,24 @@ class LoginPwdFragment : Fragment() {
     private fun setButtonsDestination() {
         lateinit var intent: Intent
         // 비밀번호 찾기로 이동
-        // 툴바 백버튼
         binding.tvFindPwd.setOnClickListener {
             intent = Intent(requireContext(), FindPwdActivity::class.java)
             startActivity(intent)
         }
         binding.btnNext.setOnClickListener {
-            if (isNew) {
+            intent = if (isNew) {
                 // 신규 회원이라면 온보딩
-                intent = Intent(requireContext(), OnBoardingActivity::class.java)
+                Intent(requireContext(), OnBoardingActivity::class.java)
             } else {
-                // 기존 회원이라면 메인화면면
-                intent = Intent(requireContext(), MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                // 기존 회원이라면 메인화면
+                Intent(requireContext(), MainActivity::class.java)
             }
+            // 이전 액티비티 스택 모두 제거
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            // 자동 로그인 상태로 만들어야 함
+
             startActivity(intent)
         }
     }
@@ -91,10 +96,13 @@ class LoginPwdFragment : Fragment() {
             checkPwd(it)
             setNextButtonEnable(isNew)
         }
-
         // 신규유저인 경우 재입력까지 확인해야 함
-        patternVM.pwd2Result.observe(viewLifecycleOwner) {
-            checkPwdAgain(it)
+        patternVM.pwd2Result.observe(viewLifecycleOwner) { result ->
+            checkPwdAgain(result)
+            if (patternVM.pwdResult.value == false && result == false) {
+                // 비밀번호 형식이 잘못된 경우, 해당 사인 우선 표시
+                binding.tvWrongSign.setText(R.string.login_wrong_pwd)
+            }
             setNextButtonEnable(isNew)
         }
     }
@@ -109,8 +117,6 @@ class LoginPwdFragment : Fragment() {
                 (patternVM.pwdResult.value == true) && (binding.etPwd.text.toString() != "")
         }
     }
-
-
 
     private fun isNewUser(new: Boolean) {
         if (new) {
@@ -128,4 +134,6 @@ class LoginPwdFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

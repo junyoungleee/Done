@@ -13,11 +13,13 @@ class PatternCheckViewModel @ViewModelInject constructor(): ViewModel(){
 
     var _emailResult: MutableLiveData<Boolean> = MutableLiveData(true)
     var _pwd: MutableLiveData<String> = MutableLiveData("")
+    var _pwd2: MutableLiveData<String> = MutableLiveData("")
     var _pwdResult: MutableLiveData<Boolean> = MutableLiveData(true)
     var _pwd2Result: MutableLiveData<Boolean> = MutableLiveData(true)
 
     val emailResult: LiveData<Boolean> get() = _emailResult
     val pwd: LiveData<String> get() = _pwd
+    val pwd2: LiveData<String> get() = _pwd2
     val pwdResult: LiveData<Boolean> get() = _pwdResult
     val pwd2Result: LiveData<Boolean> get() = _pwd2Result
 
@@ -43,10 +45,17 @@ class PatternCheckViewModel @ViewModelInject constructor(): ViewModel(){
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 _pwdResult.value = inputForm.checkPwdPattern(s.toString())
                 _pwd.value = s.toString()
+                // 재입력이 이미 입력되어 있는 상태에서 비밀번호가 바뀐 경우
+                if (!_pwd2.value.equals("")) {
+                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
+                }
             }
             override fun afterTextChanged(s: Editable?) {
                 _pwdResult.value = inputForm.checkPwdPattern(s.toString())
                 _pwd.value = s.toString()
+                if (!_pwd2.value.equals("")) {
+                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
+                }
             }
         }
     }
@@ -55,16 +64,17 @@ class PatternCheckViewModel @ViewModelInject constructor(): ViewModel(){
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 _pwd2Result.value = (pwd.value.toString() == (s.toString()))
+                _pwd2.value = s.toString()
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 _pwd2Result.value = (pwd.value.toString() == (s.toString()))
+                _pwd2.value = s.toString()
             }
             override fun afterTextChanged(s: Editable?) {
                 _pwd2Result.value = (pwd.value.toString() == (s.toString()))
+                _pwd2.value = s.toString()
             }
         }
     }
-
-
 
 }
