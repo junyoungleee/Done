@@ -21,7 +21,8 @@ class SplashActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
 
         GlobalScope.launch {
-            delay(3000L)
+            // delay(3000L)
+            delay(1000L)
             startActivity(intent)
             finish()
         }

@@ -69,10 +69,10 @@
         app:layout_constraintTop_toBottomOf="@id/tv_go_to_email"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_send_email"
+        android:id="@+id/btn_back"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/find_pwd_send_email"
+        android:text="@string/find_pwd_back"
         android:layout_marginBottom="88dp"
         app:layout_constraintLeft_toRightOf="@id/left_margin"
         app:layout_constraintRight_toLeftOf="@id/right_margin"

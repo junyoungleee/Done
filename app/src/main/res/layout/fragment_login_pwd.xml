@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.login.LoginPwdFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title_pwd"
+            style="@style/content_title_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:hint="@string/login_hint_pwd"
+            android:layout_marginTop="49dp"
+            android:maxLength="8"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/all_edittext"/>
+
+        <EditText
+            android:id="@+id/et_pwd_again"
+            android:layout_width="match_parent"
+            android:hint="@string/login_hint_pwd2"
+            android:layout_marginTop="22dp"
+            android:maxLength="8"
+            app:layout_constraintTop_toBottomOf="@id/et_pwd"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/all_edittext"/>
+
+        <TextView
+            android:id="@+id/tv_wrong_sign"
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:layout_marginTop="77dp"
+            app:layout_constraintTop_toBottomOf="@id/et_pwd"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/all_wrong_pattern_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:text="@string/ob_next_nickname"
+            app:layout_constraintTop_toBottomOf="@id/tv_wrong_sign"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:enabled="false"
+            style="@style/all_button"/>
+
+        <TextView
+            android:id="@+id/tv_find_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:text="@string/login_find_pwd"
+            app:layout_constraintTop_toBottomOf="@id/btn_next"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/black"
+            style="@style/all_wrong_pattern_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
