@@ -14,7 +14,8 @@
         android:theme="@style/Theme.Done">
         <activity android:name=".view.MainActivity"></activity>
         <activity android:name=".view.signin.OnBoardingActivity" />
-        <activity android:name=".view.login.AfterFindPwdActivity" />
+        <activity android:name=".view.login.AfterFindPwdActivity"
+            android:noHistory="true"/>
         <activity
             android:name=".view.SplashActivity"
             android:exported="true">
@@ -26,15 +27,13 @@
         </activity>
         <activity
             android:name=".view.StartActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".view.LandingActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:noHistory="true"/>
         <activity
             android:name=".view.login.FindPwdActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.signin.SignInActivity"
             android:exported="true" />
         <activity
             android:name=".view.login.LoginActivity"

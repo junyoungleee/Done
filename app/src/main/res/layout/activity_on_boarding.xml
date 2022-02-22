@@ -16,9 +16,11 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <ImageButton
+            android:id="@+id/btn_back"
             android:layout_width="21dp"
             android:layout_height="21dp"
-            android:src="@drawable/ic_back"/>
+            android:src="@drawable/ic_back"
+            android:background="@null"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

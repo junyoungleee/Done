@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.R
@@ -24,6 +25,7 @@ class ObNicknameFragment : Fragment() {
         _binding = FragmentObNicknameBinding.inflate(inflater, container, false)
 
         setNextButton()
+
         return binding.root
     }
 
@@ -46,13 +48,20 @@ class ObNicknameFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 binding.btnNext.isEnabled = !s!!.equals("")
             }
-
         })
-
         val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_on_boarding)
         binding.btnNext.setOnClickListener {
             viewPager?.currentItem = 1
+            setIndicator()  // 다음 버튼 클릭 시 indicator 수정
         }
+    }
+
+    private fun setIndicator() {
+        val indicator2 = activity?.findViewById<ImageView>(R.id.iv_indicator_second)
+        val indicator3 = activity?.findViewById<ImageView>(R.id.iv_indicator_third)
+
+        indicator2!!.setImageResource(R.drawable.ic_indicator_now)
+        indicator3!!.setImageResource(R.drawable.ic_indicator_left)
     }
 
 }

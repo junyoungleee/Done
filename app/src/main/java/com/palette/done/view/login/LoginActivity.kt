@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.palette.done.databinding.ActivityLoginBinding
+import com.palette.done.view.StartActivity
 import com.palette.done.view.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,10 +24,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setButtonsDestination() {
         lateinit var intent: Intent
-        // 비밀번호 찾기로 이동
         // 툴바 백버튼
         binding.btnBack.setOnClickListener {
-            finish()
+            var current = binding.viewPagerLogin.currentItem
+            if (current == 1) {
+                binding.viewPagerLogin.currentItem = 0
+            } else {
+                intent = Intent(this, StartActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
         }
     }
 
@@ -35,6 +42,14 @@ class LoginActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(this, fragments)
         binding.viewPagerLogin.adapter = adapter
         binding.viewPagerLogin.isUserInputEnabled = false
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // 시스템 back 버튼 클릭 시, 시작 화면으로 이동
+        var intent = Intent(this, StartActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 }
 

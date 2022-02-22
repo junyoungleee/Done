@@ -17,7 +17,12 @@ class AfterFindPwdActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
             var intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
     }
 }

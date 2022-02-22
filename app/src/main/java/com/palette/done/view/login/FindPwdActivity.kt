@@ -3,13 +3,18 @@ package com.palette.done.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.palette.done.R
 import com.palette.done.databinding.ActivityFindPwdBinding
-import com.palette.done.view.signin.SignInActivity
+import com.palette.done.viewmodel.PatternCheckViewModel
 
 class FindPwdActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFindPwdBinding
+
+    private val patternVM : PatternCheckViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +22,7 @@ class FindPwdActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setButtonsDestination()
+        setNextButtonEnable()
     }
 
     private fun setButtonsDestination() {
@@ -24,13 +30,33 @@ class FindPwdActivity : AppCompatActivity() {
         // 이메일 전송 버튼
         binding.btnSendEmail.setOnClickListener {
             intent = Intent(this, AfterFindPwdActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
 
         // 툴바 백버튼
         binding.btnBack.setOnClickListener {
-            finish()
+
+        }
+    }
+
+    private fun checkEmail(check: Boolean) {
+        if (!check) {
+            binding.etEmail.setBackgroundResource(R.drawable.all_et_background_error)
+            binding.etEmail.setTextColor(ContextCompat.getColor(this, R.color.errorColor))
+            binding.tvWrongSign.setText(R.string.login_wrong_email)
+        } else {
+            binding.etEmail.setBackgroundResource(R.drawable.all_et_background_selector)
+            binding.etEmail.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.tvWrongSign.text = ""
+        }
+    }
+
+    private fun setNextButtonEnable() {
+        binding.etEmail.addTextChangedListener(patternVM.onEmailTextWatcher())
+        patternVM.emailResult.observe(this) {
+            checkEmail(it)
+            binding.btnSendEmail.isEnabled = (patternVM.emailResult.value == true) && (binding.etEmail.text.toString() != "")
         }
     }
 }
