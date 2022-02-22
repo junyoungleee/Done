@@ -1,4 +1,4 @@
-package com.palette.done.view.login
+package com.palette.done.view
 
 import android.util.Log
 import java.util.regex.Pattern

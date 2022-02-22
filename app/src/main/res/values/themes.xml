@@ -20,6 +20,7 @@
     <style name="all_toolbar_text">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
     <style name="all_wrong_pattern_text">
@@ -28,19 +29,29 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="all_content_mini_text">
+    <style name="all_mini_text">
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/contextMiniColor</item>
+    </style>
+    <style name="all_content_mini_text" parent="all_mini_text">
         <item name="android:lineSpacingExtra">7sp</item>
-        <item name="android:translateY">-3.6sp</item>
+        <item name="android:translationY">-3.6sp</item>
         <item name="android:gravity">top</item>
     </style>
 
-    <style name="ob_title_text">
+    <style name="content_title_text">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/contextColor</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
         <item name="android:translationY">-2.4sp</item>
         <item name="android:layout_marginTop">58dp</item>
+    </style>
+
+    <style name="content_sub_title_text">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/contextColor</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="find_pwd_explain">
@@ -71,6 +82,7 @@
         <item name="android:maxLength">8</item>
     </style>
 
+
     <!-- Button -->
     <style name="all_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">54dp</item>
@@ -83,6 +95,11 @@
 
     <style name="all_kakao_button" parent="all_button">
         <item name="android:backgroundTint">@color/kakaoColor</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="all_white_button" parent="all_button">
+        <item name="android:background">@drawable/all_btn_round_stroke</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

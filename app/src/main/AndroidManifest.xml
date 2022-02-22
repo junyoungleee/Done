@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Done">
-        <activity android:name=".view.signin.OnBoardingActivity"></activity>
+        <activity android:name=".view.MainActivity"></activity>
+        <activity android:name=".view.signin.OnBoardingActivity" />
         <activity android:name=".view.login.AfterFindPwdActivity" />
         <activity
             android:name=".view.SplashActivity"

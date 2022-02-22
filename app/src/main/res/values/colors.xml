@@ -9,9 +9,11 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="contextColor">#212325</color>
+    <color name="contextMiniColor">#595959</color>
     <color name="errorColor">#FF0000</color>
     <color name="hintColor">#C4C4C4</color>
     <color name="disableColor">#F4F4F4</color>
     <color name="disableTextColor">#BDBDBD</color>
+    <color name="linkTextColor">#BDBDBD</color>
     <color name="kakaoColor">#FEE500</color>
 </resources>
