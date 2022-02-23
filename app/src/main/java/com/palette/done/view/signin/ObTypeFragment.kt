@@ -9,22 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObNicknameBinding
 import com.palette.done.databinding.FragmentObTypeBinding
+import com.palette.done.viewmodel.OnBoardingViewModel
 
 class ObTypeFragment : Fragment() {
 
     private var _binding: FragmentObTypeBinding? = null
     private val binding get() = _binding!!
 
-    private var type: Int = 0
+    private val onBoardingVM: OnBoardingViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentObTypeBinding.inflate(inflater, container, false)
+
+        onBoardingVM.nickname.observe(viewLifecycleOwner) {
+            binding.tvNickname.text = onBoardingVM.nickname.value.toString()
+        }
 
         setTypeButton()
         setNextButton()
@@ -36,15 +41,16 @@ class ObTypeFragment : Fragment() {
         _binding = null
     }
 
+
     private fun setTypeButton() {
         binding.llTypeJ.setOnClickListener {
-            type = 1
+            onBoardingVM.userType.value = "j"
             binding.btnNext.isEnabled = true
             binding.llTypeP.isSelected = false
             binding.llTypeJ.isSelected = true
         }
         binding.llTypeP.setOnClickListener {
-            type = 2
+            onBoardingVM.userType.value = "p"
             binding.btnNext.isEnabled = true
             binding.llTypeP.isSelected = true
             binding.llTypeJ.isSelected = false

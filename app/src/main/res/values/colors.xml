@@ -16,4 +16,6 @@
     <color name="disableTextColor">#BDBDBD</color>
     <color name="linkTextColor">#BDBDBD</color>
     <color name="kakaoColor">#FEE500</color>
+
+    <color name="mainDoneColor">#FF9100</color>
 </resources>

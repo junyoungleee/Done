@@ -10,14 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObNicknameBinding
+import com.palette.done.viewmodel.OnBoardingViewModel
 
 class ObNicknameFragment : Fragment() {
 
     private var _binding: FragmentObNicknameBinding? = null
     private val binding get() = _binding!!
+
+    private val onBoardingVM: OnBoardingViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,6 +47,7 @@ class ObNicknameFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.btnNext.isEnabled = !s.equals("")
+                onBoardingVM.nickname.value = s.toString()
             }
 
             override fun afterTextChanged(s: Editable?) {
