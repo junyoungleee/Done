@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ob_title_alarm"
-            style="@style/content_title_text"
+            style="@style/start_title_text"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
@@ -30,7 +30,7 @@
             android:layout_marginTop="44dp"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/content_sub_title_text"/>
+            style="@style/start_sub_title_text"/>
 
         <LinearLayout
             android:id="@+id/ll_spinners"
@@ -44,30 +44,30 @@
                 android:layout_width="88dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="52dp"
-                android:background="@drawable/ob_alarm_round_stroke"/>
+                style="@style/ob_spinner"/>
             <Spinner
                 android:id="@+id/sp_hour"
                 android:layout_width="54dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/ob_alarm_round_stroke"/>
+                style="@style/ob_spinner"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="시"
                 android:layout_marginRight="5dp"
-                style="@style/content_sub_title_text"/>
+                style="@style/start_sub_title_text"/>
             <Spinner
                 android:id="@+id/sp_min"
                 android:layout_width="54dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/ob_alarm_round_stroke"/>
+                style="@style/ob_spinner"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="분"
-                style="@style/content_sub_title_text"/>
+                style="@style/start_sub_title_text"/>
         </LinearLayout>
 
         <TextView
@@ -78,7 +78,7 @@
             android:layout_marginTop="70dp"
             app:layout_constraintTop_toBottomOf="@id/ll_spinners"
             app:layout_constraintLeft_toLeftOf="parent"
-            style="@style/content_sub_title_text"/>
+            style="@style/start_sub_title_text"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

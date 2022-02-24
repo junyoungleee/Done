@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.palette.done.view.InputForm
 
-class PatternCheckViewModel @ViewModelInject constructor(): ViewModel(){
+class PatternCheckViewModel: ViewModel(){
 
     var _emailResult: MutableLiveData<Boolean> = MutableLiveData(true)
     var _pwd: MutableLiveData<String> = MutableLiveData("")

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObAlarmBinding
@@ -21,7 +22,7 @@ class ObAlarmFragment : Fragment() {
     private var _binding: FragmentObAlarmBinding? = null
     private val binding get() = _binding!!
 
-    private val onBoardingVM: OnBoardingViewModel by viewModels()
+    private val onBoardingVM: OnBoardingViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

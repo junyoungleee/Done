@@ -25,13 +25,13 @@
                 android:layout_height="wrap_content"
                 android:text="오늘도해냄"
                 android:layout_marginRight="0dp"
-                style="@style/content_title_text" />
+                style="@style/start_title_text" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ob_title_type_hi"
                 android:layout_marginLeft="0dp"
-                style="@style/content_title_text" />
+                style="@style/start_title_text" />
         </LinearLayout>
 
         <TextView
@@ -43,18 +43,19 @@
             app:layout_constraintTop_toBottomOf="@id/ll_title"
             app:layout_constraintLeft_toRightOf="@id/left_margin"
             app:layout_constraintRight_toLeftOf="@id/right_margin"
-            style="@style/content_title_text" />
+            style="@style/start_title_text" />
 
         <LinearLayout
             android:id="@+id/ll_type_j"
             android:layout_width="0dp"
             android:layout_height="165dp"
             android:hint="@string/ob_hint_nickname"
-            android:layout_marginTop="52dp"
             android:orientation="horizontal"
             android:elevation="30dp"
             android:background="@drawable/ob_type_ll_round_selector"
+            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintTop_toBottomOf="@id/tv_title2"
+            app:layout_constraintBottom_toTopOf="@id/ll_type_p"
             app:layout_constraintLeft_toRightOf="@id/left_margin"
             app:layout_constraintRight_toLeftOf="@id/right_margin">
 
@@ -104,6 +105,7 @@
             android:elevation="30dp"
             android:background="@drawable/ob_type_ll_round_selector"
             app:layout_constraintTop_toBottomOf="@id/ll_type_j"
+            app:layout_constraintBottom_toTopOf="@id/tv_type_detail"
             app:layout_constraintLeft_toRightOf="@id/left_margin"
             app:layout_constraintRight_toLeftOf="@id/right_margin">
 
@@ -142,21 +144,22 @@
                     style="@style/all_mini_text"/>
             </LinearLayout>
         </LinearLayout>
-        
+
         <TextView
+            android:id="@+id/tv_type_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ob_hint_type"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            android:layout_marginBottom="130dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"
-            android:layout_marginBottom="56dp"
             android:text="@string/ob_next"
+            android:layout_marginBottom="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/left_margin"
             app:layout_constraintRight_toLeftOf="@id/right_margin"

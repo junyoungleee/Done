@@ -24,9 +24,12 @@
     <string name="start_login_kakao">카카오로 시작하기</string>
 
     <!-- 로그인페이지 -->
-    <string name="login">시작하기</string>
+    <string name="login_title">시작하기</string>
+    <string name="login_title_login">로그인</string>
+    <string name="login_title_sign_up">회원가입</string>
     <string name="login_title_email">반가워요!\n이메일을 입력해주세요.</string>
-    <string name="login_title_pwd">해냄과의 첫 만남!\n비밀번호를 입력해주세요.</string>
+    <string name="login_title_pwd_new">해냄과의 첫 만남!\n비밀번호를 입력해주세요.</string>
+    <string name="login_title_pwd_old">오랜만이네요!\n비밀번호를 입력해주세요</string>
     <string name="login_hint_email">이메일 주소 입력</string>
     <string name="login_hint_pwd">비밀번호 입력 (영문, 숫자포함 8자리)</string>
     <string name="login_hint_pwd2">비밀번호 재입력</string>
@@ -50,14 +53,6 @@
     <string name="find_pwd_explain_before">합니다.</string>
     <string name="find_pwd_explain_after">했어요!</string>
     <string name="find_pwd_go_to_email">지금 메일함을 확인해보세요 :)</string>
-
-    <!-- 회원가입 페이지 -->
-    <string name="sign_in_title">오랜만이네요!\n비밀번호를 입력해주세요</string>
-    <string name="sign_in">회원가입</string>
-    <string name="sign_in_agree">모두 동의합니다.</string>
-    <string name="sign_in_agree1">이용약관 동의</string>
-    <string name="sign_in_agree2">개인정보 수집 및 이용 동의</string>
-    <string name="sing_in_watch">보기</string>
 
     <!-- 온보딩 페이지 -->
     <string name="ob_title_nickname">해내미의 이름을 정해주세요!</string>
