@@ -3,7 +3,10 @@ package com.palette.done.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.palette.done.data.PreferenceManager
 import com.palette.done.databinding.ActivityLandingBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 class LandingActivity : AppCompatActivity() {
 
@@ -16,7 +19,6 @@ class LandingActivity : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             var intent = Intent(this, StartActivity::class.java)
-//            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
             startActivity(intent)
         }
     }

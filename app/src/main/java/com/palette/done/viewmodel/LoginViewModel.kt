@@ -52,6 +52,8 @@ class LoginViewModel(private val repository: MemberRepository) : ViewModel(){
                                 isLoginSuccess.value = true
                                 DoneApplication.pref.email = _email.value.toString()
                                 DoneApplication.pref.pwd = pwd
+                                DoneApplication.pref.token = response.body()!!.item?.access_token
+                                Log.d("retrofit_200_token", "${response.body()!!.item?.access_token}")
                             }
                             400 -> {
                                 isLoginSuccess.value = false

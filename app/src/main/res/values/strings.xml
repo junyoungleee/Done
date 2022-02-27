@@ -64,5 +64,6 @@
     <string name="ob_next">선택완료</string>
     <string name="ob_title_alarm">마지막으로,\n알림 시간을 정해주세요!</string>
     <string name="ob_hint_alarm">MY해냄에서 설정을 변경할 수 있어요.</string>
+    <string name="ob_hint_alarm_choose">한 개 이상의 요일을 선택해주세요.</string>
 
 </resources>

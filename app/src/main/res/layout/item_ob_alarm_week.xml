@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:background="@drawable/ob_alarm_btn_selector">
+    android:layout_height="40dp">
     <TextView
         android:id="@+id/tv_week_day"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="월"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:textColor="@drawable/ob_alarm_text_selector"
         android:fontFamily="@font/spoqa_han_sans_neo_bold"
+        android:background="@drawable/ob_alarm_btn_selector"
         android:gravity="center"/>
 </LinearLayout>

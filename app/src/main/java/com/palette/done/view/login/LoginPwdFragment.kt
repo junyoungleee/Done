@@ -57,32 +57,33 @@ class LoginPwdFragment : Fragment() {
             if (new) {
                 // 신규 회원이라면 온보딩
                 intent = Intent(requireContext(), OnBoardingActivity::class.java)
-//                loginVM.postSignUp(binding.etPwd.text.toString())
+                loginVM.postSignUp(binding.etPwd.text.toString())
+                DoneApplication.pref.signup = "false"
 
                 // 이전 액티비티 스택 모두 제거
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-//                loginVM.isSignUpSuccess.observe(viewLifecycleOwner) {
-//                    if (loginVM.isSignUpSuccess.value!!) {
-//                        startActivity(intent)
-//                    }
-//                }
+                loginVM.isSignUpSuccess.observe(viewLifecycleOwner) {
+                    if (loginVM.isSignUpSuccess.value!!) {
+                        startActivity(intent)
+                    }
+                }
                 startActivity(intent)
             } else {
                 // 기존 회원이라면 메인화면
                 intent = Intent(requireContext(), MainActivity::class.java)
-//                loginVM.postLogin(binding.etPwd.text.toString())
+                loginVM.postLogin(binding.etPwd.text.toString())
 
                 // 이전 액티비티 스택 모두 제거
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-//                loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
-//                    if (loginVM.isLoginSuccess.value!!) {
-//                        startActivity(intent)
-//                    }
-//                }
+                loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
+                    if (loginVM.isLoginSuccess.value!!) {
+                        startActivity(intent)
+                    }
+                }
                 startActivity(intent)
             }
         }

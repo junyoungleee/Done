@@ -13,14 +13,16 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObTypeBinding
+import com.palette.done.repository.MemberRepository
 import com.palette.done.viewmodel.OnBoardingViewModel
+import com.palette.done.viewmodel.OnBoardingViewModelFactory
 
 class ObTypeFragment : Fragment() {
 
     private var _binding: FragmentObTypeBinding? = null
     private val binding get() = _binding!!
 
-    private val onBoardingVM: OnBoardingViewModel by activityViewModels()
+    private val onBoardingVM: OnBoardingViewModel by activityViewModels { OnBoardingViewModelFactory(MemberRepository()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
