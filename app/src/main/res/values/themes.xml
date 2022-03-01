@@ -141,8 +141,9 @@
 
 
     <!-- Spinner -->
-    <style name="ob_spinner" parent="start_sub_title_text">
-        <item name="android:background">@drawable/ob_alarm_round_stroke</item>
+    <style name="ob_alarm_timepicker">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
 

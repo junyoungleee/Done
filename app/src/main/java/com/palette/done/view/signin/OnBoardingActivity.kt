@@ -23,17 +23,21 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private fun setBackButtonAndIndicator() {
         binding.btnBack.setOnClickListener {
-            var current = binding.viewPagerOnBoarding.currentItem
-            when(current) {
-                1 ->{
-                    binding.viewPagerOnBoarding.currentItem = 0
-                    binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_left)
-                    binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)}
-                2 -> {
-                    binding.viewPagerOnBoarding.currentItem = 1
-                    binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_now)
-                    binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)
-                }
+            setBackButton()
+        }
+    }
+
+    private fun setBackButton() {
+        var current = binding.viewPagerOnBoarding.currentItem
+        when(current) {
+            1 ->{
+                binding.viewPagerOnBoarding.currentItem = 0
+                binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_left)
+                binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)}
+            2 -> {
+                binding.viewPagerOnBoarding.currentItem = 1
+                binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_now)
+                binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)
             }
         }
     }
@@ -43,6 +47,11 @@ class OnBoardingActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(this, fragments)
         binding.viewPagerOnBoarding.adapter = adapter
         binding.viewPagerOnBoarding.isUserInputEnabled = false  // swipe action 제거
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        setBackButton()
     }
 
 
