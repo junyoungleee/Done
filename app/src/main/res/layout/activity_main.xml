@@ -1,9 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.main.MainActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sticker"
+        style="@style/main_button_stroke"
+        android:layout_marginTop="35dp"
+        android:text="@string/main_btn_sticker"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_my"
+        style="@style/main_button_solid"
+        android:layout_marginTop="35dp"
+        android:text="@string/main_btn_my"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="68dp"
+        app:headerLabelColor="@color/black"
+        app:headerColor="@color/white"
+        app:abbreviationsLabelsColor="@color/black"
+        app:todayLabelColor="@color/black"
+        app:daysLabelsColor="@color/calendarColor"
+        app:anotherMonthsDaysLabelsColor="@color/calendarHiddenColor"
+        app:layout_constraintTop_toBottomOf="@id/btn_my"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_light_yellow"
+        android:layout_marginBottom="-13dp"
+        app:layout_constraintBottom_toTopOf="@id/ll_done_list_count"
+        app:layout_constraintRight_toLeftOf="@id/ll_done_list_count"/>
+
+    <LinearLayout
+        android:id="@+id/ll_done_list_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="191dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintRight_toRightOf="@id/right_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_title_count_done"
+            style="@style/main_done_count"/>
+
+        <TextView
+            android:id="@+id/tv_done_list_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="81"
+            style="@style/main_done_count_orange"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개 👍"
+            style="@style/main_done_count_orange"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/main_sub_title_cheer"
+        app:layout_constraintTop_toBottomOf="@id/ll_done_list_count"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintRight_toRightOf="@id/right_margin"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

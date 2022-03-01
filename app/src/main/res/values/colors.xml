@@ -10,6 +10,9 @@
 
     <color name="contextColor">#212325</color>
     <color name="contextMiniColor">#595959</color>
+    <color name="calendarColor">#353535</color>
+    <color name="calendarHiddenColor">#C0C0C0</color>
+
     <color name="errorColor">#FF0000</color>
     <color name="hintColor">#C4C4C4</color>
     <color name="disableColor">#F4F4F4</color>
@@ -18,4 +21,7 @@
     <color name="kakaoColor">#FEE500</color>
 
     <color name="mainDoneColor">#FF9100</color>
+    <color name="doneYellowColor">#FFB800</color>
+    <color name="doneOrangeColor">#FF9100</color>
+    <color name="doneDarkOrangeColor">#FF6B00</color>
 </resources>

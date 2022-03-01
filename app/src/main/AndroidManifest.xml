@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Done">
-
+        <activity android:name=".view.main.DoneActivity"></activity>
         <activity
             android:name=".view.SplashActivity"
             android:exported="true">
@@ -22,20 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.main.MainActivity"></activity>
-        <activity android:name=".view.signin.OnBoardingActivity"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".view.login.AfterFindPwdActivity"
-            android:noHistory="true"/>
-
+        <activity android:name=".view.main.MainActivity" />
+        <activity
+            android:name=".view.signin.OnBoardingActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".view.login.AfterFindPwdActivity"
+            android:noHistory="true" />
         <activity
             android:name=".view.StartActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".view.LandingActivity"
             android:exported="true"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".view.login.FindPwdActivity"
             android:exported="true" />
