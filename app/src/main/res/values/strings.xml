@@ -66,4 +66,11 @@
     <string name="ob_hint_alarm">MY해냄에서 설정을 변경할 수 있어요.</string>
     <string name="ob_hint_alarm_choose">한 개 이상의 요일을 선택해주세요.</string>
 
+    <!-- 메인 페이지 -->
+    <string name="main_btn_sticker">스티커</string>
+    <string name="main_btn_my">MY</string>
+    <string name="main_title_count_done">이번달 Done&#160;</string>
+    <string name="main_sub_title_cheer">대단해요</string>
+
+
 </resources>
