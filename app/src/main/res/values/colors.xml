@@ -18,10 +18,14 @@
     <color name="disableColor">#F4F4F4</color>
     <color name="disableTextColor">#BDBDBD</color>
     <color name="linkTextColor">#BDBDBD</color>
+    <color name="doneBoxColor">#FAFAFA</color>
+    <color name="doneHintColor">#939393</color>
     <color name="kakaoColor">#FEE500</color>
 
     <color name="mainDoneColor">#FF9100</color>
     <color name="doneYellowColor">#FFB800</color>
     <color name="doneOrangeColor">#FF9100</color>
     <color name="doneDarkOrangeColor">#FF6B00</color>
+
+    <color name="mainDoneListColor">#0066FF</color>
 </resources>

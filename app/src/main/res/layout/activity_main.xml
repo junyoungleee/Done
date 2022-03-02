@@ -33,7 +33,7 @@
         app:abbreviationsLabelsColor="@color/black"
         app:todayLabelColor="@color/black"
         app:daysLabelsColor="@color/calendarColor"
-        app:anotherMonthsDaysLabelsColor="@color/calendarHiddenColor"
+        app:anotherMonthsDaysLabelsColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/btn_my"
         app:layout_constraintLeft_toLeftOf="@id/left_margin"
         app:layout_constraintRight_toRightOf="@id/right_margin"
@@ -61,20 +61,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_title_count_done"
-            style="@style/main_done_count"/>
+            style="@style/main_done_list_count"/>
 
         <TextView
             android:id="@+id/tv_done_list_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="81"
-            style="@style/main_done_count_orange"/>
+            style="@style/main_done_list_count_orange"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="개 👍"
-            style="@style/main_done_count_orange"/>
+            style="@style/main_done_list_count_orange"/>
     </LinearLayout>
 
     <TextView

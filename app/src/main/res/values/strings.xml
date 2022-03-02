@@ -72,5 +72,18 @@
     <string name="main_title_count_done">이번달 Done&#160;</string>
     <string name="main_sub_title_cheer">대단해요</string>
 
+    <!-- 던리스트 페이지 -->
+    <string name="done_btn_plan">플랜</string>
+    <string name="done_list_title">Done list</string>
+    <string name="done_list_hint">여기를 눌러 던리스트를 작성해보세요!</string>
+    <string name="done_today_title">오늘한마디</string>
+    <string name="done_today_hint">오늘을 한마디로 정리하고 스티커로 꾸며보세요! (최대 00글자)</string>
+    <string name="done_btn_hash_tag">#</string>
+    <string name="done_btn_write">입력</string>
+    <string name="done_list_write_hint">작은일도 괜찮아요, 써보세요!</string>
+
+    <!-- 오늘한마디 페이지 -->
+    <string name="today_btn_sticker">스티커</string>
+    <string name="today_btn_text">텍스트</string>
 
 </resources>

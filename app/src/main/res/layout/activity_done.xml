@@ -1,9 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.main.DoneActivity">
+
+    <ImageButton
+        android:id="@+id/btn_calendar_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar"
+        android:background="@null"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_plan"
+        android:text="@string/done_btn_plan"
+        android:layout_marginTop="28dp"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/done_button_stroke"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_plan"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <ImageButton
+                    android:id="@+id/btn_day_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_left_arrow"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"/>
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22.02.18"
+                    android:paddingRight="50dp"
+                    android:paddingLeft="50dp"
+                    style="@style/start_title_text"
+                    android:textSize="24sp"
+                    android:layout_marginTop="0dp"/>
+
+                <ImageButton
+                    android:id="@+id/btn_day_after"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right_arrow"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_done_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done_list_title"
+                android:layout_marginTop="52dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_date"
+                style="@style/done_sub_title_text"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_done_list"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:padding="10dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/done_box_round"
+                app:layout_constraintTop_toBottomOf="@id/tv_done_title"/>
+
+            <TextView
+                android:id="@+id/tv_today_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done_today_title"
+                android:layout_marginTop="52dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rc_done_list"
+                style="@style/done_sub_title_text"/>
+
+            <ImageView
+                android:id="@+id/iv_today"
+                android:layout_width="match_parent"
+                android:layout_height="119dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/done_box_round"
+                app:layout_constraintTop_toBottomOf="@id/tv_today_title" />
+
+            <TextView
+                android:id="@+id/tv_done_list_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done_list_hint"
+                app:layout_constraintTop_toTopOf="@id/rc_done_list"
+                app:layout_constraintLeft_toLeftOf="@id/rc_done_list"/>
+
+            <TextView
+                android:id="@+id/tv_today_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/done_today_hint"
+                app:layout_constraintTop_toTopOf="@id/iv_today"
+                app:layout_constraintLeft_toLeftOf="@id/iv_today"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

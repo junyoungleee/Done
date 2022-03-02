@@ -53,6 +53,7 @@ internal fun View.setTypeface(typeface: Typeface?) {
     }
 }
 
+
 internal fun View.setHeaderColor(color: Int) {
     if (color == 0) return
     this.calendarHeader.setBackgroundColor(color)
