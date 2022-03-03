@@ -10,8 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Material-Calendar-View" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/kizitonwose-CalendarView" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

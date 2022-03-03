@@ -1,14 +1,10 @@
 package com.palette.done.viewmodel
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.palette.done.DoneApplication
 import com.palette.done.data.remote.model.member.*
 import com.palette.done.repository.MemberRepository
-import com.palette.done.view.InputForm
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

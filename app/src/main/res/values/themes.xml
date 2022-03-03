@@ -74,7 +74,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-
+    <style name="done_hint_text">
+        <item name="android:textColor">@color/doneHintColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <!-- Toolbar -->
     <style name="all_toolbar_text">
@@ -107,6 +110,14 @@
     <style name="all_edittext_pwd" parent="all_edittext">
         <item name="android:inputType">textPassword</item>
         <item name="android:maxLength">8</item>
+    </style>
+
+    <style name="done_edittext">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/done_et_solid</item>
+        <item name="android:padding">13dp</item>
+        <item name="android:textColorHint">@color/doneHintColor</item>
     </style>
 
 

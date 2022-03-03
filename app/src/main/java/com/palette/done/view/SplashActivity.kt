@@ -30,19 +30,22 @@ class SplashActivity : AppCompatActivity() {
                 "true" -> {
                     // 자동 로그인
                     intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
                 "false" -> {
                     // 로그인은 되었고, 유저 정보가 없는 상태
                     intent = Intent(this, OnBoardingActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
                 }
                 "" -> {
                     // 로그아웃 or 재방문한 신규
                     intent = Intent(this, StartActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
                 }
             }
         }
 
-        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
 
         CoroutineScope(Dispatchers.IO).launch {
             // delay(3000L)

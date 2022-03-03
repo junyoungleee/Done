@@ -2,12 +2,10 @@ package com.palette.done.viewmodel
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.palette.done.view.InputForm
+import com.palette.done.view.util.InputForm
 
 class PatternCheckViewModel: ViewModel(){
 
