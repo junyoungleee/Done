@@ -23,6 +23,7 @@
         android:layout_height="15dp"
         android:includeFontPadding="false"
         android:text="8"
+        android:fontFamily="@font/spoqa_han_sans_neo_light"
         android:textColor="@color/calendarColor"
         android:gravity="center_horizontal"
         android:textSize="15sp"/>

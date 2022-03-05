@@ -15,57 +15,43 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="일"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="월"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="화"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="수"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="목"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="금"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="토"
-            android:textColor="@color/calendarColor"
-            android:textSize="15sp"
-            android:gravity="center"/>
+            style="@style/calendar_header_legend"/>
     </LinearLayout>
 
 
