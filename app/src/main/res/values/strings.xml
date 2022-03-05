@@ -93,7 +93,7 @@
 
     <!-- 플랜 페이지 -->
     <string name="plan_title">플랜</string>
-    <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,Done List에 입력하세요.</string>
+    <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,\nDone List에 입력하세요.</string>
     <string name="plan_add">플랜 추가</string>
     <string name="plan_btn_edit_mode">편집</string>
     <string name="plan_btn_edit_finish">완료</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/root_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -27,13 +28,16 @@
         style="@style/done_button_stroke"/>
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/btn_plan"
         app:layout_constraintRight_toRightOf="@id/right_margin"
         app:layout_constraintLeft_toLeftOf="@id/left_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sub_root_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -91,14 +95,25 @@
                 app:layout_constraintTop_toBottomOf="@id/ll_date"
                 style="@style/done_sub_title_text"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_done_list"
+            <TextView
+                android:id="@+id/tv_done_list"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:padding="10dp"
+                android:text="@string/done_list_hint"
+                android:paddingTop="15dp"
+                android:paddingStart="27dp"
+                style="@style/done_hint_text"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintTop_toBottomOf="@id/tv_done_title"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_done_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/tv_done_list"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_today_title"
@@ -108,36 +123,52 @@
                 android:layout_marginTop="52dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rc_done_list"
+                app:layout_constraintTop_toBottomOf="@id/tv_done_list"
                 style="@style/done_sub_title_text"/>
-
-            <ImageView
-                android:id="@+id/iv_today"
-                android:layout_width="match_parent"
-                android:layout_height="119dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/done_box_round"
-                app:layout_constraintTop_toBottomOf="@id/tv_today_title" />
 
             <TextView
                 android:id="@+id/tv_done_list_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/done_list_hint"
                 app:layout_constraintTop_toTopOf="@id/rc_done_list"
                 app:layout_constraintLeft_toLeftOf="@id/rc_done_list"/>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/tv_today_hint"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/done_today_hint"
-                app:layout_constraintTop_toTopOf="@id/iv_today"
-                app:layout_constraintLeft_toLeftOf="@id/iv_today"/>
+                android:layout_height="119dp"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/done_box_round"
+                app:layout_constraintTop_toBottomOf="@id/tv_today_title">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="19dp"
+                    android:text="@string/done_today_hint"
+                    style="@style/done_hint_text"/>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fl_done_write"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/done_write_box_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_margin"

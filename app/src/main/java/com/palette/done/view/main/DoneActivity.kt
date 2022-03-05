@@ -95,7 +95,10 @@ class DoneActivity : AppCompatActivity() {
             hideKeyboard()  // visibility보다 먼저 처리해야 함
             binding.flDoneWrite.visibility = View.GONE
         }
-
+        binding.subRootView.setOnClickListener {
+            hideKeyboard()  // visibility보다 먼저 처리해야 함
+            binding.flDoneWrite.visibility = View.GONE
+        }
     }
 
     private fun hideKeyboard() {

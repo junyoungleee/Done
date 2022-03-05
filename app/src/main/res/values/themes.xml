@@ -79,6 +79,35 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- TEXT PLAN & ROUTINE -->
+
+    <style name="done_activity_detail">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/doneDetailColor</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="done_add_button">
+        <item name="android:textColor">@color/mainDoneListColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="done_item_text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+    <!-- CALENDAR -->
+    <style name="calendar_header_legend">
+        <item name="fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
     <!-- Toolbar -->
     <style name="all_toolbar_text">
         <item name="android:textSize">18sp</item>
@@ -162,11 +191,13 @@
     </style>
 
     <style name="done_button_solid" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:fontFamily">@font/spoqa_han_sans_neo_regular</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
         <item name="android:background">@drawable/all_btn_round_solid_blue</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+
 
 
     <!-- Spinner -->

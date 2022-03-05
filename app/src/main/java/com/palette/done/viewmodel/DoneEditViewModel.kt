@@ -11,9 +11,6 @@ class DoneEditViewModel : ViewModel() {
     var _done: MutableLiveData<String> = MutableLiveData("")
     val done: LiveData<String> get() = _done
 
-    var _keyboardHeight: MutableLiveData<Int> = MutableLiveData(-1)
-    val keyboardHeight: LiveData<Int> get() = _keyboardHeight
-
     fun onDoneTextWatcher(): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
