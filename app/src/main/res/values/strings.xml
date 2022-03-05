@@ -80,12 +80,23 @@
     <string name="done_today_hint">오늘을 한마디로 정리하고 스티커로 꾸며보세요! (최대 00글자)</string>
     <string name="done_btn_hash_tag">#</string>
     <string name="done_btn_write">입력</string>
-    <string name="done_list_write_hint">작은일도 괜찮아요, 써보세요!</string>
+    <string name="done_list_write_hint">작은 일도 괜찮아요, 써보세요!</string>
     <string name="done_list_write_title">오늘의&#160;</string>
     <string name="done_list_write_title2">번째 Done</string>
+
+    <string name="done_edit_hash_tag">해시태그</string>
+    <string name="done_edit_routine">루틴</string>
 
     <!-- 오늘한마디 페이지 -->
     <string name="today_btn_sticker">스티커</string>
     <string name="today_btn_text">텍스트</string>
 
+    <!-- 플랜 페이지 -->
+    <string name="plan_title">플랜</string>
+    <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,Done List에 입력하세요.</string>
+    <string name="plan_add">플랜 추가</string>
+    <string name="plan_btn_edit_mode">편집</string>
+    <string name="plan_btn_edit_finish">완료</string>
+    <string name="plan_btn_item_edit">수정</string>
+    <string name="plan_btn_done">Done</string>
 </resources>

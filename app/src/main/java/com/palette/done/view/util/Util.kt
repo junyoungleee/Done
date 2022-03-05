@@ -14,4 +14,11 @@ class Util {
             dp.toFloat(),
             Resources.getSystem().displayMetrics).toInt()
     }
+
+    fun spToPx(sp: Int): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            sp.toFloat(),
+            Resources.getSystem().displayMetrics).toInt()
+    }
 }

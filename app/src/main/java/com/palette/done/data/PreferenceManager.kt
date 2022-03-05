@@ -12,6 +12,7 @@ class PreferenceManager (context: Context) {
     private val USER_EMAIL = "email"
     private val USER_PWD = "pwd"
     private val ACCESS_TOKEN = "token"
+    private val KEYBOARD_HEIGHT = "keyboard_height"
 
     private val PREF_NAME = "user_info"
     private val PREF_MODE = Context.MODE_PRIVATE
@@ -36,4 +37,8 @@ class PreferenceManager (context: Context) {
     var token: String?
         get() = prefs.getString(ACCESS_TOKEN, "")
         set(value) = prefs.edit().putString(ACCESS_TOKEN, value).apply()
+
+    var keyboard: Int
+        get() = prefs.getInt(KEYBOARD_HEIGHT, -1)
+        set(value) = prefs.edit().putInt(KEYBOARD_HEIGHT, value).apply()
 }

@@ -9,12 +9,12 @@ import com.palette.done.repository.MemberRepository
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DoneViewModel() : ViewModel() {
+class DoneDateViewModel() : ViewModel() {
 
     val format = SimpleDateFormat("yyyy-MM-dd")
+
     var calDate: MutableLiveData<Calendar> = MutableLiveData(Calendar.getInstance())
     var titleDate: MutableLiveData<String> = MutableLiveData("")
-
 
     fun setTitleDate(date: String) {
         var tDate: String = date
@@ -48,17 +48,4 @@ class DoneViewModel() : ViewModel() {
         transCalendarToString()
     }
 
-
-
-
 }
-
-//class DoneViewModelFactory(private val date: Calendar): ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(DoneViewModel::class.java)) {
-//            @Suppress("UNCHECKED_CAST")
-//            return DoneViewModel(date) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel Class")
-//    }
-//}

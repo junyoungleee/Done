@@ -1,9 +1,11 @@
 package com.palette.done.view.main
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -33,18 +35,23 @@ class MainActivity : AppCompatActivity() {
     private val df = DecimalFormat("00")
 
     private var today = LocalDate.now()
+    private var doneDates = mutableSetOf<LocalDate>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         setCalendarView()
     }
 
     private fun setCalendarView() {
         setCalendarHeader()
         with(binding.calendarView) {
+            doOnPreDraw {
+                daySize = Size(binding.calendarView.width/7, util.dpToPx(86))
+            }
+
             val currentMonth = YearMonth.now()
             val firstMonth = currentMonth.minusMonths(240)
             val lastMonth = currentMonth.plusMonths(240)
@@ -63,12 +70,14 @@ class MainActivity : AppCompatActivity() {
                     }
                     container.date.text = day.date.dayOfMonth.toString()
                     if (day.owner != DayOwner.THIS_MONTH) {
-                        container.date.setTextColor(Color.TRANSPARENT)
-                        container.doneIcon.background = null
-                        container.doneIcon.text = ""
+                        // 현재 날짜가 이번 달의 날짜가 아닌 경우
+                        container.date.setTextColor(ContextCompat.getColor(context, R.color.calendarHiddenColor))
+                        container.doneIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.calendarHiddenColor))
                     } else {
                         when {
                             today == day.date -> {
+                                // 오늘
+                                Log.d("today", "$today")
                                 container.date.typeface = resources.getFont(R.font.spoqa_han_sans_neo_bold)
                                 container.date.setTextColor(Color.BLACK)
                                 container.today.setBackgroundResource(R.drawable.ic_calendar_dot)
@@ -76,15 +85,10 @@ class MainActivity : AppCompatActivity() {
                             else -> {
                                 container.date.typeface = resources.getFont(R.font.spoqa_han_sans_neo_regular)
                                 container.date.setTextColor(ContextCompat.getColor(context, R.color.calendarColor))
-                                container.today.background = null
                             }
                         }
                     }
                 }
-            }
-
-            doOnPreDraw {
-                daySize = Size(binding.calendarView.width/7, util.dpToPx(89))
             }
         }
     }
