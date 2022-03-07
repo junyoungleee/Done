@@ -98,6 +98,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="done_edit_button">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 
     <!-- CALENDAR -->
     <style name="calendar_header_legend">
@@ -198,12 +204,17 @@
     </style>
 
 
-
-
     <!-- Spinner -->
     <style name="ob_alarm_timepicker">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
+    </style>
+
+
+    <!-- Tablayout -->
+    <style name="done_tab_layout" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 

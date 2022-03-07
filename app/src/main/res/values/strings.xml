@@ -86,6 +86,9 @@
 
     <string name="done_edit_hash_tag">해시태그</string>
     <string name="done_edit_routine">루틴</string>
+    <string name="done_edit_hint">오늘 한 일을 선택해 보세요!</string>
+    <string name="done_edit_random">랜덤</string>
+    <string name="done_edit_edit">편집</string>
 
     <!-- 오늘한마디 페이지 -->
     <string name="today_btn_sticker">스티커</string>

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,8 +19,12 @@ import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.FragmentDoneBinding
 import com.palette.done.databinding.FragmentLoginEmailBinding
+import com.palette.done.repository.DoneServerRepository
 import com.palette.done.view.util.Util
+import com.palette.done.viewmodel.DoneDateViewModel
+import com.palette.done.viewmodel.DoneDateViewModelFactory
 import com.palette.done.viewmodel.DoneEditViewModel
+import com.palette.done.viewmodel.DoneEditViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -28,7 +33,12 @@ class DoneFragment : Fragment() {
     private var _binding: FragmentDoneBinding? = null
     private val binding get() = _binding!!
 
-    private val doneVM: DoneEditViewModel by activityViewModels()
+    private val doneEditVM: DoneEditViewModel by viewModels() {
+        DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+    }
+    private val doneDateVM: DoneDateViewModel by activityViewModels() {
+        DoneDateViewModelFactory(DoneApplication().doneRepository)
+    }
 
     private var isEditPopupOpen: Boolean = false
 
@@ -51,8 +61,8 @@ class DoneFragment : Fragment() {
     }
 
     private fun setWriteButtons() {
-        binding.etDone.addTextChangedListener(doneVM.onDoneTextWatcher())
-        doneVM.done.observe(viewLifecycleOwner) { done ->
+        binding.etDone.addTextChangedListener(doneEditVM.onDoneTextWatcher())
+        doneEditVM.done.observe(viewLifecycleOwner) { done ->
             if (done == "") {
                 with(binding.btnWrite) {
                     text = getString(R.string.done_btn_hash_tag)
@@ -69,6 +79,13 @@ class DoneFragment : Fragment() {
                     text = getString(R.string.done_btn_write)
                     setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                     setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
+                    setOnClickListener {
+                        // recyclerview 추가
+                        val date = doneDateVM.getTitleDate()
+                        Log.d("date_save", "$date")
+                        doneEditVM.addDoneList(date, binding.etDone.text.toString(), null, null, null)
+                        binding.etDone.text.clear()
+                    }
                 }
             }
         }
@@ -76,7 +93,9 @@ class DoneFragment : Fragment() {
 
     private fun setCategoryButton() {
         binding.btnCategory.setOnClickListener {
-            isEditPopupOpen = !isEditPopupOpen
+            if (!isEditPopupOpen) {
+                isEditPopupOpen = !isEditPopupOpen
+            }
             setInputFrameLayout()
             parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
         }

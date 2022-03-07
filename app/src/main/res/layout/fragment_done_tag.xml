@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.main.done.DoneTagFragment">
 
@@ -15,7 +17,8 @@
         app:tabBackground="@color/white"
         app:tabIndicatorColor="@color/mainDoneListColor"
         app:tabSelectedTextColor="@color/mainDoneListColor"
-        app:tabTextColor="@color/hintColor"/>
+        app:tabTextColor="@color/hintColor"
+        app:tabTextAppearance="@style/done_tab_layout"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_tab_bar_layout"

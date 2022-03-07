@@ -9,21 +9,33 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import com.palette.done.DoneApplication
+import com.palette.done.R
+import com.palette.done.data.db.entity.Done
 import com.palette.done.databinding.ActivityDoneBinding
+import com.palette.done.repository.DoneServerRepository
+import com.palette.done.view.adapter.DoneAdapter
 import com.palette.done.view.main.done.DoneFragment
 import com.palette.done.viewmodel.DoneDateViewModel
+import com.palette.done.viewmodel.DoneDateViewModelFactory
 import com.palette.done.viewmodel.DoneEditViewModel
+import com.palette.done.viewmodel.DoneEditViewModelFactory
 import java.util.*
 
 class DoneActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDoneBinding
-    private val dateVM: DoneDateViewModel by viewModels()
-    private val doneEditVM: DoneEditViewModel by viewModels()
+    private val dateVM: DoneDateViewModel by viewModels() {
+        DoneDateViewModelFactory((application as DoneApplication).doneRepository)
+    }
 
     private var rootHeight = -1
     private var keyboardHeight = -1
+
+    private lateinit var doneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +48,31 @@ class DoneActivity : AppCompatActivity() {
         dateVM.setTitleDate(clickedDate!!)
         dateVM.transStringToCalendar(clickedDate!!)
 
-
         setKeyboardHeight()
-        setTitleDate()
-
         setTitleDate()
         setButtonsDestination()
 
+        initDoneListRecyclerView()
+
         popEditFrame()
         hideKeyboard()
+    }
+
+    private fun initDoneListRecyclerView() {
+        doneAdapter = DoneAdapter()
+        with(binding.rcDoneList) {
+            adapter = doneAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        dateVM.doneList.observe(this) { doneLists ->
+            Log.d("date_list_size", "${doneLists.size}")
+            doneLists.let { doneAdapter.submitList(it) }
+            if (doneLists.isEmpty()) {
+                binding.tvDoneList.text = getString(R.string.done_list_hint)
+            } else {
+                binding.tvDoneList.text = ""
+            }
+        }
     }
 
     private fun setKeyboardHeight() {
@@ -88,6 +116,10 @@ class DoneActivity : AppCompatActivity() {
 
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment()).commit()
+            binding.flDoneWrite.visibility = View.VISIBLE
+        }
+        binding.rcDoneList.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment()).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
