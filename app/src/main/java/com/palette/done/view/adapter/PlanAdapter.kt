@@ -1,6 +1,7 @@
 package com.palette.done.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,11 +13,11 @@ import com.palette.done.databinding.ItemPlanRoutineBinding
 
 class PlanAdapter : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator())  {
 
-    class PlanViewHolder(val binding: ItemPlanRoutineBinding): RecyclerView.ViewHolder(binding.root) {
+    private lateinit var planItemClickListener: OnPlanItemClickListener
+    private var editMode = false
 
-        fun bind(plan: Plan) {
-
-        }
+    fun setEditMode(edit: Boolean) {
+        editMode = edit
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanViewHolder {
@@ -25,9 +26,32 @@ class PlanAdapter : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator
     }
 
     override fun onBindViewHolder(holder: PlanViewHolder, position: Int) {
-        val current = getItem(position)
-        holder.bind(current)
+        val plan = getItem(position)
+        with(holder.binding) {
+            tvContent.text = plan.content
+            if (editMode) {
+                btnDone.visibility = View.GONE
+                btnEdit.visibility = View.VISIBLE
+                btnDelete.visibility = View.VISIBLE
+            } else {
+                btnDone.visibility = View.VISIBLE
+                btnEdit.visibility = View.GONE
+                btnDelete.visibility = View.INVISIBLE
+            }
+
+            btnDone.setOnClickListener {
+                planItemClickListener.onDoneButtonClick(it, plan)
+            }
+            btnEdit.setOnClickListener {
+                planItemClickListener.onEditButtonClick(it, plan)
+            }
+            btnDelete.setOnClickListener {
+                planItemClickListener.onDeleteButtonClick(it, plan)
+            }
+        }
     }
+
+    class PlanViewHolder(val binding: ItemPlanRoutineBinding): RecyclerView.ViewHolder(binding.root) { }
 
     class PlanComparator: DiffUtil.ItemCallback<Plan>() {
         override fun areItemsTheSame(oldItem: Plan, newItem: Plan): Boolean {
@@ -38,5 +62,15 @@ class PlanAdapter : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator
             return oldItem.planNo == newItem.planNo
         }
 
+    }
+
+    interface OnPlanItemClickListener {
+        fun onDoneButtonClick(v: View, plan: Plan)
+        fun onEditButtonClick(v: View, plan: Plan)
+        fun onDeleteButtonClick(v: View, plan: Plan)
+    }
+
+    fun setPlanItemClickListener(onPlanItemClickListener: OnPlanItemClickListener) {
+        this.planItemClickListener = onPlanItemClickListener
     }
 }

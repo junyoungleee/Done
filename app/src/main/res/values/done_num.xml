@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="done_num">
+    <string-array name="korean_num">
         <item>첫</item>
         <item>두</item>
         <item>세</item>

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -20,15 +21,13 @@ import com.palette.done.R
 import com.palette.done.databinding.FragmentDoneBinding
 import com.palette.done.databinding.FragmentLoginEmailBinding
 import com.palette.done.repository.DoneServerRepository
+import com.palette.done.view.main.DoneMode
 import com.palette.done.view.util.Util
-import com.palette.done.viewmodel.DoneDateViewModel
-import com.palette.done.viewmodel.DoneDateViewModelFactory
-import com.palette.done.viewmodel.DoneEditViewModel
-import com.palette.done.viewmodel.DoneEditViewModelFactory
+import com.palette.done.viewmodel.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class DoneFragment : Fragment() {
+class DoneFragment(mode: DoneMode) : Fragment() {
 
     private var _binding: FragmentDoneBinding? = null
     private val binding get() = _binding!!
@@ -39,8 +38,12 @@ class DoneFragment : Fragment() {
     private val doneDateVM: DoneDateViewModel by activityViewModels() {
         DoneDateViewModelFactory(DoneApplication().doneRepository)
     }
+    private val planVM: PlanViewModel by activityViewModels() {
+        PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+    }
 
     private var isEditPopupOpen: Boolean = false
+    private val editMode = mode
 
     private val util = Util()
 
@@ -53,41 +56,126 @@ class DoneFragment : Fragment() {
 
         binding.etDone.requestFocus()
 
+        setTitle()
+
         setCategoryButton()
         setWriteButtons()
+        setEditTextHint()
         setEditText()
 
         return binding.root
     }
 
-    private fun setWriteButtons() {
-        binding.etDone.addTextChangedListener(doneEditVM.onDoneTextWatcher())
-        doneEditVM.done.observe(viewLifecycleOwner) { done ->
-            if (done == "") {
-                with(binding.btnWrite) {
-                    text = getString(R.string.done_btn_hash_tag)
-                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-                    setPadding(util.dpToPx(0), util.dpToPx(0), util.dpToPx(0), util.dpToPx(0))
-                    setOnClickListener {
-                        isEditPopupOpen = true
-                        setInputFrameLayout()
-                        parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneTagFragment()).commit()
-                    }
-                }
-            } else {
-                with(binding.btnWrite) {
-                    text = getString(R.string.done_btn_write)
-                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-                    setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
-                    setOnClickListener {
-                        // recyclerview 추가
-                        val date = doneDateVM.getTitleDate()
-                        Log.d("date_save", "$date")
-                        doneEditVM.addDoneList(date, binding.etDone.text.toString(), null, null, null)
-                        binding.etDone.text.clear()
+    private fun setTitle() {
+        // edit 상자의 title 세팅
+        when(editMode) {
+            DoneMode.DONE -> {
+                with(binding) {
+                    tvDoneTitle1.visibility = View.VISIBLE
+                    tvDoneTitle2.visibility = View.VISIBLE
+                    val num = resources.getStringArray(R.array.korean_num)
+                    doneDateVM.doneList.observe(viewLifecycleOwner) {
+                        if (it.size < 19) { tvDoneIndex.text = num[it.size]
+                        } else { tvDoneIndex.text = (it.size + 1).toString() }
                     }
                 }
             }
+
+            DoneMode.ADD_PLAN -> {
+                with(binding) {
+                    tvDoneTitle1.visibility = View.GONE
+                    tvDoneTitle2.visibility = View.GONE
+                    tvDoneIndex.text = getString(R.string.plan_add)
+                }
+            }
+
+            DoneMode.EDIT_PLAN -> {
+                with(binding) {
+                    tvDoneTitle1.visibility = View.GONE
+                    tvDoneTitle2.visibility = View.GONE
+                    tvDoneIndex.text = getString(R.string.plan_item_edit)
+                }
+            }
+        }
+    }
+
+    private fun setWriteButtons() {
+        // editText 옆의 입력 버튼 세팅
+        binding.etDone.addTextChangedListener(doneEditVM.onDoneTextWatcher())
+        doneEditVM.done.observe(viewLifecycleOwner) { done ->
+            when(editMode) {
+                DoneMode.DONE -> {
+                    if (done == "") {
+                        with(binding.btnWrite) {
+                            text = getString(R.string.done_btn_hash_tag)
+                            setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+                            setPadding(util.dpToPx(0), util.dpToPx(0), util.dpToPx(0), util.dpToPx(0))
+                            setOnClickListener {
+                                binding.etDone.hint = getString(R.string.done_tag_hint)
+                                isEditPopupOpen = true
+                                setInputFrameLayout()
+                                parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneTagFragment()).commit()
+                            }
+                        }
+                    } else {
+                        with(binding.btnWrite) {
+                            text = getString(R.string.done_btn_write)
+                            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                            setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
+                            setOnClickListener {
+                                // recyclerview 추가
+                                val date = doneDateVM.getTitleDate()
+                                Log.d("date_save", "$date")
+                                doneEditVM.addDoneList(date, binding.etDone.text.toString(), null, null, null)
+                                binding.etDone.text.clear()
+                            }
+                        }
+                    }
+                }
+
+                DoneMode.ADD_PLAN -> {
+                    with(binding.btnWrite) {
+                        text = getString(R.string.plan_btn_add)
+                        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                        setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
+                        setOnClickListener {
+                            if (done != "") {
+                                // db, server에 plan 추가
+                                planVM.insertPlan(binding.etDone.text.toString(), null)
+                                binding.etDone.text.clear()
+                            }
+                        }
+                    }
+                }
+
+                DoneMode.EDIT_PLAN -> {
+                    with(binding.btnWrite) {
+                        text = getString(R.string.plan_btn_item_edit)
+                        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                        setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
+                        setOnClickListener {
+                            val category: Int? = null  // 새로 선택한 카테고리 받아오기
+                            if (done != planVM.selectedEditPlan.content || category != planVM.selectedEditPlan.categoryNo) {
+                                // db, server에 plan 수정
+                                planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
+                                binding.etDone.text.clear()
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun setEditTextHint() {
+        binding.etDone.hint = when(editMode) {
+            DoneMode.DONE -> getString(R.string.done_list_write_hint)
+            DoneMode.ADD_PLAN -> getString(R.string.plan_hint_add)
+            else -> ""
+        }
+        if (editMode == DoneMode.EDIT_PLAN) {
+            binding.etDone.setText(planVM.selectedEditPlan.content)
         }
     }
 
@@ -97,6 +185,7 @@ class DoneFragment : Fragment() {
                 isEditPopupOpen = !isEditPopupOpen
             }
             setInputFrameLayout()
+//            binding.btnCategory.background = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category)
             parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
         }
     }
@@ -106,6 +195,9 @@ class DoneFragment : Fragment() {
             if (isEditPopupOpen) {
                 isEditPopupOpen = false
                 setInputFrameLayout()
+            }
+            if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
+                binding.etDone.hint = getString(R.string.done_list_write_hint)
             }
         }
     }

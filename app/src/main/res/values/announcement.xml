@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="plan_message">
+        <item>플랜 Done! 👍해냈군요!</item>
+        <item>플랜 Done! 잘하셨어요!🔥</item>
+        <item>플랜 Done! 너무 좋아요!</item>
+    </string-array>
+
+</resources>

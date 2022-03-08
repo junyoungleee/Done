@@ -20,6 +20,7 @@
             app:layout_constraintBottom_toTopOf="@id/et_done">
 
             <TextView
+                android:id="@+id/tv_done_title_1"
                 style="@style/done_sub_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,6 +36,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/tv_done_title_2"
                 style="@style/done_sub_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

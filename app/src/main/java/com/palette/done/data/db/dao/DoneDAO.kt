@@ -12,14 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DoneDAO {
     // 던 ------------------------------------------------------------------------------------------
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDone(done: Done)
 
     @Delete
     suspend fun deleteDone(done: Done)
-
-    @Update
-    suspend fun updateDone(done: Done)
 
     @Query("SELECT * FROM Done WHERE date = :date ORDER BY doneId ASC")
     fun getAllDoneInDate(date: String): Flow<List<Done>>
@@ -31,44 +28,35 @@ interface DoneDAO {
     fun getAllDoneCountInMonth(yearMonth: String): Int
 
     @Query("SELECT COUNT(*) FROM Done WHERE date = :date")
-    fun getAllDoneCountInDate(date: String): Int
+    suspend fun getAllDoneCountInDate(date: String): Int
 
     // 플랜 -----------------------------------------------------------------------------------------
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlan(plan: Plan)
 
-    @Delete
-    suspend fun deletePlan(plan: Plan)
-
-    @Update
-    suspend fun updatePlan(plan: Plan)
+    @Query("DELETE FROM `Plan` WHERE planNo = :planNo")
+    suspend fun deletePlan(planNo: Int)
 
     @Query("SELECT * FROM `Plan` ORDER BY planNo")
-    fun getAllPlan(): LiveData<List<Plan>>
+    fun getAllPlan(): Flow<List<Plan>>
 
     // 루틴 -----------------------------------------------------------------------------------------
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRoutine(routine: Routine)
 
     @Delete
     suspend fun deleteRoutine(routine: Routine)
 
-    @Update
-    suspend fun updateRoutine(routine: Routine)
-
     @Query("SELECT * FROM Routine ORDER BY routineNo")
-    fun getAllRoutine(): LiveData<List<Routine>>
+    fun getAllRoutine(): Flow<List<Routine>>
 
     // 오늘 한마디 -----------------------------------------------------------------------------------
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodayRecord(todayRecord: TodayRecord)
 
     @Delete
     suspend fun deleteTodayRecord(todayRecord: TodayRecord)
 
-    @Update
-    suspend fun updateTodayRecord(todayRecord: TodayRecord)
-
     @Query("SELECT * FROM TodayRecord WHERE date = :date")
-    fun getTodayRecord(date: String): LiveData<TodayRecord>
+    fun getTodayRecord(date: String): Flow<TodayRecord>
 }

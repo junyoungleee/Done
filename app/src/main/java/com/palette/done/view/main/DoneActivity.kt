@@ -95,6 +95,8 @@ class DoneActivity : AppCompatActivity() {
             }
             btnPlan.setOnClickListener {
                 var intent = Intent(this@DoneActivity, PlanActivity::class.java)
+                val date = dateVM.getTitleDate()
+                intent.putExtra("date", date)  // 현재 던리스트의 날짜
                 startActivity(intent)
             }
         }
@@ -116,11 +118,11 @@ class DoneActivity : AppCompatActivity() {
 
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment()).commit()
+            supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
         binding.rcDoneList.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment()).commit()
+            supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
         binding.rootView.setOnClickListener {
