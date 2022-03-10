@@ -52,6 +52,7 @@ class DoneActivity : AppCompatActivity() {
         dateVM.transStringToCalendar(clickedDate!!)
 
         routineVM.initRoutine()
+        planVM.initPlan()
 
         setKeyboardHeight()
         setTitleDate()

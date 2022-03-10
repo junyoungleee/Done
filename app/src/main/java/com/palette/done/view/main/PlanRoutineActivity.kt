@@ -61,6 +61,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
                 planAdapter = PlanAdapter()
                 initPlanRecyclerView()
                 setPlanAddButton()
+                setPlanAddButtonVisibility()
                 binding.tvAddItem.text = getString(R.string.plan_add)
             }
             ItemMode.ROUTINE -> {
@@ -68,6 +69,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
                 routineAdapter = RoutineAdapter()
                 initRoutineRecyclerView()
                 setRoutineAddButton()
+                setRoutineAddButtonVisibility()
                 binding.tvAddItem.text = getString(R.string.routine_add)
             }
         }
@@ -90,16 +92,6 @@ class PlanRoutineActivity() : AppCompatActivity() {
         planVM.planList.observe(this) { planList ->
             Log.d("plan_list_size", "${planList.size}")
             planList.let { planAdapter.submitList(it) }
-            if (planList.isEmpty()) {
-                binding.llAddItem.visibility = View.VISIBLE
-            } else {
-                if (isEditMode) {
-                    binding.llAddItem.visibility = View.VISIBLE
-                } else {
-                    binding.llAddItem.visibility = View.GONE
-                }
-                binding.btnEditMode.visibility = View.VISIBLE
-            }
         }
         planAdapter.setPlanItemClickListener(object : PlanAdapter.OnPlanItemClickListener {
             override fun onDoneButtonClick(v: View, plan: Plan) {
@@ -129,16 +121,6 @@ class PlanRoutineActivity() : AppCompatActivity() {
         routineVM.routineList.observe(this) { routineList ->
             Log.d("routine_list_size", "${routineList.size}")
             routineList.let { routineAdapter.submitList(it) }
-            if (routineList.isEmpty()) {
-                binding.llAddItem.visibility = View.VISIBLE
-            } else {
-                if (isEditMode) {
-                    binding.llAddItem.visibility = View.VISIBLE
-                } else {
-                    binding.llAddItem.visibility = View.GONE
-                }
-                binding.btnEditMode.visibility = View.VISIBLE
-            }
         }
         routineAdapter.setRoutineItemClickListener(object : RoutineAdapter.OnRoutineItemClickListener {
             override fun onEditButtonClick(v: View, routine: Routine) {
@@ -177,23 +159,29 @@ class PlanRoutineActivity() : AppCompatActivity() {
     private fun setEditMode() {
         setTitle()
         if (isEditMode) {
+            // 편집모드
             with(binding) {
                 btnBack.visibility = View.GONE
                 llAddItem.visibility = View.VISIBLE
                 with(btnEditMode) {
+                    visibility = View.VISIBLE
                     background = ContextCompat.getDrawable(context, R.drawable.all_btn_round_selector)
                     setTextColor(ContextCompat.getColor(context, R.color.white))
                     text = getString(R.string.btn_edit_finish)
                 }
             }
         } else {
+            // 편집모드 X
             with(binding) {
                 btnBack.visibility = View.VISIBLE
                 tvPlanTitle.text = when (itemMode) {
                     ItemMode.ROUTINE -> { getString(R.string.routine_title)}
                     ItemMode.PLAN -> {getString(R.string.plan_title)}
                 }
-                llAddItem.visibility = View.GONE
+                when (itemMode) {
+                    ItemMode.PLAN -> setPlanAddButtonVisibility()
+                    ItemMode.ROUTINE -> setRoutineAddButtonVisibility()
+                }
                 with(btnEditMode) {
                     background = ContextCompat.getDrawable(context, R.drawable.all_btn_round_stroke)
                     setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -204,6 +192,34 @@ class PlanRoutineActivity() : AppCompatActivity() {
         when (itemMode) {
             ItemMode.PLAN -> setPlanItemEditMode()
             ItemMode.ROUTINE -> setRoutineItemEditMode()
+        }
+    }
+
+    private fun setPlanAddButtonVisibility() {
+        planVM.planList.observe(this) { planList ->
+            if(!isEditMode) {
+                if (planList.isEmpty()) {
+                    binding.llAddItem.visibility = View.VISIBLE
+                    binding.btnEditMode.visibility = View.GONE
+                } else {
+                    binding.llAddItem.visibility = View.GONE
+                    binding.btnEditMode.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun setRoutineAddButtonVisibility() {
+        routineVM.routineList.observe(this) { routineList ->
+            if(!isEditMode) {
+                if (routineList.isEmpty()) {
+                    binding.llAddItem.visibility = View.VISIBLE
+                    binding.btnEditMode.visibility = View.GONE
+                } else {
+                    binding.llAddItem.visibility = View.GONE
+                    binding.btnEditMode.visibility = View.VISIBLE
+                }
+            }
         }
     }
 

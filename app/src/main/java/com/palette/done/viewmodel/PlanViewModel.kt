@@ -6,8 +6,13 @@ import com.palette.done.data.db.entity.Plan
 import com.palette.done.data.remote.model.dones.Plans
 import com.palette.done.data.remote.model.dones.PlansResponse
 import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.db.entity.Routine
+import com.palette.done.data.remote.model.dones.PlanListResponse
+import com.palette.done.data.remote.model.dones.RoutineListResponse
 import com.palette.done.data.remote.repository.DoneServerRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +24,43 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
     lateinit var selectedEditPlan: Plan
 
     var planList: LiveData<List<Plan>> = dbRepo.getAllPlan().asLiveData()
+
+    fun initPlan() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                getPlan()
+            }
+        }
+    }
+
+    private fun getPlan() {
+        viewModelScope.launch {
+            serverRepo.getPlanList()
+                .enqueue(object : Callback<PlanListResponse> {
+                    override fun onResponse(call: Call<PlanListResponse>, response: Response<PlanListResponse>) {
+                        if (response.isSuccessful) {
+                            when (response.code()) {
+                                200 -> {
+                                    val list = response.body()!!.item!!.plans
+                                    for (p in list) {
+                                        Log.d("routine_server", "${p.plan_no}")
+                                        val plan = Plan(p.plan_no!!, p.content, p.category_no)
+                                        insertOrUpdatePlanInDB(plan)
+                                    }
+                                }
+                                400 -> {
+                                    Log.d("retrofit_400", "${response.body()!!.message}")
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<PlanListResponse>, t: Throwable) {
+                        Log.d("retrofit_failure", "${t.message}")
+                    }
+                })
+        }
+    }
 
     private fun insertOrUpdatePlanInDB(plan: Plan) = viewModelScope.launch {
         dbRepo.insertPlan(plan)
