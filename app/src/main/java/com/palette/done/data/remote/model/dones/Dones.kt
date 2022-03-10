@@ -55,11 +55,39 @@ data class PlansResponse(
 
 data class PlansNo(val plan_no: Int)
 
+data class PlanListResponse(
+    val item: PlanList?,
+    val message: String?,
+    val is_success: Boolean
+)
+
+data class PlanList(val plans: List<PlanListItem>)
+
+data class PlanListItem(
+    val plan_no: Int,
+    val content: String,
+    val category_no: Int?
+)
+
 // 루틴 -----------------------------------------------------------------
 data class Routines(
     @SerializedName("content")
     val content: String,
     @SerializedName("category_no")
+    val category_no: Int?
+)
+
+data class RoutineListResponse(
+    val item: RoutineList?,
+    val message: String?,
+    val is_success: Boolean
+)
+
+data class RoutineList(val routines: List<RoutineListItem>)
+
+data class RoutineListItem(
+    val routine_no: Int,
+    val content: String,
     val category_no: Int?
 )
 

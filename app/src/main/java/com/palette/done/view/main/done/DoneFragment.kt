@@ -1,26 +1,20 @@
 package com.palette.done.view.main.done
 
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.FragmentDoneBinding
-import com.palette.done.databinding.FragmentLoginEmailBinding
-import com.palette.done.repository.DoneServerRepository
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.view.main.DoneMode
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
@@ -41,6 +35,9 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     private val planVM: PlanViewModel by activityViewModels() {
         PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
     }
+    private val routineVM: RoutineViewModel by activityViewModels() {
+        RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+    }
 
     private var isEditPopupOpen: Boolean = false
     private val editMode = mode
@@ -60,7 +57,6 @@ class DoneFragment(mode: DoneMode) : Fragment() {
 
         setCategoryButton()
         setWriteButtons()
-        setEditTextHint()
         setEditText()
 
         return binding.root
@@ -80,20 +76,17 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                     }
                 }
             }
-
-            DoneMode.ADD_PLAN -> {
+            else -> {
                 with(binding) {
                     tvDoneTitle1.visibility = View.GONE
                     tvDoneTitle2.visibility = View.GONE
-                    tvDoneIndex.text = getString(R.string.plan_add)
-                }
-            }
-
-            DoneMode.EDIT_PLAN -> {
-                with(binding) {
-                    tvDoneTitle1.visibility = View.GONE
-                    tvDoneTitle2.visibility = View.GONE
-                    tvDoneIndex.text = getString(R.string.plan_item_edit)
+                    tvDoneIndex.text = when (editMode) {
+                        DoneMode.ADD_PLAN -> getString(R.string.plan_add)
+                        DoneMode.EDIT_PLAN -> getString(R.string.plan_item_edit)
+                        DoneMode.ADD_ROUTINE -> getString(R.string.routine_add)
+                        DoneMode.EDIT_ROUTINE -> getString(R.string.routine_item_edit)
+                        else -> ""
+                    }
                 }
             }
         }
@@ -132,50 +125,48 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                         }
                     }
                 }
-
-                DoneMode.ADD_PLAN -> {
+                else -> {
                     with(binding.btnWrite) {
-                        text = getString(R.string.plan_btn_add)
                         setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                         setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
-                        setOnClickListener {
-                            if (done != "") {
-                                // db, server에 plan 추가
-                                planVM.insertPlan(binding.etDone.text.toString(), null)
-                                binding.etDone.text.clear()
-                            }
+                        text = when(editMode) {
+                            DoneMode.ADD_PLAN, DoneMode.ADD_ROUTINE -> getString(R.string.btn_add)
+                            DoneMode.EDIT_PLAN, DoneMode.EDIT_ROUTINE -> getString(R.string.btn_item_edit)
+                            else -> ""
                         }
-                    }
-                }
-
-                DoneMode.EDIT_PLAN -> {
-                    with(binding.btnWrite) {
-                        text = getString(R.string.plan_btn_item_edit)
-                        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-                        setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                         setOnClickListener {
-                            val category: Int? = null  // 새로 선택한 카테고리 받아오기
-                            if (done != planVM.selectedEditPlan.content || category != planVM.selectedEditPlan.categoryNo) {
-                                // db, server에 plan 수정
-                                planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
-                                binding.etDone.text.clear()
+                            when (editMode) {
+                                DoneMode.ADD_PLAN -> {
+                                    if (done != "") {
+                                        planVM.insertPlan(done, null)
+                                    }
+                                    binding.etDone.text.clear()
+                                }
+                                DoneMode.EDIT_PLAN -> {
+                                    val category: Int? = null  // 새로 선택한 카테고리 받아오기
+                                    if (done != planVM.selectedEditPlan.content || category != planVM.selectedEditPlan.categoryNo) {
+                                        // db, server에 plan 수정
+                                        planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
+                                    }
+                                }
+                                DoneMode.ADD_ROUTINE -> {
+                                    if (done != "") {
+                                        routineVM.insertRoutine(done, null)
+                                    }
+                                    binding.etDone.text.clear()
+                                }
+                                DoneMode.EDIT_ROUTINE -> {
+                                    val category: Int? = null
+                                    if (done != routineVM.selectedEditRoutine.content || category != routineVM.selectedEditRoutine.categoryNo) {
+                                        routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)
+                                    }
+                                }
                             }
+
                         }
                     }
                 }
             }
-
-        }
-    }
-
-    private fun setEditTextHint() {
-        binding.etDone.hint = when(editMode) {
-            DoneMode.DONE -> getString(R.string.done_list_write_hint)
-            DoneMode.ADD_PLAN -> getString(R.string.plan_hint_add)
-            else -> ""
-        }
-        if (editMode == DoneMode.EDIT_PLAN) {
-            binding.etDone.setText(planVM.selectedEditPlan.content)
         }
     }
 
@@ -191,13 +182,35 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     }
 
     private fun setEditText() {
-        binding.etDone.setOnClickListener {
-            if (isEditPopupOpen) {
-                isEditPopupOpen = false
-                setInputFrameLayout()
+        // edittext 설정
+        with(binding.etDone) {
+            setOnClickListener {
+                if (isEditPopupOpen) {
+                    isEditPopupOpen = false
+                    setInputFrameLayout()
+                }
+                if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
+                    binding.etDone.hint = getString(R.string.done_list_write_hint)
+                }
             }
-            if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
-                binding.etDone.hint = getString(R.string.done_list_write_hint)
+            // EditText의 hint
+            hint = when(editMode) {
+                DoneMode.DONE -> getString(R.string.done_list_write_hint)
+                DoneMode.ADD_PLAN -> getString(R.string.plan_hint_add)
+                DoneMode.ADD_ROUTINE -> getString(R.string.routine_hint_add)
+                else -> ""
+            }
+            // EditText의 text
+            setText(when(editMode) {
+                DoneMode.EDIT_PLAN -> planVM.selectedEditPlan.content
+                DoneMode.EDIT_ROUTINE -> routineVM.selectedEditRoutine.content
+                else -> ""
+            })
+            // 입력 글자수 제한
+            maxLines = when(editMode) {
+                DoneMode.DONE -> 14
+                DoneMode.ADD_PLAN, DoneMode.EDIT_PLAN -> 10
+                DoneMode.ADD_ROUTINE, DoneMode.EDIT_ROUTINE -> 10
             }
         }
     }

@@ -44,8 +44,8 @@ interface DoneDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRoutine(routine: Routine)
 
-    @Delete
-    suspend fun deleteRoutine(routine: Routine)
+    @Query("DELETE FROM Routine WHERE routineNo = :routineNo")
+    suspend fun deleteRoutine(routineNo: Int)
 
     @Query("SELECT * FROM Routine ORDER BY routineNo")
     fun getAllRoutine(): Flow<List<Routine>>
@@ -54,8 +54,8 @@ interface DoneDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodayRecord(todayRecord: TodayRecord)
 
-    @Delete
-    suspend fun deleteTodayRecord(todayRecord: TodayRecord)
+    @Query("DELETE FROM TodayRecord WHERE todayNo = :todayNo")
+    suspend fun deleteTodayRecord(todayNo: Int)
 
     @Query("SELECT * FROM TodayRecord WHERE date = :date")
     fun getTodayRecord(date: String): Flow<TodayRecord>

@@ -3,8 +3,7 @@ package com.palette.done.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import com.palette.done.data.db.entity.Done
-import com.palette.done.repository.DoneRepository
-import kotlinx.coroutines.launch
+import com.palette.done.data.db.datasource.DoneRepository
 import java.text.SimpleDateFormat
 import java.util.*
 

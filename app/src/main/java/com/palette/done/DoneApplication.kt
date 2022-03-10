@@ -3,7 +3,7 @@ package com.palette.done
 import android.app.Application
 import com.palette.done.data.PreferenceManager
 import com.palette.done.data.db.DoneDatabase
-import com.palette.done.repository.DoneRepository
+import com.palette.done.data.db.datasource.DoneRepository
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

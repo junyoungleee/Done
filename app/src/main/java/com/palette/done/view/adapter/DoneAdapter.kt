@@ -27,7 +27,7 @@ class DoneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator(
         holder.bind(current)
     }
 
-    class DoneComparator: DiffUtil.ItemCallback<Done>() {
+    private class DoneComparator: DiffUtil.ItemCallback<Done>() {
         override fun areItemsTheSame(oldItem: Done, newItem: Done): Boolean {
             return oldItem === newItem
         }

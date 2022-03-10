@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.palette.done.databinding.FragmentDoneRoutineBinding
 import com.palette.done.databinding.FragmentDoneTagBinding
@@ -27,7 +28,10 @@ class DoneTagFragment : Fragment() {
         val tabTitle = arrayOf("해시태그", "루틴")
         val fragments = arrayListOf(DoneHashtagFragment(), DoneRoutineFragment())
 
-        binding.vpTabBarLayout.adapter = ViewPagerAdapter(requireActivity(), fragments)
+        with(binding.vpTabBarLayout) {
+            adapter = ViewPagerAdapter(requireActivity(), fragments)
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
         TabLayoutMediator(binding.tabBar, binding.vpTabBarLayout) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()

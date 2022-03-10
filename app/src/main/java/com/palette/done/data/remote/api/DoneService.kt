@@ -28,8 +28,21 @@ interface DoneService {
     @DELETE("/api/plans/{planNo}")
     fun deletePlans(@Path("planNo") planNo: Int): Call<PlansResponse>
 
-    // 루틴 -----------------------------------------------------------------------------------------
+    @GET("/api/plans")
+    fun getPlans(): Call<PlanListResponse>
 
+    // 루틴 -----------------------------------------------------------------------------------------
+    @POST("/api/routines")
+    fun postRoutines(@Body data: Routines): Call<RoutinesResponse>
+
+    @PATCH("/api/routines/{routineNo}")
+    fun patchRoutines(@Body data: Routines, @Path("routineNo") routineNo: Int): Call<RoutinesResponse>
+
+    @DELETE("/api/routines/{routineNo}")
+    fun deleteRoutines(@Path("routineNo") routineNo: Int): Call<RoutinesResponse>
+
+    @GET("/api/routines")
+    fun getRoutines(): Call<RoutineListResponse>
 
     // 태그 -----------------------------------------------------------------------------------------
     @GET("/api/tags")

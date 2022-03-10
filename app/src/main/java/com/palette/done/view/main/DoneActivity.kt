@@ -9,20 +9,16 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityDoneBinding
-import com.palette.done.repository.DoneServerRepository
 import com.palette.done.view.adapter.DoneAdapter
 import com.palette.done.view.main.done.DoneFragment
-import com.palette.done.viewmodel.DoneDateViewModel
-import com.palette.done.viewmodel.DoneDateViewModelFactory
-import com.palette.done.viewmodel.DoneEditViewModel
-import com.palette.done.viewmodel.DoneEditViewModelFactory
+import com.palette.done.viewmodel.*
 import java.util.*
 
 class DoneActivity : AppCompatActivity() {
@@ -31,6 +27,13 @@ class DoneActivity : AppCompatActivity() {
     private val dateVM: DoneDateViewModel by viewModels() {
         DoneDateViewModelFactory((application as DoneApplication).doneRepository)
     }
+    private val planVM: PlanViewModel by viewModels() {
+        PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+    }
+    private val routineVM: RoutineViewModel by viewModels() {
+        RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+    }
+
 
     private var rootHeight = -1
     private var keyboardHeight = -1
@@ -47,6 +50,8 @@ class DoneActivity : AppCompatActivity() {
 
         dateVM.setTitleDate(clickedDate!!)
         dateVM.transStringToCalendar(clickedDate!!)
+
+        routineVM.initRoutine()
 
         setKeyboardHeight()
         setTitleDate()
@@ -94,8 +99,9 @@ class DoneActivity : AppCompatActivity() {
                 finish()
             }
             btnPlan.setOnClickListener {
-                var intent = Intent(this@DoneActivity, PlanActivity::class.java)
+                var intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
                 val date = dateVM.getTitleDate()
+                intent.putExtra("mode", ItemMode.PLAN.name)
                 intent.putExtra("date", date)  // 현재 던리스트의 날짜
                 startActivity(intent)
             }

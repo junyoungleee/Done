@@ -2,19 +2,19 @@ package com.palette.done.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.palette.done.data.db.entity.Done
 import com.palette.done.data.db.entity.Plan
 import com.palette.done.data.remote.model.dones.Plans
 import com.palette.done.data.remote.model.dones.PlansResponse
-import com.palette.done.repository.DoneRepository
-import com.palette.done.repository.DoneServerRepository
-import kotlinx.coroutines.coroutineScope
+import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.remote.repository.DoneServerRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlanViewModel(private val serverRepo: DoneServerRepository, private val dbRepo: DoneRepository) : ViewModel() {
+class PlanViewModel(private val serverRepo: DoneServerRepository,
+                    private val dbRepo: DoneRepository
+) : ViewModel() {
 
     lateinit var selectedEditPlan: Plan
 
@@ -37,8 +37,8 @@ class PlanViewModel(private val serverRepo: DoneServerRepository, private val db
                             when (response.code()) {
                                 200 -> {
                                     val planNo = response.body()!!.item!!.plan_no
-                                    val done = Plan(planNo, content, category)
-                                    insertOrUpdatePlanInDB(done)
+                                    val plan = Plan(planNo, content, category)
+                                    insertOrUpdatePlanInDB(plan)
                                 }
                                 400 -> {
                                     Log.d("retrofit_400", "${response.body()!!.message}")
@@ -103,7 +103,8 @@ class PlanViewModel(private val serverRepo: DoneServerRepository, private val db
 }
 
 class PlanViewModelFactory(private val serverRepo: DoneServerRepository,
-                           private val dbRepo: DoneRepository): ViewModelProvider.Factory {
+                           private val dbRepo: DoneRepository
+): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PlanViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

@@ -94,22 +94,26 @@
     <string name="today_btn_sticker">스티커</string>
     <string name="today_btn_text">텍스트</string>
 
+    <!-- 플랜/루틴 페이지 -->
+    <string name="btn_edit_mode">편집</string>
+    <string name="btn_edit_finish">완료</string>
+    <string name="btn_item_edit">수정</string>
+    <string name="btn_add">추가</string>
+
     <!-- 플랜 페이지 -->
     <string name="plan_title">플랜</string>
     <string name="plan_edit_title">플랜 편집</string>
     <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,\nDone List에 입력하세요.</string>
     <string name="plan_add">플랜 추가</string>
     <string name="plan_item_edit">플랜 수정</string>
-    <string name="plan_btn_edit_mode">편집</string>
-    <string name="plan_btn_edit_finish">완료</string>
-    <string name="plan_btn_item_edit">수정</string>
-    <string name="plan_btn_add">추가</string>
     <string name="plan_btn_done">Done</string>
     <string name="plan_hint_add">플랜을 입력해보세요</string>
 
-
     <!-- 루틴 페이지 -->
     <string name="routine_title">루틴</string>
+    <string name="routine_edit_title">루틴 편집</string>
     <string name="routine_detail">반복되는 Done List를 루틴으로 등록하고,\n쉽게 입력해보세요.</string>
     <string name="routine_add">루틴 추가</string>
+    <string name="routine_item_edit">루틴 수정</string>
+    <string name="routine_hint_add">루틴을 입력해보세요</string>
 </resources>

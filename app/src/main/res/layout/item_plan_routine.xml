@@ -38,7 +38,7 @@
             android:id="@+id/btn_edit"
             android:layout_width="49dp"
             android:layout_height="32dp"
-            android:text="@string/plan_btn_item_edit"
+            android:text="@string/btn_item_edit"
             style="@style/plan_edit_button"
             android:visibility="gone"/>
     </LinearLayout>

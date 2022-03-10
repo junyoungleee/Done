@@ -1,4 +1,4 @@
-package com.palette.done.repository
+package com.palette.done.data.remote.repository
 
 import com.palette.done.data.remote.ApiBuilder
 import com.palette.done.data.remote.api.MemberLoginService

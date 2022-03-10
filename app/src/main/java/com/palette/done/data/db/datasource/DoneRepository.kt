@@ -1,4 +1,4 @@
-package com.palette.done.repository
+package com.palette.done.data.db.datasource
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,6 +45,14 @@ class DoneRepository(private val doneDao: DoneDAO) {
     }
 
     // 루틴 --------------------------------------------------------------------------
+    suspend fun insertRoutine(routine: Routine) {
+        doneDao.insertRoutine(routine)
+    }
+
+    suspend fun deleteRoutine(routineNo: Int) {
+        doneDao.deleteRoutine(routineNo)
+    }
+
     fun getAllRoutine(): Flow<List<Routine>>{
         return doneDao.getAllRoutine()
     }

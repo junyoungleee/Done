@@ -53,7 +53,7 @@ class PlanAdapter : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator
 
     class PlanViewHolder(val binding: ItemPlanRoutineBinding): RecyclerView.ViewHolder(binding.root) { }
 
-    class PlanComparator: DiffUtil.ItemCallback<Plan>() {
+    private class PlanComparator: DiffUtil.ItemCallback<Plan>() {
         override fun areItemsTheSame(oldItem: Plan, newItem: Plan): Boolean {
             return oldItem === newItem
         }

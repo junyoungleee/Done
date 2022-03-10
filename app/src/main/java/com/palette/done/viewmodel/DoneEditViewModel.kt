@@ -7,16 +7,16 @@ import androidx.lifecycle.*
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.remote.model.dones.Dones
 import com.palette.done.data.remote.model.dones.DonesResponse
-import com.palette.done.repository.DoneRepository
-import com.palette.done.repository.DoneServerRepository
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.remote.repository.DoneServerRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DoneEditViewModel(private val serverRepo: DoneServerRepository,
-                        private val dbRepo: DoneRepository) : ViewModel() {
+                        private val dbRepo: DoneRepository
+) : ViewModel() {
 
     var _done: MutableLiveData<String> = MutableLiveData("")
     val done: LiveData<String> get() = _done
@@ -67,7 +67,8 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
 }
 
 class DoneEditViewModelFactory(private val serverRepo: DoneServerRepository,
-                               private val dbRepo: DoneRepository): ViewModelProvider.Factory {
+                               private val dbRepo: DoneRepository
+): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DoneEditViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

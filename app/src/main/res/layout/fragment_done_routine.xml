@@ -6,28 +6,60 @@
     android:orientation="vertical"
     tools:context=".view.main.done.DoneRoutineFragment">
 
-    <LinearLayout
-        android:id="@+id/ll_routine_edit"
+    <TextView
+        android:id="@+id/btn_routine_edit"
+        style="@style/done_edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:layout_marginEnd="10dp"
+        android:padding="7dp"
+        android:text="@string/done_edit_edit" />
 
-        <TextView
-            style="@style/done_edit_button"
+    <LinearLayout
+        android:id="@+id/ll_add_routine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_add_routine_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/done_edit_edit" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="40dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_plus"
+                android:background="@null"/>
+
+            <TextView
+                android:id="@+id/tv_add_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/routine_add"
+                style="@style/done_add_button"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_routine_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            style="@style/done_activity_detail"
+            android:text="@string/routine_detail"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_routine"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

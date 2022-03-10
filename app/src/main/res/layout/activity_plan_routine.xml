@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.PlanActivity">
+    tools:context=".view.main.PlanRoutineActivity">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -27,10 +27,10 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_plan_edit"
+        android:id="@+id/btn_edit_mode"
         android:layout_width="58dp"
         android:layout_height="31dp"
-        android:text="@string/plan_btn_edit_mode"
+        android:text="@string/btn_edit_mode"
         style="@style/main_button_stroke"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="20dp"
@@ -39,7 +39,7 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/tv_detail_plan"
+        android:id="@+id/tv_activity_detail"
         android:layout_width="wrap_content"
         android:layout_height="63dp"
         android:layout_gravity="center"
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_plan"
+        app:layout_constraintTop_toBottomOf="@id/tv_activity_detail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -67,22 +67,24 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_plan"
+                android:id="@+id/rc_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"/>
+                android:layout_marginBottom="30dp"
+                android:overScrollMode="never"/>
 
             <LinearLayout
-                android:id="@+id/ll_add_plan"
+                android:id="@+id/ll_add_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <ImageButton
+                <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_plus"
                     android:background="@null"/>
                 <TextView
+                    android:id="@+id/tv_add_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -94,7 +96,7 @@
     </ScrollView>
 
     <FrameLayout
-        android:id="@+id/fl_plan_write"
+        android:id="@+id/fl_item_write"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/done_write_box_round"

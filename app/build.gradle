@@ -82,6 +82,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
+    // Room Debug Tool
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     // Retrofit
     def retrofit_version = "2.9.0"
