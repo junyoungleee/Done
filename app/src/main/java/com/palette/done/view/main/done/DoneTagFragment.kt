@@ -30,7 +30,7 @@ class DoneTagFragment : Fragment() {
 
         with(binding.vpTabBarLayout) {
             adapter = ViewPagerAdapter(requireActivity(), fragments)
-            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
         TabLayoutMediator(binding.tabBar, binding.vpTabBarLayout) { tab, position ->
             tab.text = tabTitle[position]

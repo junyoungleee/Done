@@ -11,7 +11,7 @@ class DoneServerRepository {
         ApiBuilder.retrofit.create(DoneService::class.java)
     }
 
-    suspend fun postDone(dones: Dones): Call<DonesResponse> {
+    fun postDone(dones: Dones): Call<DonesResponse> {
         return doneApi.postDones(dones)
     }
 
@@ -49,4 +49,8 @@ class DoneServerRepository {
         return doneApi.getRoutines()
     }
 
+    // 태그 ----------------------------------------------------------------------------------------
+    fun getHashTag(): Call<TagsResponse> {
+        return doneApi.getHashTags()
+    }
 }

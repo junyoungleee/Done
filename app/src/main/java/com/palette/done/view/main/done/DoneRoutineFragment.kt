@@ -10,14 +10,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.flexbox.*
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.db.entity.Routine
 import com.palette.done.databinding.FragmentDoneRoutineBinding
 import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.view.adapter.RoutineAdapter
 import com.palette.done.view.adapter.RoutineTagAdapter
 import com.palette.done.view.main.ItemMode
 import com.palette.done.view.main.PlanRoutineActivity
@@ -46,13 +50,35 @@ class DoneRoutineFragment : Fragment() {
         setEditAndAddButton()
         setRoutineDetailTextSpan()
 
+        initRoutineTagRecyclerView()
+
         return binding.root
     }
 
     private fun initRoutineTagRecyclerView() {
+        val tagLayoutManager = FlexboxLayoutManager(context)
+        tagLayoutManager.flexDirection = FlexDirection.ROW
+        tagLayoutManager.justifyContent = JustifyContent.CENTER
+
+        val tagDecoration = FlexboxItemDecoration(context)
+        tagDecoration.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.tag_divider))
+
         with(binding.rcRoutine) {
             adapter = tagAdapter
+            layoutManager = tagLayoutManager
+            overScrollMode = View.OVER_SCROLL_NEVER
+            addItemDecoration(tagDecoration)
         }
+        routineVM.routineList.observe(viewLifecycleOwner) { routineList ->
+            routineList.let { tagAdapter.submitList(it) }
+        }
+        tagAdapter.setTagItemClickListener(object : RoutineTagAdapter.OnTagItemClickListener {
+            override fun onTagClick(v: View, routine: Routine) {
+                // 루틴 태그 클릭 리스너
+
+            }
+
+        })
     }
 
     private fun setEditAndAddButton() {

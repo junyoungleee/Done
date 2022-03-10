@@ -8,6 +8,7 @@ import com.palette.done.data.db.entity.Done
 import com.palette.done.data.remote.model.dones.Dones
 import com.palette.done.data.remote.model.dones.DonesResponse
 import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.db.entity.Routine
 import com.palette.done.data.remote.repository.DoneServerRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -20,6 +21,9 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
 
     var _done: MutableLiveData<String> = MutableLiveData("")
     val done: LiveData<String> get() = _done
+
+    var _selectedRoutineTag: MutableLiveData<Routine> = MutableLiveData(Routine(1, "", null))
+    val selectedRoutineTag: LiveData<Routine> get() = _selectedRoutineTag
 
     fun onDoneTextWatcher(): TextWatcher {
         return object : TextWatcher {

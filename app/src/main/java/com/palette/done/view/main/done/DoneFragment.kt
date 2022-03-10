@@ -2,6 +2,7 @@ package com.palette.done.view.main.done
 
 import android.content.Context
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -207,11 +208,12 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 else -> ""
             })
             // 입력 글자수 제한
-            maxLines = when(editMode) {
+            val maxLength =  when(editMode) {
                 DoneMode.DONE -> 14
                 DoneMode.ADD_PLAN, DoneMode.EDIT_PLAN -> 10
                 DoneMode.ADD_ROUTINE, DoneMode.EDIT_ROUTINE -> 10
             }
+            filters += InputFilter.LengthFilter(maxLength)
         }
     }
 
