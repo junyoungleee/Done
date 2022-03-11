@@ -2,7 +2,7 @@ package com.palette.done.data.remote.model.dones
 
 import com.google.gson.annotations.SerializedName
 
-// 던리스트 ---------------------------------------------------------
+// 던리스트 ----------------------------------------------------------
 data class Dones (
     @SerializedName("content")
     val content: String,
@@ -23,7 +23,7 @@ data class DonesResponse(
     val message: String? = null,
     val is_success: Boolean)
 
-// 오늘 한마디 ---------------------------------------------------------
+// 오늘 한마디 ----------------------------------------------------------
 data class TodayRecords (
     @SerializedName("content")
     val content: String,
@@ -38,6 +38,28 @@ data class TodayRecordsResponse(
 )
 
 data class TodayNo(val today_no: Int)
+
+// 던리스트 & 오늘 한마디 -------------------------------------------------
+data class DonesAndTodayResponse(
+    val message: String?,
+    val is_success: Boolean
+)
+
+data class DonesAndToday(
+    val dones: List<Done>,
+    val todays: List<TodayRecord>
+)
+
+data class Done(
+    val done_no: Int,
+    val content: String,
+    val category_no: Int?
+)
+
+data class TodayRecord(
+    val today_no: Int,
+    val content: String
+)
 
 // 플랜 -----------------------------------------------------------------
 data class Plans(

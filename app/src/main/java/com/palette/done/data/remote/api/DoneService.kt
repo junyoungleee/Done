@@ -18,6 +18,9 @@ interface DoneService {
     @DELETE("/api/dones/{doneNo}")
     fun deleteDones(@Path("doneNo") doneNo: Int): Call<DonesResponse>
 
+    @GET("/api/dones")
+    fun getDoneListAndTodayRecord(@Query("date") date: String): Call<DonesAndTodayResponse>
+
     // 플랜 -----------------------------------------------------------------------------------------
     @POST("/api/plans")
     fun postPlans(@Body data: Plans): Call<PlansResponse>
@@ -27,6 +30,9 @@ interface DoneService {
 
     @DELETE("/api/plans/{planNo}")
     fun deletePlans(@Path("planNo") planNo: Int): Call<PlansResponse>
+
+    @POST("/api/plans/{planNo}")
+    fun donePlans(@Path("planNo") planNo: Int): Call<DonesResponse>
 
     @GET("/api/plans")
     fun getPlans(): Call<PlanListResponse>

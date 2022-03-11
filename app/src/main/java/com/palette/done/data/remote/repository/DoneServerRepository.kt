@@ -15,6 +15,10 @@ class DoneServerRepository {
         return doneApi.postDones(dones)
     }
 
+    fun getDoneAndTodayRecord(date: String): Call<DonesAndTodayResponse> {
+        return doneApi.getDoneListAndTodayRecord(date)
+    }
+
     // 플랜 ----------------------------------------------------------------------------------------
     fun postPlan(plans: Plans): Call<PlansResponse> {
         return doneApi.postPlans(plans)
@@ -26,6 +30,10 @@ class DoneServerRepository {
 
     fun deletePlan(planNo: Int): Call<PlansResponse> {
         return doneApi.deletePlans(planNo)
+    }
+
+    fun donePlan(planNo: Int): Call<DonesResponse> {
+        return doneApi.donePlans(planNo)
     }
 
     fun getPlanList(): Call<PlanListResponse> {

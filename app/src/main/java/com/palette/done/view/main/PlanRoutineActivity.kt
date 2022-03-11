@@ -21,11 +21,13 @@ import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityPlanRoutineBinding
 import com.palette.done.view.adapter.PlanAdapter
 import com.palette.done.view.adapter.RoutineAdapter
+import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
 import com.palette.done.viewmodel.PlanViewModel
 import com.palette.done.viewmodel.PlanViewModelFactory
 import com.palette.done.viewmodel.RoutineViewModel
 import com.palette.done.viewmodel.RoutineViewModelFactory
+import java.util.*
 
 class PlanRoutineActivity() : AppCompatActivity() {
 
@@ -96,7 +98,10 @@ class PlanRoutineActivity() : AppCompatActivity() {
         planAdapter.setPlanItemClickListener(object : PlanAdapter.OnPlanItemClickListener {
             override fun onDoneButtonClick(v: View, plan: Plan) {
                 // 플랜 Done -> 리스트에서 사라지고 던리스트에 추가
-
+//                planVM.donePlan(plan)
+                val idx = Random().nextInt(3)
+                val messages = resources.getStringArray(R.array.plan_message)
+                DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
             }
 
             override fun onEditButtonClick(v: View, plan: Plan) {

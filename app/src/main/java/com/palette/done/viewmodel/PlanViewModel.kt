@@ -3,12 +3,10 @@ package com.palette.done.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import com.palette.done.data.db.entity.Plan
-import com.palette.done.data.remote.model.dones.Plans
-import com.palette.done.data.remote.model.dones.PlansResponse
 import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.db.entity.Done
 import com.palette.done.data.db.entity.Routine
-import com.palette.done.data.remote.model.dones.PlanListResponse
-import com.palette.done.data.remote.model.dones.RoutineListResponse
+import com.palette.done.data.remote.model.dones.*
 import com.palette.done.data.remote.repository.DoneServerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,6 +14,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PlanViewModel(private val serverRepo: DoneServerRepository,
                     private val dbRepo: DoneRepository
@@ -68,6 +68,10 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
 
     private fun deletePlanInDB(planNo: Int) = viewModelScope.launch {
         dbRepo.deletePlan(planNo)
+    }
+
+    private fun insertPlanAsDoneInDB(done: Done) = viewModelScope.launch {
+        dbRepo.insertDone(done)
     }
 
     fun insertPlan(content: String, category: Int?) {
@@ -137,6 +141,35 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
                         }
                     }
                     override fun onFailure(call: Call<PlansResponse>, t: Throwable) {
+                        Log.d("retrofit_failure", "${t.message}")
+                    }
+                })
+        }
+    }
+
+    fun donePlan(plan: Plan) {
+        viewModelScope.launch {
+            serverRepo.donePlan(plan.planNo)
+                .enqueue(object : Callback<DonesResponse> {
+                    override fun onResponse(call: Call<DonesResponse>, response: Response<DonesResponse>) {
+                        if (response.isSuccessful) {
+                            when (response.code()) {
+                                200 -> {
+                                    // db에서 Plan 삭제
+                                    deletePlanInDB(plan.planNo)
+
+                                    val format = SimpleDateFormat("yyyy-MM-dd")
+                                    val today = format.format(Calendar.getInstance().time)
+                                    val done = Done(response.body()!!.item!!.done_no, today, plan.content, plan.categoryNo)
+                                    insertPlanAsDoneInDB(done)
+                                }
+                                400 -> {
+                                    Log.d("retrofit_400", "${response.body()!!.message}")
+                                }
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<DonesResponse>, t: Throwable) {
                         Log.d("retrofit_failure", "${t.message}")
                     }
                 })
