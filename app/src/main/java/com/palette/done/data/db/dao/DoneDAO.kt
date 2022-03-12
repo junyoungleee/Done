@@ -3,10 +3,7 @@ package com.palette.done.data.db.dao
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.palette.done.data.db.entity.Done
-import com.palette.done.data.db.entity.Plan
-import com.palette.done.data.db.entity.Routine
-import com.palette.done.data.db.entity.TodayRecord
+import com.palette.done.data.db.entity.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,8 +21,11 @@ interface DoneDAO {
     @Query("SELECT * FROM Done")
     fun getAllDone(): Flow<List<Done>>
 
-    @Query("SELECT COUNT(*) FROM Done WHERE date LIKE :yearMonth")
-    fun getAllDoneCountInMonth(yearMonth: String): Int
+    @Query("SELECT COUNT(*) FROM Done WHERE date LIKE :yearMonth || '%'")
+    fun getAllDoneCountInMonth(yearMonth: String): Flow<Int>
+
+    @Query("SELECT date, COUNT(*) as count FROM DONE GROUP BY date")
+    fun getDoneCountCountEachDayInMonth(): Flow<List<DoneCount>>
 
     @Query("SELECT COUNT(*) FROM Done WHERE date = :date")
     suspend fun getAllDoneCountInDate(date: String): Int

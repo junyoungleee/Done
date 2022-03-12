@@ -21,7 +21,7 @@ abstract class DoneDatabase: RoomDatabase() {
 
     companion object {
         private var INSTANCE: DoneDatabase? = null
-        fun getDatabase(context: Context, scope: CoroutineScope): DoneDatabase? {
+        fun getDatabase(context: Context): DoneDatabase? {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

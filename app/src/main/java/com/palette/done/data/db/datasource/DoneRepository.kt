@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.palette.done.data.db.dao.DoneDAO
 import com.palette.done.data.db.entity.Done
+import com.palette.done.data.db.entity.DoneCount
 import com.palette.done.data.db.entity.Plan
 import com.palette.done.data.db.entity.Routine
 import kotlinx.coroutines.flow.Flow
@@ -23,11 +24,11 @@ class DoneRepository(private val doneDao: DoneDAO) {
         return doneDao.getAllDoneInDate(date)
     }
 
-    fun getAllDone(): Flow<List<Done>> {
-        return doneDao.getAllDone()
+    fun getDoneCountCountEachDayInMonth(): Flow<List<DoneCount>> {
+        return doneDao.getDoneCountCountEachDayInMonth()
     }
 
-    suspend fun getAllDoneCountInMonth(date: String): Int {
+    fun getAllDoneCountInMonth(date: String): Flow<Int> {
         return doneDao.getAllDoneCountInMonth(date)
     }
 

@@ -38,3 +38,8 @@ data class TodayRecord(
     var createdAt: String,
     var updatedAt: String
 )
+
+data class DoneCount(
+    var date: String,
+    var count: Int
+)
