@@ -12,8 +12,8 @@ interface DoneDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDone(done: Done)
 
-    @Delete
-    suspend fun deleteDone(done: Done)
+    @Query("DELETE FROM Done WHERE doneId = :doneNo")
+    suspend fun deleteDone(doneNo: Int)
 
     @Query("SELECT * FROM Done WHERE date = :date ORDER BY doneId ASC")
     fun getAllDoneInDate(date: String): Flow<List<Done>>

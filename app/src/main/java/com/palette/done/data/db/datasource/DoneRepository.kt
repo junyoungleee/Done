@@ -16,8 +16,8 @@ class DoneRepository(private val doneDao: DoneDAO) {
         doneDao.insertDone(done)
     }
 
-    suspend fun deleteDone(done: Done) {
-        doneDao.deleteDone(done)
+    suspend fun deleteDone(doneNo: Int) {
+        doneDao.deleteDone(doneNo)
     }
 
     fun getAllDoneInDate(date: String): Flow<List<Done>> {

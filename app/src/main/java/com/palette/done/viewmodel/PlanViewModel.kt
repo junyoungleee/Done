@@ -44,7 +44,7 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
                                     val list = response.body()!!.item!!.plans
                                     for (p in list) {
                                         Log.d("routine_server", "${p.plan_no}")
-                                        val plan = Plan(p.plan_no!!, p.content, p.category_no)
+                                        val plan = Plan(p.plan_no, p.content, p.category_no)
                                         insertOrUpdatePlanInDB(plan)
                                     }
                                 }
@@ -160,7 +160,7 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
 
                                     val format = SimpleDateFormat("yyyy-MM-dd")
                                     val today = format.format(Calendar.getInstance().time)
-                                    val done = Done(response.body()!!.item!!.done_no, today, plan.content, plan.categoryNo)
+                                    val done = Done(response.body()!!.item!!.done_no, today, plan.content, plan.categoryNo, null, null)
                                     insertPlanAsDoneInDB(done)
                                 }
                                 400 -> {

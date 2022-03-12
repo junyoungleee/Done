@@ -13,7 +13,7 @@ interface DoneService {
     fun postTodayRecord(@Body data: TodayRecords): Call<TodayRecordsResponse>
 
     @PATCH("/api/dones/{doneNo}")
-    fun patchDones(@Body data: Dones, @Path("doneNo") doneNo: Int): Call<DonesResponse>
+    fun patchDones(@Body data: DonesUpdate, @Path("doneNo") doneNo: Int): Call<DonesResponse>
 
     @DELETE("/api/dones/{doneNo}")
     fun deleteDones(@Path("doneNo") doneNo: Int): Call<DonesResponse>

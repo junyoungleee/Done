@@ -80,6 +80,8 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.btnEditMode.setOnClickListener {
             isEditMode = !isEditMode
             setEditMode()
+            hideKeyboard()
+            binding.flItemWrite.visibility = View.GONE
         }
 
         setBackButton()

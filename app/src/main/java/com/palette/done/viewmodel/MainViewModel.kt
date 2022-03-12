@@ -25,7 +25,7 @@ class MainViewModel(private val serverRepo: DoneServerRepository,
         dbRepo.getAllDoneCountInMonth(it).asLiveData()
     }
     var doneCountList: LiveData<List<DoneCount>> = dbRepo.getDoneCountCountEachDayInMonth().asLiveData()
-    private lateinit var doneCountMap: Map<String, Int>
+    private var doneCountMap: Map<String, Int> = mapOf()
 
     private fun doneCountListToMap() {
         Log.d("done_map", "1")

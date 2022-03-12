@@ -107,4 +107,7 @@ dependencies {
 
     // Flexbox-layout
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // Popup
+    implementation "com.github.skydoves:powermenu:2.2.0"
 }

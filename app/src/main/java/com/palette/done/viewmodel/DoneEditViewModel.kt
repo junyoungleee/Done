@@ -9,6 +9,7 @@ import com.palette.done.data.remote.model.dones.Dones
 import com.palette.done.data.remote.model.dones.DonesResponse
 import com.palette.done.data.db.datasource.DoneRepository
 import com.palette.done.data.db.entity.Routine
+import com.palette.done.data.remote.model.dones.DonesUpdate
 import com.palette.done.data.remote.repository.DoneServerRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -21,6 +22,9 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
 
     var _done: MutableLiveData<String> = MutableLiveData("")
     val done: LiveData<String> get() = _done
+
+    var oldDone = Done(0, "", "", null, null, null)
+    var oldDoneIndex: Int = 0
 
     var _selectedRoutineTag: MutableLiveData<Routine> = MutableLiveData(Routine(1, "", null))
     val selectedRoutineTag: LiveData<Routine> get() = _selectedRoutineTag
@@ -37,8 +41,12 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
         }
     }
 
-    fun addDoneInDB(done: Done) = viewModelScope.launch {
+    private fun insertOrUpdateDoneInDB(done: Done) = viewModelScope.launch {
         dbRepo.insertDone(done)
+    }
+
+    private fun deleteDoneInDB(doneNo: Int) = viewModelScope.launch {
+        dbRepo.deleteDone(doneNo)
     }
 
     fun addDoneList(date: String, content: String, category: Int?, tag: Int?, routine: Int?) {
@@ -51,8 +59,55 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
                             when (response.code()) {
                                 200 -> {
                                     val doneId = response.body()!!.item!!.done_no
-                                    val done = Done(doneId, date, content, category)
-                                    addDoneInDB(done)
+                                    val done = Done(doneId, date, content, category, tag, routine)
+                                    insertOrUpdateDoneInDB(done)
+                                }
+                                400 -> {
+                                    Log.d("retrofit_400", "${response.body()!!.message}")
+                                }
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<DonesResponse>, t: Throwable) {
+                        Log.d("retrofit_failure", "${t.message}")
+                    }
+                })
+        }
+    }
+
+    fun deleteDoneList(doneNo: Int) {
+        viewModelScope.launch {
+            serverRepo.deleteDone(doneNo)
+                .enqueue(object : Callback<DonesResponse> {
+                    override fun onResponse(call: Call<DonesResponse>, response: Response<DonesResponse>) {
+                        if (response.isSuccessful) {
+                            when (response.code()) {
+                                200 -> {
+                                    deleteDoneInDB(doneNo)
+                                }
+                                400 -> {
+                                    Log.d("retrofit_400", "${response.body()!!.message}")
+                                }
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<DonesResponse>, t: Throwable) {
+                        Log.d("retrofit_failure", "${t.message}")
+                    }
+                })
+        }
+    }
+
+    fun updateDoneList(done: Done) {
+        viewModelScope.launch {
+            val old = DonesUpdate(done.content, done.categoryNo, done.tagNo, done.routineNo)
+            serverRepo.patchDone(old, done.doneId)
+                .enqueue(object : Callback<DonesResponse> {
+                    override fun onResponse(call: Call<DonesResponse>, response: Response<DonesResponse>) {
+                        if (response.isSuccessful) {
+                            when (response.code()) {
+                                200 -> {
+                                    updateDoneList(done)
                                 }
                                 400 -> {
                                     Log.d("retrofit_400", "${response.body()!!.message}")

@@ -23,6 +23,17 @@ data class DonesResponse(
     val message: String? = null,
     val is_success: Boolean)
 
+data class DonesUpdate(
+    @SerializedName("content")
+    val content: String,
+    @SerializedName("category_no")
+    val categoryNo: Int?,
+    @SerializedName("tag_no")
+    val tagNo: Int?,
+    @SerializedName("routine_no")
+    val routineNo: Int?
+)
+
 // 오늘 한마디 ----------------------------------------------------------
 data class TodayRecords (
     @SerializedName("content")

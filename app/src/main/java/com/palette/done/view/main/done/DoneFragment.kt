@@ -14,8 +14,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.db.entity.Done
 import com.palette.done.databinding.FragmentDoneBinding
 import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.view.main.DoneActivity
 import com.palette.done.view.main.DoneMode
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
@@ -27,7 +29,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     private var _binding: FragmentDoneBinding? = null
     private val binding get() = _binding!!
 
-    private val doneEditVM: DoneEditViewModel by viewModels() {
+    private val doneEditVM: DoneEditViewModel by activityViewModels() {
         DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
     }
     private val doneDateVM: DoneDateViewModel by activityViewModels() {
@@ -77,6 +79,20 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                     }
                 }
             }
+            DoneMode.EDIT_DONE -> {
+                with(binding) {
+                    tvDoneTitle1.visibility = View.VISIBLE
+                    tvDoneTitle2.visibility = View.VISIBLE
+                    val num = resources.getStringArray(R.array.korean_num)
+                    val index = doneEditVM.oldDoneIndex
+
+                    tvDoneIndex.text = if (index < 19) {
+                        num[index]
+                    } else {
+                        (index+1).toString()
+                    }
+                }
+            }
             else -> {
                 with(binding) {
                     tvDoneTitle1.visibility = View.GONE
@@ -117,6 +133,10 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                             setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                             setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                             setOnClickListener {
+                                val category: Int? = null
+                                val tag: Int? = null
+                                val routine: Int? = null
+
                                 // recyclerview 추가
                                 val date = doneDateVM.getTitleDate()
                                 Log.d("date_save", "$date")
@@ -131,12 +151,27 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                         setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                         setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                         text = when(editMode) {
+                            DoneMode.EDIT_DONE -> getString(R.string.done_btn_write)
                             DoneMode.ADD_PLAN, DoneMode.ADD_ROUTINE -> getString(R.string.btn_add)
                             DoneMode.EDIT_PLAN, DoneMode.EDIT_ROUTINE -> getString(R.string.btn_item_edit)
                             else -> ""
                         }
                         setOnClickListener {
+                            val category: Int? = null
+                            val tag: Int? = null
+                            val routine: Int? = null
+
                             when (editMode) {
+                                DoneMode.EDIT_DONE -> {
+                                    val old = doneEditVM.oldDone
+                                    if (done != old.content || category != old.categoryNo || tag != old.tagNo || routine != old.routineNo) {
+                                        val new = Done(old.doneId, old.date, done, category, tag, routine)
+                                        Log.d("done_edit", "id = ${old.doneId}")
+//                                        doneEditVM.updateDoneList(new)
+                                    }
+                                    hideKeyboard()
+                                    (activity as DoneActivity).closeEditFrame()
+                                }
                                 DoneMode.ADD_PLAN -> {
                                     if (done != "") {
                                         planVM.insertPlan(done, null)
@@ -149,6 +184,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         // db, server에 plan 수정
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
                                     }
+                                    hideKeyboard()
+                                    (activity as DoneActivity).closeEditFrame()
                                 }
                                 DoneMode.ADD_ROUTINE -> {
                                     if (done != "") {
@@ -161,6 +198,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     if (done != routineVM.selectedEditRoutine.content || category != routineVM.selectedEditRoutine.categoryNo) {
                                         routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)
                                     }
+                                    hideKeyboard()
+                                    (activity as DoneActivity).closeEditFrame()
                                 }
                             }
 
@@ -203,13 +242,14 @@ class DoneFragment(mode: DoneMode) : Fragment() {
             }
             // EditText의 text
             setText(when(editMode) {
+                DoneMode.EDIT_DONE -> doneEditVM.oldDone.content
                 DoneMode.EDIT_PLAN -> planVM.selectedEditPlan.content
                 DoneMode.EDIT_ROUTINE -> routineVM.selectedEditRoutine.content
                 else -> ""
             })
             // 입력 글자수 제한
             val maxLength =  when(editMode) {
-                DoneMode.DONE -> 14
+                DoneMode.DONE, DoneMode.EDIT_DONE -> 14
                 DoneMode.ADD_PLAN, DoneMode.EDIT_PLAN -> 10
                 DoneMode.ADD_ROUTINE, DoneMode.EDIT_ROUTINE -> 10
             }

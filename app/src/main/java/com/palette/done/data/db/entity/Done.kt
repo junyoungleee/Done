@@ -9,7 +9,9 @@ data class Done(
     var doneId: Int,
     var date: String,
     var content: String,
-    var categoryNo: Int?
+    var categoryNo: Int?,
+    var tagNo: Int?,
+    var routineNo: Int?
 )
 
 @Entity

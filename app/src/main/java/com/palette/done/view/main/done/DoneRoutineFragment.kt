@@ -75,7 +75,7 @@ class DoneRoutineFragment : Fragment() {
         tagAdapter.setTagItemClickListener(object : RoutineTagAdapter.OnTagItemClickListener {
             override fun onTagClick(v: View, routine: Routine) {
                 // 루틴 태그 클릭 리스너
-
+                doneVM._selectedRoutineTag.value = routine
             }
 
         })

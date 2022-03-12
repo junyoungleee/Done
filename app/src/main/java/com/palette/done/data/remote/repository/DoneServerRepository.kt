@@ -15,6 +15,14 @@ class DoneServerRepository {
         return doneApi.postDones(dones)
     }
 
+    fun patchDone(dones: DonesUpdate, doneNo: Int): Call<DonesResponse> {
+        return doneApi.patchDones(dones, doneNo)
+    }
+
+    fun deleteDone(doneNo: Int): Call<DonesResponse> {
+        return doneApi.deleteDones(doneNo)
+    }
+
     fun getDoneAndTodayRecord(date: String): Call<DonesAndTodayResponse> {
         return doneApi.getDoneListAndTodayRecord(date)
     }
