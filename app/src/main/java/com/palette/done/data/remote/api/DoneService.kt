@@ -6,6 +6,10 @@ import retrofit2.http.*
 
 interface DoneService {
 
+    @GET("/api/categories")
+    fun getCategories(): Call<CategoryResponse>
+
+    // 던리스트 -------------------------------------------------------------------------------------
     @POST("/api/dones")
     fun postDones(@Body data: Dones): Call<DonesResponse>
 

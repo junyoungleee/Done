@@ -45,6 +45,9 @@ class DoneActivity : AppCompatActivity() {
     private val routineVM: RoutineViewModel by viewModels() {
         RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
     }
+    private val categoryVM: CategoryViewModel by viewModels() {
+        CategoryViewModelFactory(DoneApplication().doneRepository)
+    }
 
 
     private var rootHeight = -1
@@ -118,6 +121,7 @@ class DoneActivity : AppCompatActivity() {
                                 popup.dismiss()
                                 doneVM.oldDone = done
                                 doneVM.oldDoneIndex = position
+                                categoryVM._selectedCategory.value = done.categoryNo
                                 supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.EDIT_DONE)).commit()
                                 binding.flDoneWrite.visibility = View.VISIBLE
                             }

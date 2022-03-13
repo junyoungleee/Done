@@ -11,6 +11,11 @@ class DoneServerRepository {
         ApiBuilder.retrofit.create(DoneService::class.java)
     }
 
+    fun getCategories(): Call<CategoryResponse> {
+        return doneApi.getCategories()
+    }
+
+    // 던리스트 -------------------------------------------------------------------------------------
     fun postDone(dones: Dones): Call<DonesResponse> {
         return doneApi.postDones(dones)
     }

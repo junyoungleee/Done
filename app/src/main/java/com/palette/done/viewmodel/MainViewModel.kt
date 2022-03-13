@@ -2,10 +2,19 @@ package com.palette.done.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.palette.done.DoneApplication
 import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.db.entity.Category
 import com.palette.done.data.db.entity.DoneCount
+import com.palette.done.data.db.entity.Plan
+import com.palette.done.data.remote.model.dones.CategoryResponse
+import com.palette.done.data.remote.model.dones.PlanListResponse
 import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.view.main.DoneActivity
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collector
@@ -24,6 +33,11 @@ class MainViewModel(private val serverRepo: DoneServerRepository,
     var doneCount: LiveData<Int> = Transformations.switchMap(yearMonth){
         dbRepo.getAllDoneCountInMonth(it).asLiveData()
     }
+
+    init {
+        getCategory()
+    }
+
     var doneCountList: LiveData<List<DoneCount>> = dbRepo.getDoneCountCountEachDayInMonth().asLiveData()
     private var doneCountMap: Map<String, Int> = mapOf()
 
@@ -38,6 +52,40 @@ class MainViewModel(private val serverRepo: DoneServerRepository,
         Log.d("done_map", "2")
         return doneCountMap
     }
+
+    private fun insertOrUpdateCategoryInDB(category: Category) = viewModelScope.launch {
+        dbRepo.insertCategory(category)
+    }
+
+    fun getCategory() {
+        viewModelScope.launch {
+            serverRepo.getCategories()
+                .enqueue(object : Callback<CategoryResponse> {
+                    override fun onResponse(call: Call<CategoryResponse>, response: Response<CategoryResponse>) {
+                        if (response.isSuccessful) {
+                            when (response.code()) {
+                                200 -> {
+                                    val list = response.body()!!.item!!.categories
+                                    for (c in list) {
+                                        Log.d("routine_server", "${c.name}")
+                                        val category = Category(c.category_no, c.name)
+                                        insertOrUpdateCategoryInDB(category)
+                                    }
+                                }
+                                400 -> {
+                                    Log.d("retrofit_400", "${response.body()!!.message}")
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CategoryResponse>, t: Throwable) {
+                        Log.d("retrofit_failure", "${t.message}")
+                    }
+                })
+        }
+    }
+
 }
 
 class MainViewModelFactory(private val serverRepo: DoneServerRepository,

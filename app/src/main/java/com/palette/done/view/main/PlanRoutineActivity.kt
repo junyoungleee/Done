@@ -12,6 +12,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.palette.done.DoneApplication
 import com.palette.done.R
@@ -23,10 +24,7 @@ import com.palette.done.view.adapter.PlanAdapter
 import com.palette.done.view.adapter.RoutineAdapter
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
-import com.palette.done.viewmodel.PlanViewModel
-import com.palette.done.viewmodel.PlanViewModelFactory
-import com.palette.done.viewmodel.RoutineViewModel
-import com.palette.done.viewmodel.RoutineViewModelFactory
+import com.palette.done.viewmodel.*
 import java.util.*
 
 class PlanRoutineActivity() : AppCompatActivity() {
@@ -38,6 +36,9 @@ class PlanRoutineActivity() : AppCompatActivity() {
     }
     private val routineVM: RoutineViewModel by viewModels() {
         RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+    }
+    private val categoryVM: CategoryViewModel by viewModels() {
+        CategoryViewModelFactory(DoneApplication().doneRepository)
     }
 
     private lateinit var itemMode: ItemMode  // 플랜, 루틴 모드
@@ -109,6 +110,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
             override fun onEditButtonClick(v: View, plan: Plan) {
                 // 플랜 수정
                 planVM.selectedEditPlan = plan
+                categoryVM._selectedCategory.value = plan.categoryNo
                 supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.EDIT_PLAN)).commit()
                 binding.flItemWrite.visibility = View.VISIBLE
             }
@@ -133,6 +135,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
             override fun onEditButtonClick(v: View, routine: Routine) {
                 // 루틴 수정
                 routineVM.selectedEditRoutine = routine
+                categoryVM._selectedCategory.value = routine.categoryNo
                 supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.EDIT_ROUTINE)).commit()
                 binding.flItemWrite.visibility = View.VISIBLE
             }

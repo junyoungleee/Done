@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         MainViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

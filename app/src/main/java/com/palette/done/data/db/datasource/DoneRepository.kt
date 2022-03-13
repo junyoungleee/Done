@@ -3,10 +3,7 @@ package com.palette.done.data.db.datasource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.palette.done.data.db.dao.DoneDAO
-import com.palette.done.data.db.entity.Done
-import com.palette.done.data.db.entity.DoneCount
-import com.palette.done.data.db.entity.Plan
-import com.palette.done.data.db.entity.Routine
+import com.palette.done.data.db.entity.*
 import kotlinx.coroutines.flow.Flow
 
 class DoneRepository(private val doneDao: DoneDAO) {
@@ -56,6 +53,19 @@ class DoneRepository(private val doneDao: DoneDAO) {
 
     fun getAllRoutine(): Flow<List<Routine>>{
         return doneDao.getAllRoutine()
+    }
+
+    // 카테고리 ------------------------------------------------------------------------
+    suspend fun insertCategory(category: Category) {
+        doneDao.insertCategory(category)
+    }
+
+    suspend fun getCountCategory(): Int {
+        return doneDao.getCategoryCount()
+    }
+
+    fun getCategory(): Flow<List<Category>> {
+        return doneDao.getCategory()
     }
 
 }

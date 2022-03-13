@@ -41,6 +41,13 @@ data class TodayRecord(
     var updatedAt: String
 )
 
+@Entity
+data class Category(
+    @PrimaryKey
+    var categoryNo: Int,
+    var name: String
+)
+
 data class DoneCount(
     var date: String,
     var count: Int

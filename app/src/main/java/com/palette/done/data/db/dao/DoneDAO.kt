@@ -59,4 +59,14 @@ interface DoneDAO {
 
     @Query("SELECT * FROM TodayRecord WHERE date = :date")
     fun getTodayRecord(date: String): Flow<TodayRecord>
+
+    // 카테고리 --------------------------------------------------------------------------------------
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCategory(category: Category)
+
+    @Query("SELECT COUNT(*) FROM Category")
+    suspend fun getCategoryCount(): Int
+
+    @Query("SELECT * FROM Category")
+    fun getCategory(): Flow<List<Category>>
 }

@@ -7,17 +7,14 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.palette.done.data.db.dao.DoneDAO
-import com.palette.done.data.db.entity.Done
-import com.palette.done.data.db.entity.Plan
-import com.palette.done.data.db.entity.Routine
-import com.palette.done.data.db.entity.TodayRecord
+import com.palette.done.data.db.entity.*
 import kotlinx.coroutines.CoroutineScope
 
 /**
  * <doneDB>
  * Done, TodayRecord, Plan, Routine 관리 DB
  */
-@Database(entities = [Done::class, Plan::class, Routine::class, TodayRecord::class], version = 2)
+@Database(entities = [Done::class, Plan::class, Routine::class, TodayRecord::class, Category::class], version = 3)
 abstract class DoneDatabase: RoomDatabase() {
     abstract fun doneDao(): DoneDAO
 
@@ -29,6 +26,7 @@ abstract class DoneDatabase: RoomDatabase() {
                     context.applicationContext,
                     DoneDatabase::class.java, "doneDB" )
                     .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_2_3)
                     .build()
                 INSTANCE = instance
                 instance
@@ -39,6 +37,11 @@ abstract class DoneDatabase: RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Done ADD COLUMN 'tagNo' INTEGER")
                 database.execSQL("ALTER TABLE Done ADD COLUMN 'routineNo' INTEGER")
+            }
+        }
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE Category ('categoryNo' INTEGER NOT NULL, 'name' TEXT NOT NULL, PRIMARY KEY('categoryNo'))")
             }
         }
     }
