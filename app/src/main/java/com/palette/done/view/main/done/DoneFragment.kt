@@ -20,6 +20,7 @@ import com.palette.done.databinding.FragmentDoneBinding
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.view.main.DoneActivity
 import com.palette.done.view.main.DoneMode
+import com.palette.done.view.main.PlanRoutineActivity
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import kotlinx.coroutines.delay
@@ -66,6 +67,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         setCategoryButtonClick()
         setWriteButtons()
         setEditText()
+
+        setTagClickListener()
 
         return binding.root
     }
@@ -140,15 +143,18 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                             setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                             setOnClickListener {
                                 val category = categoryVM.getSelectedCategory()
-                                val tag: Int? = null
-                                val routine: Int? = null
+                                val tag = doneEditVM.getSelectedHashTag()
+                                val routine = doneEditVM.getSelectedRoutineTag()
 
                                 // recyclerview 추가
                                 val date = doneDateVM.getTitleDate()
                                 Log.d("date_save", "$date")
-                                doneEditVM.addDoneList(date, binding.etDone.text.toString(), category, null, null)
+                                doneEditVM.addDoneList(date, binding.etDone.text.toString(), category, tag, routine)
 
+                                // Done 추가 후, 초기화
                                 binding.etDone.text.clear()
+                                doneEditVM.initSelectedHashTag()
+                                doneEditVM.initSelectedRoutineTag()
                                 categoryVM.initSelectedCategory()
                             }
                         }
@@ -166,8 +172,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                         }
                         setOnClickListener {
                             val category = categoryVM.getSelectedCategory()
-                            val tag: Int? = null
-                            val routine: Int? = null
+                            val tag = doneEditVM.getSelectedHashTag()
+                            val routine = doneEditVM.getSelectedRoutineTag()
 
                             if (done != "") {
                                 when (editMode) {
@@ -175,7 +181,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         val old = doneEditVM.oldDone
                                         val new = Done(old.doneId, old.date, done, category, tag, routine)
                                         Log.d("done_edit", "id = ${old.doneId}")
-//                                        doneEditVM.updateDoneList(new)
+                                        doneEditVM.updateDoneList(new)
                                         hideKeyboard()
                                         (activity as DoneActivity).closeEditFrame()
                                     }
@@ -186,7 +192,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     DoneMode.EDIT_PLAN -> {
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
                                         hideKeyboard()
-                                        (activity as DoneActivity).closeEditFrame()
+                                        (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_ROUTINE -> {
                                         routineVM.insertRoutine(done, null)
@@ -195,12 +201,31 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     DoneMode.EDIT_ROUTINE -> {
                                         routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)
                                         hideKeyboard()
-                                        (activity as DoneActivity).closeEditFrame()
+                                        (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                 }
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private fun setTagClickListener() {
+        if (editMode == DoneMode.DONE) {
+            doneEditVM.selectedHashtag.observe(viewLifecycleOwner) {
+                with(binding) {
+                    etDone.setText(it.name)
+                    categoryVM._selectedCategory.value = it.category_no
+                    Log.d("tag_hash", "${categoryVM._selectedCategory.value}")
+                }
+            }
+            doneEditVM.selectedRoutineTag.observe(viewLifecycleOwner) {
+                with(binding) {
+                    etDone.setText(it.content)
+                    categoryVM._selectedCategory.value = it.categoryNo
+                    Log.d("tag_routine", "${categoryVM._selectedCategory.value}")
                 }
             }
         }

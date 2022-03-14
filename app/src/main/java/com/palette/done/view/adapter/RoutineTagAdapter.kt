@@ -1,5 +1,6 @@
 package com.palette.done.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +12,27 @@ import com.palette.done.databinding.ItemTagBinding
 
 class RoutineTagAdapter : ListAdapter<Routine, RoutineTagAdapter.RoutineTagViewHolder>(RoutineComparator()){
     private lateinit var tagItemClickListener: OnTagItemClickListener
+    private var clickedPosition: Int? = null
 
+    fun initClickedPosition() {
+        clickedPosition = null
+    }
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineTagViewHolder {
         val binding = ItemTagBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RoutineTagAdapter.RoutineTagViewHolder(binding)
+        return RoutineTagViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RoutineTagViewHolder, position: Int) {
         val routine = getItem(position)
         with(holder.binding) {
             tvTag.text = routine.content
-            root.setOnClickListener {
+            tvTag.setOnClickListener {
+                Log.d("tag_clicked", "$position")
+                clickedPosition = position
                 tagItemClickListener.onTagClick(it, routine)
             }
+            tvTag.isEnabled = clickedPosition != position
         }
     }
 

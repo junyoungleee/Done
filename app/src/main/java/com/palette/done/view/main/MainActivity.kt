@@ -26,6 +26,7 @@ import com.palette.done.data.db.entity.DoneCount
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
+import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.MainViewModel
 import com.palette.done.viewmodel.MainViewModelFactory
@@ -54,13 +55,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d("done_map", "3")
         mainVM.doneCountList.observe(this) {
-            Log.d("done_map", "4")
             doneCountList = mainVM.getDoneCountMap()
             setCalendarView()
         }
-        Log.d("done_map", "5")
 
         setCalendarSubHeader()
     }
@@ -119,6 +117,9 @@ class MainActivity : AppCompatActivity() {
                                 container.date.typeface = resources.getFont(R.font.spoqa_han_sans_neo_regular)
                                 container.date.setTextColor(ContextCompat.getColor(context, R.color.calendarColor))
                                 container.today.visibility = View.INVISIBLE
+                                if (day.date.isAfter(today)) {
+                                    container.view.isClickable = false
+                                }
                             }
                         }
                         // 던아이콘 세팅
@@ -176,7 +177,9 @@ class MainActivity : AppCompatActivity() {
         mainVM.doneCount.observe(this) { cnt ->
             binding.tvDoneListCount.text = "$cnt"
         }
-
         // 랜덤 응원메세지
+        val messages = resources.getStringArray(R.array.main_message)
+        val idx = Random().nextInt(messages.size)
+        binding.tvCheerUpMsg.text = messages[idx]
     }
 }

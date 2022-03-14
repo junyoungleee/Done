@@ -12,6 +12,11 @@ import com.palette.done.databinding.ItemTagBinding
 
 class HashTagAdapter : ListAdapter<Tags, HashTagAdapter.HashTagViewHolder>(TagComparator()){
     private lateinit var tagItemClickListener: OnTagItemClickListener
+    private var clickedPosition: Int? = null
+
+    fun initClickedPosition() {
+        clickedPosition = null
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HashTagViewHolder {
         val binding = ItemTagBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,10 +26,12 @@ class HashTagAdapter : ListAdapter<Tags, HashTagAdapter.HashTagViewHolder>(TagCo
     override fun onBindViewHolder(holder: HashTagViewHolder, position: Int) {
         val hashTag = getItem(position)
         with(holder.binding) {
-            tvTag.text = hashTag.name
-            root.setOnClickListener {
+            tvTag.text = "#${hashTag.name}"
+            tvTag.setOnClickListener {
+                clickedPosition = position
                 tagItemClickListener.onTagClick(it, hashTag)
             }
+            tvTag.isEnabled = clickedPosition != position
         }
     }
 

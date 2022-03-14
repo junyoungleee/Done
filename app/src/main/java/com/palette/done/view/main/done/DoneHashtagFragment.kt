@@ -22,6 +22,7 @@ import com.palette.done.databinding.FragmentObNicknameBinding
 import com.palette.done.view.adapter.HashTagAdapter
 import com.palette.done.view.adapter.RoutineTagAdapter
 import com.palette.done.viewmodel.*
+import okhttp3.internal.notify
 
 class DoneHashtagFragment : Fragment() {
 
@@ -68,13 +69,22 @@ class DoneHashtagFragment : Fragment() {
         tagAdapter.setTagItemClickListener(object : HashTagAdapter.OnTagItemClickListener {
             override fun onTagClick(v: View, tag: Tags) {
                 // 해시 태그 클릭 리스너
-
+                doneVM._selectedHashtag.value = tag
+                tagAdapter.notifyDataSetChanged()
             }
         })
+        doneVM.selectedHashtag.observe(viewLifecycleOwner) {
+            if (it.tag_no == 0) {
+                tagAdapter.initClickedPosition()
+                tagAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun setRandomButton() {
         binding.llHashTagRandom.setOnClickListener {
+            tagAdapter.initClickedPosition()
+            tagAdapter.notifyDataSetChanged()
             hashTagVM.get6Tags()
         }
     }

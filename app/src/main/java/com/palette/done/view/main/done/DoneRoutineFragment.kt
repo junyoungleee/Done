@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -75,10 +76,17 @@ class DoneRoutineFragment : Fragment() {
         tagAdapter.setTagItemClickListener(object : RoutineTagAdapter.OnTagItemClickListener {
             override fun onTagClick(v: View, routine: Routine) {
                 // 루틴 태그 클릭 리스너
+                Log.d("tag_routine_fragment", "${routine.content}")
                 doneVM._selectedRoutineTag.value = routine
+                tagAdapter.notifyDataSetChanged()
             }
-
         })
+        doneVM.selectedRoutineTag.observe(viewLifecycleOwner) {
+            if (it.routineNo == 0) {
+                tagAdapter.initClickedPosition()
+                tagAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun setEditAndAddButton() {

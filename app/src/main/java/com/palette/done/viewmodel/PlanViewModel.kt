@@ -160,7 +160,8 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
 
                                     val format = SimpleDateFormat("yyyy-MM-dd")
                                     val today = format.format(Calendar.getInstance().time)
-                                    val done = Done(response.body()!!.item!!.done_no, today, plan.content, plan.categoryNo, null, null)
+                                    val doneNo = response.body()!!.item!!.done_no
+                                    val done = Done(doneNo, today, plan.content, plan.categoryNo, null, null)
                                     insertPlanAsDoneInDB(done)
                                 }
                                 400 -> {

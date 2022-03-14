@@ -101,7 +101,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         planAdapter.setPlanItemClickListener(object : PlanAdapter.OnPlanItemClickListener {
             override fun onDoneButtonClick(v: View, plan: Plan) {
                 // 플랜 Done -> 리스트에서 사라지고 던리스트에 추가
-//                planVM.donePlan(plan)
+                planVM.donePlan(plan)
                 val idx = Random().nextInt(3)
                 val messages = resources.getStringArray(R.array.plan_message)
                 DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
@@ -271,6 +271,10 @@ class PlanRoutineActivity() : AppCompatActivity() {
     private fun hideKeyboard() {
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+    }
+
+    fun closeEditFrame() {
+        binding.flItemWrite.visibility = View.GONE
     }
 
     private fun setPlanDetailTextSpan() {

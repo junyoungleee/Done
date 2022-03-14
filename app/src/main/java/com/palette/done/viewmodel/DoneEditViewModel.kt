@@ -10,6 +10,7 @@ import com.palette.done.data.remote.model.dones.DonesResponse
 import com.palette.done.data.db.datasource.DoneRepository
 import com.palette.done.data.db.entity.Routine
 import com.palette.done.data.remote.model.dones.DonesUpdate
+import com.palette.done.data.remote.model.dones.Tags
 import com.palette.done.data.remote.repository.DoneServerRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -26,8 +27,35 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
     var oldDone = Done(0, "", "", null, null, null)
     var oldDoneIndex: Int = 0
 
-    var _selectedRoutineTag: MutableLiveData<Routine> = MutableLiveData(Routine(1, "", null))
+    var _selectedRoutineTag: MutableLiveData<Routine> = MutableLiveData(Routine(0, "", null))
     val selectedRoutineTag: LiveData<Routine> get() = _selectedRoutineTag
+
+    var _selectedHashtag: MutableLiveData<Tags> = MutableLiveData(Tags(0, "", 0))
+    val selectedHashtag: LiveData<Tags> get() = _selectedHashtag
+
+    fun initSelectedRoutineTag() {
+        _selectedRoutineTag.value = Routine(0, "", null)
+    }
+
+    fun getSelectedRoutineTag(): Int? {
+        return if (selectedRoutineTag.value!!.routineNo == 0) {
+            null
+        } else {
+            selectedRoutineTag.value!!.routineNo
+        }
+    }
+
+    fun initSelectedHashTag() {
+        _selectedHashtag.value = Tags(0, "", 0)
+    }
+
+    fun getSelectedHashTag(): Int? {
+        return if (selectedHashtag.value!!.tag_no == 0) {
+            null
+        } else {
+            selectedHashtag.value!!.tag_no
+        }
+    }
 
     fun onDoneTextWatcher(): TextWatcher {
         return object : TextWatcher {
@@ -37,6 +65,7 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
             }
             override fun afterTextChanged(s: Editable?) {
                 _done.value = s.toString()
+                Log.d("done", "$s")
             }
         }
     }
@@ -100,14 +129,14 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
 
     fun updateDoneList(done: Done) {
         viewModelScope.launch {
-            val old = DonesUpdate(done.content, done.categoryNo, done.tagNo, done.routineNo)
-            serverRepo.patchDone(old, done.doneId)
+            val new = DonesUpdate(done.content, done.categoryNo, done.tagNo, done.routineNo)
+            serverRepo.patchDone(new, done.doneId)
                 .enqueue(object : Callback<DonesResponse> {
                     override fun onResponse(call: Call<DonesResponse>, response: Response<DonesResponse>) {
                         if (response.isSuccessful) {
                             when (response.code()) {
                                 200 -> {
-                                    updateDoneList(done)
+                                    insertOrUpdateDoneInDB(done)
                                 }
                                 400 -> {
                                     Log.d("retrofit_400", "${response.body()!!.message}")

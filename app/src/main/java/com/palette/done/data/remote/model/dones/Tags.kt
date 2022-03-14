@@ -3,7 +3,7 @@ package com.palette.done.data.remote.model.dones
 data class Tags(
     val tag_no: Int,
     val name: String,
-    val category: String
+    val category_no: Int
 )
 
 data class TagsResponse(

@@ -49,7 +49,6 @@ class DoneActivity : AppCompatActivity() {
         CategoryViewModelFactory(DoneApplication().doneRepository)
     }
 
-
     private var rootHeight = -1
     private var keyboardHeight = -1
 
