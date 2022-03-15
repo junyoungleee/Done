@@ -117,7 +117,8 @@
                 android:layout_height="280dp"
                 android:text="@string/done_list_hint"
                 android:paddingTop="15dp"
-                android:paddingStart="27dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 style="@style/done_hint_text"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/done_box_round"
@@ -147,28 +148,53 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_done_list"
                 style="@style/done_sub_title_text"/>
 
-            <LinearLayout
-                android:id="@+id/tv_today_hint"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_today_record"
                 android:layout_width="match_parent"
-                android:layout_height="119dp"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:padding="8dp"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintTop_toBottomOf="@id/tv_today_title">
 
+
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:id="@+id/iv_today_record_sticker"
+                    android:layout_width="@dimen/all_sticker_size"
+                    android:layout_height="@dimen/all_sticker_size"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"/>
+
+                <View
+                    android:id="@+id/view_today_record_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@null"
+                    app:layout_constraintTop_toBottomOf="@id/iv_today_record_sticker"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"/>
 
                 <TextView
+                    android:id="@+id/tv_today_record_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="19dp"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="17dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="9dp"
+                    android:lines="3"
                     android:text="@string/done_today_hint"
-                    style="@style/done_hint_text"/>
-            </LinearLayout>
+                    style="@style/done_hint_text"
+                    app:layout_constraintTop_toBottomOf="@id/view_today_record_divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="visible"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

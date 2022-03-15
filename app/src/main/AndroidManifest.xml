@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Done">
-        <activity android:name=".view.main.PlanRoutineActivity"></activity>
+        <activity android:name=".view.main.today.TodayRecordActivity"></activity>
+        <activity android:name=".view.main.PlanRoutineActivity" />
         <activity android:name=".view.main.DoneActivity" />
         <activity
             android:name=".view.SplashActivity"

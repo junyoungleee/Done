@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.main.today.TodayRecordFragment">
+
+
+
+    <TextView
+        android:id="@+id/ll_done_write_header"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_marginTop="11dp"
+        android:gravity="center"
+        android:text="@string/today_sticker_title"
+        style="@style/main_done_list_count"/>
+
+    <LinearLayout
+        android:id="@+id/ll_sticker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <ImageButton
+            android:id="@+id/btn_sticker_before"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:background="@null"
+            android:padding="10dp"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_sticker"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/ll_sticker_empty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today_sticker_empty"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                style="@style/today_hint_text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/today_sticker_empty_detail"
+                android:fontFamily="@font/spoqa_han_sans_neo_light"
+                style="@style/today_hint_text"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_sticker_after"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="-1"
+            android:src="@drawable/ic_back"
+            android:background="@null"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

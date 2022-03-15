@@ -36,10 +36,12 @@ data class DonesUpdate(
 
 // 오늘 한마디 ----------------------------------------------------------
 data class TodayRecords (
-    @SerializedName("content")
-    val content: String,
     @SerializedName("date")
-    val date: String
+    val date: String,
+    @SerializedName("content")
+    val content: String?,
+    @SerializedName("sticker")
+    val sticker: Int?
 )
 
 data class TodayRecordsResponse(

@@ -37,8 +37,6 @@ data class TodayRecord(
     var date: String,
     var todayWord: String?,
     var todaySticker: Int?,
-    var createdAt: String,
-    var updatedAt: String
 )
 
 @Entity

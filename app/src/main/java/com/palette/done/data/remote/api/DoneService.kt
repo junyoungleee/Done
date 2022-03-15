@@ -13,9 +13,6 @@ interface DoneService {
     @POST("/api/dones")
     fun postDones(@Body data: Dones): Call<DonesResponse>
 
-    @POST("/api/dones/today-record")
-    fun postTodayRecord(@Body data: TodayRecords): Call<TodayRecordsResponse>
-
     @PATCH("/api/dones/{doneNo}")
     fun patchDones(@Body data: DonesUpdate, @Path("doneNo") doneNo: Int): Call<DonesResponse>
 
@@ -24,6 +21,11 @@ interface DoneService {
 
     @GET("/api/dones")
     fun getDoneListAndTodayRecord(@Query("date") date: String): Call<DonesAndTodayResponse>
+
+    // 오늘 한마디 -----------------------------------------------------------------------------------
+    @POST("/api/dones/today-record")
+    fun postTodayRecord(@Body data: TodayRecords): Call<TodayRecordsResponse>
+
 
     // 플랜 -----------------------------------------------------------------------------------------
     @POST("/api/plans")

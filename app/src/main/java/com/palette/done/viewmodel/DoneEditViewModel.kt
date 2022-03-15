@@ -65,7 +65,6 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
             }
             override fun afterTextChanged(s: Editable?) {
                 _done.value = s.toString()
-                Log.d("done", "$s")
             }
         }
     }

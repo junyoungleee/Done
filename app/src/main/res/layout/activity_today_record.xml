@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.today.TodayRecordActivity">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/all_toolbar_back_btn"/>
+
+    <TextView
+        style="@style/all_toolbar_text"
+        android:id="@+id/tv_today_record_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/done_today_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/btn_delete_sticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_delete_img"
+        android:padding="12dp"
+        android:elevation="1dp"
+        app:layout_constraintTop_toTopOf="@id/ll_today_record_edit"
+        app:layout_constraintEnd_toEndOf="@id/ll_today_record_edit"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/ll_today_record_edit"
+        android:layout_width="match_parent"
+        android:layout_height="276dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="61dp"
+        android:orientation="vertical"
+        android:background="@drawable/done_box_round"
+        app:layout_constraintTop_toBottomOf="@id/tv_today_record_title">
+
+        <LinearLayout
+            android:id="@+id/ll_today_sticker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_add_sticker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_plus"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today_btn_sticker"
+                    style="@style/done_sub_title_text"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_today_sticker"
+                android:layout_width="@dimen/all_sticker_size"
+                android:layout_height="@dimen/all_sticker_size"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/ll_today_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_add_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_plus"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today_btn_text"
+                    style="@style/done_sub_title_text"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_today_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:maxLength="45"
+                android:gravity="top|start"
+                style="@style/today_edittext"
+                android:hint="@string/today_text_hint"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_sticker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/done_write_box_round"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,9 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.palette.done.DoneApplication
 import com.palette.done.R
@@ -22,10 +20,10 @@ import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityDoneBinding
 import com.palette.done.view.adapter.DoneAdapter
 import com.palette.done.view.main.done.DoneFragment
+import com.palette.done.view.main.today.TodayRecordActivity
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
-import com.skydoves.powermenu.OnMenuItemClickListener
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
 import java.util.*
@@ -156,10 +154,14 @@ class DoneActivity : AppCompatActivity() {
                 finish()
             }
             btnPlan.setOnClickListener {
-                var intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
+                val intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
                 val date = dateVM.getTitleDate()
                 intent.putExtra("mode", ItemMode.PLAN.name)
                 intent.putExtra("date", date)  // 현재 던리스트의 날짜
+                startActivity(intent)
+            }
+            llTodayRecord.setOnClickListener {
+                val intent = Intent(this@DoneActivity, TodayRecordActivity::class.java)
                 startActivity(intent)
             }
         }
