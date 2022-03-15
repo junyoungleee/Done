@@ -1,11 +1,14 @@
 package com.palette.done.data.db.entity
 
+import androidx.room.PrimaryKey
+
 data class Member(
-    val member_no: Int,
-    val email: String,
-    val password: String,
-    val authority: String = "basic",
-    val type: String = "p",
+    @PrimaryKey
+    var member_no: Int,
+    var email: String,
+    var password: String,
+    var authority: String = "basic",
+    var type: String = "p",
     var nickname: String?,
-    val isRecvAlarm: Boolean = true
+    var isRecvAlarm: Boolean = true
 )

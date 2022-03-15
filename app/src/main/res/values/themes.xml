@@ -60,15 +60,69 @@
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
-    <style name="main_done_count">
+    <style name="main_done_list_count">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
-    <style name="main_done_count_orange" parent="main_done_count">
+    <style name="main_done_list_count_orange" parent="main_done_list_count">
         <item name="android:textColor">@color/doneDarkOrangeColor</item>
     </style>
+
+    <style name="done_sub_title_text" parent="start_sub_title_text">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="done_hint_text">
+        <item name="android:textColor">@color/doneHintColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+    </style>
+
+    <style name="today_text" parent="done_hint_text">
+        <item name="hintTextColor">@color/doneHintColor</item>
+    </style>
+
+    <style name="today_hint_text">
+        <item name="android:textColor">@color/doneDetailColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- TEXT PLAN & ROUTINE -->
+
+    <style name="done_activity_detail">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/doneDetailColor</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="done_add_button">
+        <item name="android:textColor">@color/mainDoneListColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="done_item_text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="done_edit_button">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <!-- CALENDAR -->
+    <style name="calendar_header_legend">
+        <item name="fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 
     <!-- Toolbar -->
     <style name="all_toolbar_text">
@@ -93,7 +147,7 @@
         <item name="android:background">@drawable/all_et_background_selector</item>
         <item name="android:textCursorDrawable">@drawable/all_et_cursor_background</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:padding">0dp</item>
         <item name="android:maxLines">1</item>
     </style>
@@ -103,6 +157,19 @@
         <item name="android:maxLength">8</item>
     </style>
 
+    <style name="done_edittext">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/done_et_solid</item>
+        <item name="android:padding">13dp</item>
+        <item name="android:textCursorDrawable">@drawable/all_et_cursor_background</item>
+        <item name="android:textColorHint">@color/doneHintColor</item>
+    </style>
+
+    <style name="today_edittext" parent="done_hint_text">
+        <item name="android:textCursorDrawable">@drawable/all_et_cursor_background</item>
+        <item name="android:background">@null</item>
+    </style>
 
     <!-- Button -->
     <style name="all_button" parent="Widget.AppCompat.Button.Borderless">
@@ -139,11 +206,41 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="done_button_stroke" parent="main_button_stroke">
+        <item name="android:background">@drawable/all_btn_round_stroke_blue</item>
+        <item name="android:textColor">@color/mainDoneListColor</item>
+    </style>
+
+    <style name="done_button_solid" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:background">@drawable/all_btn_round_solid_blue</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="plan_edit_button" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:background">@drawable/all_btn_round_stroke</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="dialog_button" parent="main_button_solid">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
     <!-- Spinner -->
     <style name="ob_alarm_timepicker">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
+    </style>
+
+
+    <!-- Tablayout -->
+    <style name="done_tab_layout" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 

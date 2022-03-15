@@ -1,13 +1,7 @@
 package com.palette.done.data.remote.api
 
-import com.palette.done.data.remote.ApiBuilder
 import com.palette.done.data.remote.model.member.*
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 

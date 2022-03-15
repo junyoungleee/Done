@@ -1,9 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/root_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.main.DoneActivity">
+
+    <ImageButton
+        android:id="@+id/btn_calendar_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar"
+        android:background="@null"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_plan"
+        android:text="@string/done_btn_plan"
+        android:layout_marginTop="28dp"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/done_button_stroke"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/btn_plan"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sub_root_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <ImageButton
+                    android:id="@+id/btn_day_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_left_arrow"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"/>
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="50dp"
+                    android:paddingLeft="50dp"
+                    style="@style/start_title_text"
+                    android:textSize="24sp"
+                    android:layout_marginTop="0dp"/>
+
+                <ImageButton
+                    android:id="@+id/btn_day_after"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right_arrow"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_done_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done_list_title"
+                android:layout_marginTop="52dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_date"
+                style="@style/done_sub_title_text"/>
+
+            <TextView
+                android:id="@+id/tv_done_list_count"
+                android:layout_width="25.5dp"
+                android:layout_height="27.4dp"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/ic_count_done"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingBottom="2dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginBottom="17dp"
+                app:layout_constraintStart_toEndOf="@id/tv_done_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_done_title"/>
+
+            <TextView
+                android:id="@+id/tv_done_list"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:text="@string/done_list_hint"
+                android:paddingTop="15dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                style="@style/done_hint_text"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/done_box_round"
+                app:layout_constraintTop_toBottomOf="@id/tv_done_title"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_done_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:overScrollMode="never"
+                app:layout_constraintTop_toTopOf="@id/tv_done_list"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_today_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done_today_title"
+                android:layout_marginTop="52dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_done_list"
+                style="@style/done_sub_title_text"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_today_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:background="@drawable/done_box_round"
+                app:layout_constraintTop_toBottomOf="@id/tv_today_title">
+
+
+                <ImageView
+                    android:id="@+id/iv_today_record_sticker"
+                    android:layout_width="@dimen/all_sticker_size"
+                    android:layout_height="@dimen/all_sticker_size"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"/>
+
+                <View
+                    android:id="@+id/view_today_record_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@null"
+                    app:layout_constraintTop_toBottomOf="@id/iv_today_record_sticker"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_today_record_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="17dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="9dp"
+                    android:lines="3"
+                    android:text="@string/done_today_hint"
+                    style="@style/done_hint_text"
+                    app:layout_constraintTop_toBottomOf="@id/view_today_record_divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="visible"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fl_done_write"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/done_write_box_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

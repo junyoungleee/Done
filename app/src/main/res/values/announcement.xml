@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="plan_message">
+        <item>&#160;플랜 Done!👍해냈군요!</item>
+        <item>&#160;플랜 Done! 잘하셨어요!🔥</item>
+        <item>&#160;플랜 Done! 너무 좋아요!</item>
+    </string-array>
+
+    <string-array name="main_message">
+        <item>대단해요!</item>
+        <item>갓생을 응원해요!</item>
+        <item>휴식도 필요해요:)</item>
+        <item>오늘도 수고했어요</item>
+        <item>내일도 화이팅</item>
+        <item>잠시 쉬어가요~</item>
+        <item>오늘부터 다시 시작!</item>
+        <item>즐거운 일만 생각하기</item>
+        <item>잘하고 있어요!</item>
+        <item>나만의 던리스트를 채워봐요!</item>
+    </string-array>
+</resources>

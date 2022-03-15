@@ -72,5 +72,56 @@
     <string name="main_title_count_done">이번달 Done&#160;</string>
     <string name="main_sub_title_cheer">대단해요</string>
 
+    <!-- 던리스트 페이지 -->
+    <string name="done_btn_plan">플랜</string>
+    <string name="done_list_title">Done list</string>
+    <string name="done_list_hint">여기를 눌러 던리스트를 작성해보세요!</string>
+    <string name="done_today_title">오늘한마디</string>
+    <string name="done_today_hint">오늘을 한마디로 정리하고 스티커로 꾸며보세요! (최대 45자)</string>
+    <string name="done_btn_hash_tag">#</string>
+    <string name="done_btn_write">입력</string>
+    <string name="done_list_write_hint">작은 일도 괜찮아요, 써보세요!</string>
+    <string name="done_list_write_title">오늘의&#160;</string>
+    <string name="done_list_write_title2">번째 Done</string>
+
+    <string name="done_edit_hash_tag">해시태그</string>
+    <string name="done_edit_routine">루틴</string>
+    <string name="done_tag_hint">오늘 한 일을 선택해 보세요!</string>
+    <string name="done_edit_random">랜덤</string>
+    <string name="done_edit_edit">편집</string>
+
+    <string name="done_dialog_empty_list">Done List가 작성되지 않았어요.</string>
+    <string name="done_dialog_empty_btn">작성하기</string>
+
+    <!-- 오늘한마디 페이지 -->
+    <string name="today_btn_sticker">스티커</string>
+    <string name="today_btn_text">텍스트</string>
+    <string name="today_sticker_title">스티커 선택</string>
+    <string name="today_sticker_empty">아직 스티커가 없어요😔</string>
+    <string name="today_sticker_empty_detail">던리스트 작성을 완료하고\n첫 스티커를 받아보세요!</string>
+    <string name="today_text_hint">텍스트를 입력하세요 (최대 45자)</string>
+
+    <!-- 플랜/루틴 페이지 -->
+    <string name="btn_edit_mode">편집</string>
+    <string name="btn_edit_finish">완료</string>
+    <string name="btn_item_edit">수정</string>
+    <string name="btn_add">추가</string>
+
+    <!-- 플랜 페이지 -->
+    <string name="plan_title">플랜</string>
+    <string name="plan_edit_title">플랜 편집</string>
+    <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,\nDone List에 입력하세요.</string>
+    <string name="plan_add">플랜 추가</string>
+    <string name="plan_item_edit">플랜 수정</string>
+    <string name="plan_btn_done">Done</string>
+    <string name="plan_hint_add">플랜을 입력해보세요</string>
+
+    <!-- 루틴 페이지 -->
+    <string name="routine_title">루틴</string>
+    <string name="routine_edit_title">루틴 편집</string>
+    <string name="routine_detail">반복되는 Done List를 루틴으로 등록하고,\n쉽게 입력해보세요.</string>
+    <string name="routine_add">루틴 추가</string>
+    <string name="routine_item_edit">루틴 수정</string>
+    <string name="routine_hint_add">루틴을 입력해보세요</string>
 
 </resources>
