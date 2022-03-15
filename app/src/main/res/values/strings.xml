@@ -90,6 +90,9 @@
     <string name="done_edit_random">랜덤</string>
     <string name="done_edit_edit">편집</string>
 
+    <string name="done_dialog_empty_list">Done List가 작성되지 않았어요.</string>
+    <string name="done_dialog_empty_btn">작성하기</string>
+
     <!-- 오늘한마디 페이지 -->
     <string name="today_btn_sticker">스티커</string>
     <string name="today_btn_text">텍스트</string>

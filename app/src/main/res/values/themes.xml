@@ -225,6 +225,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="dialog_button" parent="main_button_solid">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
     <!-- Spinner -->
     <style name="ob_alarm_timepicker">

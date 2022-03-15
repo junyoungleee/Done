@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity() {
                 override fun create(view: View) = DayViewContainer(view)
                 override fun bind(container: DayViewContainer, day: CalendarDay) {
                     // 날짜 클릭 이벤트
+                    val intent = Intent(this@MainActivity, DoneActivity::class.java)
                     container.view.setOnClickListener {
                         val clickedDate = "${day.date.year}-${df.format(day.date.monthValue)}-${df.format(day.date.dayOfMonth)}"
-                        val intent = Intent(this@MainActivity, DoneActivity::class.java)
                         intent.putExtra("clickedDate", clickedDate)
                         startActivity(intent)
                     }
@@ -135,6 +135,9 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }
                                 false -> {
+                                    if (day.date != today) {
+                                        intent.putExtra("is_empty", true)
+                                    }
                                     visibility = View.INVISIBLE
                                 }
                             }

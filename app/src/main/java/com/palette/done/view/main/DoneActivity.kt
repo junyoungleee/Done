@@ -65,6 +65,8 @@ class DoneActivity : AppCompatActivity() {
         routineVM.initRoutine()
         planVM.initPlan()
 
+        showDialog()
+
         setTitleDate()
         setButtonsDestination()
 
@@ -72,6 +74,14 @@ class DoneActivity : AppCompatActivity() {
 
         popEditFrame()
         hideKeyboard()
+    }
+
+    private fun showDialog() {
+        val empty = intent.getBooleanExtra("is_empty", false)
+        if (empty) {
+            val dialog = DoneDialog()
+            dialog.show(supportFragmentManager, "DoneDialog")
+        }
     }
 
     private fun initDoneListRecyclerView() {
