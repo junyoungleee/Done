@@ -9,8 +9,15 @@ import javax.inject.Singleton
 class PreferenceManager (context: Context) {
     private val FIRST = "first"
     private val SIGN_UP = "signup"
+
     private val USER_EMAIL = "email"
     private val USER_PWD = "pwd"
+
+    private val USER_NICKNAME = "nickname"
+    private val USER_TYPE = "type"
+    private val USER_ALARM_CYCLE = "alarm_cycle"
+    private val USER_ALARM_TIME = "alarm_time"
+
     private val ACCESS_TOKEN = "token"
     private val KEYBOARD_HEIGHT = "keyboard_height"
 
@@ -34,6 +41,24 @@ class PreferenceManager (context: Context) {
         get() = prefs.getString(USER_PWD, "")
         set(value) = prefs.edit().putString(USER_PWD, value).apply()
 
+    // 사용자 정보 -----------------------------------------------------------------------------------
+    var nickname: String?
+        get() = prefs.getString(USER_NICKNAME, "")
+        set(value) = prefs.edit().putString(USER_NICKNAME, value).apply()
+
+    var type: String?
+        get() = prefs.getString(USER_TYPE, "")
+        set(value) = prefs.edit().putString(USER_TYPE, value).apply()
+
+    var alarmCycle: String?
+        get() = prefs.getString(USER_ALARM_CYCLE, "")
+        set(value) = prefs.edit().putString(USER_ALARM_CYCLE, value).apply()
+
+    var alarmTime: String?
+        get() = prefs.getString(USER_ALARM_TIME, "")
+        set(value) = prefs.edit().putString(USER_ALARM_TIME, value).apply()
+
+    // ---------------------------------------------------------------------------------------------
     var token: String?
         get() = prefs.getString(ACCESS_TOKEN, "")
         set(value) = prefs.edit().putString(ACCESS_TOKEN, value).apply()

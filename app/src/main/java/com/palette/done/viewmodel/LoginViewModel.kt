@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.palette.done.DoneApplication
 import com.palette.done.data.remote.model.member.*
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

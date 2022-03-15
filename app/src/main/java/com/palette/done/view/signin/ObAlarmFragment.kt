@@ -7,29 +7,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.palette.done.R
 import com.palette.done.databinding.FragmentObAlarmBinding
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.view.adapter.ObAlarmRecyclerViewAdapter
 import com.palette.done.view.decoration.RecyclerViewDecoration
 import com.palette.done.view.main.MainActivity
-import com.palette.done.viewmodel.LoginViewModelFactory
 import com.palette.done.viewmodel.OnBoardingViewModel
 import com.palette.done.viewmodel.OnBoardingViewModelFactory
-import java.text.DateFormatSymbols
 
 class ObAlarmFragment : Fragment() {
 
     private var _binding: FragmentObAlarmBinding? = null
     private val binding get() = _binding!!
 
-    private val onBoardingVM: OnBoardingViewModel by activityViewModels { OnBoardingViewModelFactory(MemberRepository()) }
+    private val onBoardingVM: OnBoardingViewModel by activityViewModels { OnBoardingViewModelFactory(
+        MemberRepository()
+    ) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentObAlarmBinding.inflate(inflater, container, false)
@@ -101,7 +96,7 @@ class ObAlarmFragment : Fragment() {
 //            }
 //        }
 //    }
-    
+
     private fun setTimeTicker() {
         binding.tpAlarmTime.hour = 9
         binding.tpAlarmTime.minute = 0

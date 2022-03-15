@@ -12,19 +12,19 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.R
 import com.palette.done.databinding.FragmentLoginEmailBinding
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.viewmodel.LoginViewModel
 import com.palette.done.viewmodel.LoginViewModelFactory
 import com.palette.done.viewmodel.PatternCheckViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.FragmentScoped
 
 class LoginEmailFragment : Fragment() {
 
     private var _binding: FragmentLoginEmailBinding? = null
     private val binding get() = _binding!!
 
-    private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(MemberRepository()) }
+    private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(
+        MemberRepository()
+    ) }
     private val patternVM : PatternCheckViewModel by viewModels()
 
     override fun onCreateView(

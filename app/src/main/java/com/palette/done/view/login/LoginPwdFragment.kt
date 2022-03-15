@@ -14,21 +14,21 @@ import androidx.fragment.app.viewModels
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.FragmentLoginPwdBinding
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.view.main.MainActivity
 import com.palette.done.view.signin.OnBoardingActivity
 import com.palette.done.viewmodel.LoginViewModel
 import com.palette.done.viewmodel.LoginViewModelFactory
 import com.palette.done.viewmodel.PatternCheckViewModel
-import dagger.hilt.android.AndroidEntryPoint
-
 
 class LoginPwdFragment : Fragment() {
 
     private var _binding: FragmentLoginPwdBinding? = null
     private val binding get() = _binding!!
 
-    private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(MemberRepository()) }
+    private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(
+        MemberRepository()
+    ) }
     private val patternVM: PatternCheckViewModel by viewModels()
 
     override fun onCreateView(

@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.palette.done.DoneApplication
 import com.palette.done.data.remote.model.member.MemberProfile
 import com.palette.done.data.remote.model.member.MemberProfileResponse
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +39,13 @@ class OnBoardingViewModel(private val repository: MemberRepository): ViewModel()
         Log.d("ob_vm_cycle", "$alarmCycle")
 
         val profile = MemberProfile(nickname.value.toString(), userType.value.toString(), alarmTime, alarmCycle)
+
+        with(DoneApplication.pref) {
+            nickname = this@OnBoardingViewModel.nickname.value.toString()
+            type = this@OnBoardingViewModel.userType.value.toString()
+            this.alarmTime = alarmTime
+            this.alarmCycle = alarmCycle
+        }
 
         viewModelScope.launch {
             repository.patchMemberProfile(profile).enqueue(object : Callback<MemberProfileResponse> {

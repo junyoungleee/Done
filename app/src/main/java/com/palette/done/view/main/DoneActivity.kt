@@ -2,7 +2,6 @@ package com.palette.done.view.main
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -47,9 +46,6 @@ class DoneActivity : AppCompatActivity() {
         CategoryViewModelFactory(DoneApplication().doneRepository)
     }
 
-    private var rootHeight = -1
-    private var keyboardHeight = -1
-
     private var doneAdapter = DoneAdapter()
     private lateinit var popup: PowerMenu
 
@@ -69,7 +65,6 @@ class DoneActivity : AppCompatActivity() {
         routineVM.initRoutine()
         planVM.initPlan()
 
-        setKeyboardHeight()
         setTitleDate()
         setButtonsDestination()
 
@@ -132,20 +127,6 @@ class DoneActivity : AppCompatActivity() {
                 popup.showAsDropDown(v)
             }
         })
-    }
-
-
-    private fun setKeyboardHeight() {
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            if (rootHeight == -1) rootHeight = binding.root.height
-            val visibleFrameSize = Rect()
-            binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
-            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
-            if (heightExceptKeyboard < rootHeight && DoneApplication.pref.keyboard == -1) {
-                DoneApplication.pref.keyboard = rootHeight - heightExceptKeyboard
-                Log.d("keyboard_height", "$keyboardHeight")
-            }
-        }
     }
 
     private fun setButtonsDestination() {

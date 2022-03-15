@@ -1,9 +1,12 @@
 package com.palette.done.view.signin
 
 import android.content.Intent
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
+import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.ActivityOnBoardingBinding
 import com.palette.done.view.adapter.ViewPagerAdapter
@@ -12,10 +15,15 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnBoardingBinding
 
+    private var rootHeight = -1
+    private var keyboardHeight = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setKeyboardHeight()
 
         setBackButtonAndIndicator()
         setViewPager()
@@ -47,6 +55,19 @@ class OnBoardingActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(this, fragments)
         binding.viewPagerOnBoarding.adapter = adapter
         binding.viewPagerOnBoarding.isUserInputEnabled = false  // swipe action 제거
+    }
+
+    private fun setKeyboardHeight() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            if (rootHeight == -1) rootHeight = binding.root.height
+            val visibleFrameSize = Rect()
+            binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
+            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+            if (heightExceptKeyboard < rootHeight && DoneApplication.pref.keyboard == -1) {
+                DoneApplication.pref.keyboard = rootHeight - heightExceptKeyboard
+                Log.d("keyboard_height", "$keyboardHeight")
+            }
+        }
     }
 
     override fun onBackPressed() {

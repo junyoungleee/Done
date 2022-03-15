@@ -1,6 +1,7 @@
 package com.palette.done.view.signin
 
 import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,13 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObNicknameBinding
-import com.palette.done.repository.MemberRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.viewmodel.OnBoardingViewModel
 import com.palette.done.viewmodel.OnBoardingViewModelFactory
 
@@ -26,7 +26,9 @@ class ObNicknameFragment : Fragment() {
     private var _binding: FragmentObNicknameBinding? = null
     private val binding get() = _binding!!
 
-    private val onBoardingVM: OnBoardingViewModel by activityViewModels { OnBoardingViewModelFactory(MemberRepository()) }
+    private val onBoardingVM: OnBoardingViewModel by activityViewModels { OnBoardingViewModelFactory(
+        MemberRepository()
+    ) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
