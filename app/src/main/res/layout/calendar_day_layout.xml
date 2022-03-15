@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/disableColor" />
+
+    <ImageView
+        android:id="@+id/iv_today_dot"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ic_calendar_dot"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/calendarDayText"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:includeFontPadding="false"
+        android:text="8"
+        android:fontFamily="@font/spoqa_han_sans_neo_light"
+        android:textColor="@color/calendarColor"
+        android:gravity="center_horizontal"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/doneIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/ic_calendar_done_icon"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="19dp"/>
+</LinearLayout>

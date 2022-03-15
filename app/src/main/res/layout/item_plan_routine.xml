@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="46dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/ic_delete"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/spoqa_han_sans_neo_regular"
+            android:layout_marginStart="16dp"
+            style="@style/done_item_text"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_done"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
+            android:text="@string/plan_btn_done"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            style="@style/done_button_solid"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_edit"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
+            android:text="@string/btn_item_edit"
+            style="@style/plan_edit_button"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/disableColor"/>
+</LinearLayout>

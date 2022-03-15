@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="korean_num">
+        <item>첫</item>
+        <item>두</item>
+        <item>세</item>
+        <item>네</item>
+        <item>다섯</item>
+        <item>여섯</item>
+        <item>일곱</item>
+        <item>여덟</item>
+        <item>아홉</item>
+        <item>열</item>
+        <item>열한</item>
+        <item>열두</item>
+        <item>열세</item>
+        <item>열네</item>
+        <item>열다섯</item>
+        <item>열여섯</item>
+        <item>열일곱</item>
+        <item>열여덟</item>
+        <item>열아홉</item>
+        <item>스무</item>
+    </string-array>
+</resources>

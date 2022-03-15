@@ -1,18 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sticker"
+        style="@style/main_button_stroke"
+        android:layout_marginTop="35dp"
+        android:text="@string/main_btn_sticker"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_my"
+        style="@style/main_button_solid"
+        android:layout_marginTop="35dp"
+        android:text="@string/main_btn_my"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_calendar_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        app:layout_constraintBottom_toTopOf="@id/ll_done_list_count">
+
+        <ImageButton
+            android:id="@+id/btn_previous_month"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_left_arrow"
+            android:paddingRight="10dp"
+            android:paddingLeft="15dp"
+            android:background="@null"/>
+
+        <TextView
+            android:id="@+id/tv_calendar_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22.02"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            style="@style/start_title_text"
+            android:textSize="24sp"
+            android:layout_marginTop="0dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_next_month"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_right_arrow"
+            android:paddingRight="15dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/calendar_legend"
+        layout="@layout/calendar_header_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        app:layout_constraintBottom_toTopOf="@id/calendar_view"/>
+
+    <com.kizitonwose.calendarview.CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        app:cv_orientation="horizontal"
+        app:cv_hasBoundaries="true"
+        app:cv_scrollMode="paged"
+        app:cv_dayViewResource="@layout/calendar_day_layout"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_light_yellow"
+        android:layout_marginBottom="-13dp"
+        app:layout_constraintBottom_toTopOf="@id/ll_done_list_count"
+        app:layout_constraintEnd_toStartOf="@id/ll_done_list_count"/>
+
+    <LinearLayout
+        android:id="@+id/ll_done_list_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintBottom_toTopOf="@id/tv_cheer_up_msg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_title_count_done"
+            style="@style/main_done_list_count"/>
+
+        <TextView
+            android:id="@+id/tv_done_list_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="81"
+            style="@style/main_done_list_count_orange"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개 👍"
+            style="@style/main_done_list_count_orange"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cheer_up_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
+        android:text="@string/main_sub_title_cheer"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintRight_toRightOf="@id/right_margin"
+        app:layout_constraintBottom_toTopOf="@id/calendar_legend"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
