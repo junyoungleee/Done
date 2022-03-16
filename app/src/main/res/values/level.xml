@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="level">
+        <item>새싹해냄이</item>
+        <item>해린이</item>
+        <item>프로해냄러</item>
+        <item>갓생해린이</item>
+    </string-array>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="my_card_view_style">
+        <item name="android:outlineAmbientShadowColor">@color/cardElevation</item>
+        <item name="android:outlineSpotShadowColor">@color/cardElevation</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">30dp</item>
+    </style>
+</resources>

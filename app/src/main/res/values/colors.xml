@@ -27,6 +27,9 @@
     <color name="doneYellowColor">#FFB800</color>
     <color name="doneOrangeColor">#FF9100</color>
     <color name="doneDarkOrangeColor">#FF6B00</color>
+    <color name="doneLightColor">#FFF4E7</color>
+
+    <color name="cardElevation">#66000000</color>
 
     <color name="mainDoneListColor">#0066FF</color>
 </resources>
