@@ -41,7 +41,8 @@
             android:id="@+id/sub_root_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
             <LinearLayout
                 android:id="@+id/ll_date"
@@ -90,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/done_list_title"
                 android:layout_marginTop="52dp"
+                android:paddingBottom="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_date"
@@ -107,35 +109,36 @@
                 android:includeFontPadding="false"
                 android:paddingBottom="2dp"
                 android:layout_marginStart="13dp"
-                android:layout_marginBottom="17dp"
+                android:layout_marginBottom="27dp"
                 app:layout_constraintStart_toEndOf="@id/tv_done_title"
                 app:layout_constraintBottom_toBottomOf="@id/tv_done_title"/>
 
             <TextView
                 android:id="@+id/tv_done_list"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="wrap_content"
                 android:text="@string/done_list_hint"
                 android:paddingTop="15dp"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
+                android:elevation="1dp"
                 style="@style/done_hint_text"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/done_box_round"
-                app:layout_constraintTop_toBottomOf="@id/tv_done_title"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_done_title" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rc_done_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="280dp"
                 android:overScrollMode="never"
-                app:layout_constraintTop_toTopOf="@id/tv_done_list"
+                android:paddingStart="15dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="20dp"
+                android:background="@drawable/done_box_round"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_done_list" />
 
             <TextView
                 android:id="@+id/tv_today_title"
@@ -145,7 +148,7 @@
                 android:layout_marginTop="52dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_done_list"
+                app:layout_constraintTop_toBottomOf="@id/rc_done_list"
                 style="@style/done_sub_title_text"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
