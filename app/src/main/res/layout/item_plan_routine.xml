@@ -21,7 +21,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/spoqa_han_sans_neo_regular"
             android:layout_marginStart="16dp"
             style="@style/done_item_text"/>
 

@@ -15,7 +15,7 @@ import com.palette.done.databinding.ItemDoneBinding
  */
 class DoneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator())  {
 
-    private lateinit var doneMenuClickListener: OnDoneMenuClickListener
+    private lateinit var doneClickListener: OnDoneClickListener
 
     class DoneViewHolder(val binding: ItemDoneBinding): RecyclerView.ViewHolder(binding.root) { }
 
@@ -28,8 +28,14 @@ class DoneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator(
         val done = getItem(position)
         with(holder.binding) {
             tvDoneContent.text = done.content
+            tvDoneContent.setOnClickListener {
+                doneClickListener.onDoneRootClick(it)
+            }
+            ivDoneCategory.setOnClickListener {
+                doneClickListener.onDoneRootClick(it)
+            }
             btnDoneMenu.setOnClickListener {
-                doneMenuClickListener.onDoneMenuClick(it, done, position)
+                doneClickListener.onDoneMenuClick(it, done, position)
             }
         }
     }
@@ -44,11 +50,12 @@ class DoneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator(
         }
     }
 
-    interface OnDoneMenuClickListener {
+    interface OnDoneClickListener {
         fun onDoneMenuClick(v: View, done: Done, position: Int)
+        fun onDoneRootClick(v: View)
     }
 
-    fun setDoneMenuClickListener(onDoneMenuClickListener: OnDoneMenuClickListener) {
-        this.doneMenuClickListener = onDoneMenuClickListener
+    fun setDoneClickListener(onDoneClickListener: OnDoneClickListener) {
+        this.doneClickListener = onDoneClickListener
     }
 }
