@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Constraints
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.palette.done.DoneApplication
@@ -25,6 +28,7 @@ import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
+import com.skydoves.powermenu.kotlin.showAsDropDown
 import java.util.*
 
 class DoneActivity : AppCompatActivity() {
@@ -100,8 +104,25 @@ class DoneActivity : AppCompatActivity() {
                 binding.tvDoneListCount.text = "${doneLists.size}"
                 binding.tvDoneList.text = ""
             }
+            // recyclerview 높이 지정
+            lateinit var layoutParams: ConstraintLayout.LayoutParams
+            if (doneLists.size > 6) {
+                layoutParams = ConstraintLayout.LayoutParams(binding.rcDoneList.width, ConstraintLayout.LayoutParams.MATCH_PARENT)
+                layoutParams.topToBottom = binding.tvDoneTitle.id
+                layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+
+            } else {
+                layoutParams = ConstraintLayout.LayoutParams(binding.rcDoneList.width, util.dpToPx(280))
+                layoutParams.topToBottom = binding.tvDoneTitle.id
+                layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+            }
+            binding.rcDoneList.layoutParams = layoutParams
+
         }
-        doneAdapter.setDoneMenuClickListener(object : DoneAdapter.OnDoneMenuClickListener{
+
+        doneAdapter.setDoneClickListener(object : DoneAdapter.OnDoneClickListener{
             // 던리스트 수정/삭제 메뉴
             override fun onDoneMenuClick(v: View, done: Done, position: Int) {
                 popup = PowerMenu.Builder(this@DoneActivity)
@@ -112,9 +133,10 @@ class DoneActivity : AppCompatActivity() {
                     .setTextSize(14)
                     .setTextGravity(Gravity.CENTER)
                     .setMenuColor(ContextCompat.getColor(this@DoneActivity, R.color.white))
-                    .setDivider(ColorDrawable(ContextCompat.getColor(this@DoneActivity, R.color.disableColor)))
+                    .setDivider(ContextCompat.getDrawable(this@DoneActivity, R.drawable.popup_divider))
                     .setDividerHeight(util.dpToPx(1))
                     .setPadding(9)
+                    .setWidth(util.dpToPx(108))
                     .setAnimation(MenuAnimation.SHOWUP_TOP_RIGHT)
                     .setSelectedMenuColor(ContextCompat.getColor(this@DoneActivity, R.color.doneDetailColor))
                     .setOnMenuItemClickListener { menu, item ->
@@ -134,7 +156,12 @@ class DoneActivity : AppCompatActivity() {
                         }
                     }
                     .build()
-                popup.showAsDropDown(v)
+                popup.showAsDropDown(v, v.measuredWidth/2-popup.contentViewWidth+util.dpToPx(14), -v.measuredHeight/2-util.dpToPx(6))
+            }
+
+            override fun onDoneRootClick(v: View) {
+                supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
+                binding.flDoneWrite.visibility = View.VISIBLE
             }
         })
     }
