@@ -30,19 +30,20 @@
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scrollbars="none"
         android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/btn_plan"
         app:layout_constraintRight_toRightOf="@id/right_margin"
-        app:layout_constraintLeft_toLeftOf="@id/left_margin">
+        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sub_root_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingBottom="30dp">
 
             <LinearLayout
                 android:id="@+id/ll_date"
@@ -82,7 +83,6 @@
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp"
                     android:background="@null"/>
-
             </LinearLayout>
 
             <TextView
@@ -128,12 +128,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rc_done_list"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:paddingStart="15dp"
                 android:paddingTop="20dp"
                 android:paddingEnd="15dp"
                 android:paddingBottom="20dp"
+                android:minHeight="280dp"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -156,10 +157,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:minHeight="110dp"
                 android:padding="8dp"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintTop_toBottomOf="@id/tv_today_title">
-
 
                 <ImageView
                     android:id="@+id/iv_today_record_sticker"
@@ -185,11 +186,12 @@
                     android:id="@+id/tv_today_record_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="17dp"
-                    android:paddingEnd="17dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="9dp"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginEnd="17dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="9dp"
                     android:lines="3"
+                    android:lineHeight="25sp"
                     android:text="@string/done_today_hint"
                     style="@style/done_hint_text"
                     app:layout_constraintTop_toBottomOf="@id/view_today_record_divider"
