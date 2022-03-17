@@ -7,11 +7,11 @@
         </shape>
     </item>
     <item>
-        <clip>
+        <scale android:scaleWidth="100%">
             <shape>
                 <corners android:radius="10dp" />
                 <solid android:color="@color/mainDoneColor" />
             </shape>
-        </clip>
+        </scale>
     </item>
 </layer-list>

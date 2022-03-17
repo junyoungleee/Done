@@ -17,6 +17,7 @@ class PreferenceManager (context: Context) {
     private val USER_TYPE = "type"
     private val USER_ALARM_CYCLE = "alarm_cycle"
     private val USER_ALARM_TIME = "alarm_time"
+    private val LEVEL = "level"
 
     private val ACCESS_TOKEN = "token"
     private val KEYBOARD_HEIGHT = "keyboard_height"
@@ -58,6 +59,9 @@ class PreferenceManager (context: Context) {
         get() = prefs.getString(USER_ALARM_TIME, "")
         set(value) = prefs.edit().putString(USER_ALARM_TIME, value).apply()
 
+    var level: Int
+        get() = prefs.getInt(LEVEL, 1)
+        set(value) = prefs.edit().putInt(LEVEL, value).apply()
     // ---------------------------------------------------------------------------------------------
     var token: String?
         get() = prefs.getString(ACCESS_TOKEN, "")
