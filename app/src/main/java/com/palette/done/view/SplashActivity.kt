@@ -20,34 +20,34 @@ class SplashActivity : AppCompatActivity() {
 
         lateinit var intent: Intent
 
-//        // 자동 로그인
-//        if (DoneApplication.pref.first) {
-//            // 앱 설치 후 처음 방문
-//            DoneApplication.pref.first = false  // 재방문
-//            intent = Intent(this, LandingActivity::class.java)
-//        } else {
-//            when(DoneApplication.pref.signup) {
-//                "true" -> {
-//                    // 자동 로그인
-//                    intent = Intent(this, MainActivity::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                }
-//                "false" -> {
-//                    // 로그인은 되었고, 유저 정보가 없는 상태
-//                    intent = Intent(this, OnBoardingActivity::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-//                }
-//                "" -> {
-//                    // 로그아웃 or 재방문한 신규
-//                    intent = Intent(this, StartActivity::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-//                }
-//            }
-//        }
+        // 자동 로그인
+        if (DoneApplication.pref.first) {
+            // 앱 설치 후 처음 방문
+            DoneApplication.pref.first = false  // 재방문
+            intent = Intent(this, LandingActivity::class.java)
+        } else {
+            when(DoneApplication.pref.signup) {
+                "true" -> {
+                    // 자동 로그인
+                    intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                "false" -> {
+                    // 로그인은 되었고, 유저 정보가 없는 상태
+                    intent = Intent(this, OnBoardingActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                }
+                "" -> {
+                    // 로그아웃 or 재방문한 신규
+                    intent = Intent(this, StartActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                }
+            }
+        }
 
-        // 로그인 테스트
-        intent = Intent(this, LandingActivity::class.java)
+//        // 로그인 테스트
+//        intent = Intent(this, LandingActivity::class.java)
 
         CoroutineScope(Dispatchers.IO).launch {
             // delay(3000L)
