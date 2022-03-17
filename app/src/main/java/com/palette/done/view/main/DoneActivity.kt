@@ -2,19 +2,23 @@ package com.palette.done.view.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
+import android.widget.ScrollView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Constraints
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
@@ -50,8 +54,10 @@ class DoneActivity : AppCompatActivity() {
         CategoryViewModelFactory(DoneApplication().doneRepository)
     }
 
-    private var doneAdapter = DoneAdapter()
+    private var doneAdapter = DoneAdapter(this)
     private lateinit var popup: PowerMenu
+
+    private var rootHeight: Int = -1
 
     private val util = Util()
 
@@ -59,6 +65,8 @@ class DoneActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDoneBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setKeyboardHeight()
 
         val clickedDate = intent.getStringExtra("clickedDate")
         Log.d("date_clicked", "${clickedDate}")
@@ -88,10 +96,33 @@ class DoneActivity : AppCompatActivity() {
         }
     }
 
+    private fun setKeyboardHeight() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener{
+            override fun onGlobalLayout() {
+                if (rootHeight == -1) rootHeight = binding.root.height
+                val visibleFrameSize = Rect()
+                binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
+                val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+                val keyboard = rootHeight - heightExceptKeyboard
+                Log.d("keyboard", "$keyboard")
+                if (DoneApplication.pref.keyboard != keyboard && keyboard != 0) {
+                    DoneApplication.pref.keyboard = keyboard
+                    Log.d("keyboard_pref", "${DoneApplication.pref.keyboard}")
+                    binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                } else {
+                    if (keyboard != 0) {
+                        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                }
+            }
+        })
+    }
+
     private fun initDoneListRecyclerView() {
         with(binding.rcDoneList) {
             adapter = doneAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = null
         }
         dateVM.doneList.observe(this) { doneLists ->
             Log.d("date_list_size", "${doneLists.size}")
@@ -104,22 +135,6 @@ class DoneActivity : AppCompatActivity() {
                 binding.tvDoneListCount.text = "${doneLists.size}"
                 binding.tvDoneList.text = ""
             }
-            // recyclerview 높이 지정
-            lateinit var layoutParams: ConstraintLayout.LayoutParams
-            if (doneLists.size > 6) {
-                layoutParams = ConstraintLayout.LayoutParams(binding.rcDoneList.width, ConstraintLayout.LayoutParams.MATCH_PARENT)
-                layoutParams.topToBottom = binding.tvDoneTitle.id
-                layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-
-            } else {
-                layoutParams = ConstraintLayout.LayoutParams(binding.rcDoneList.width, util.dpToPx(280))
-                layoutParams.topToBottom = binding.tvDoneTitle.id
-                layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-            }
-            binding.rcDoneList.layoutParams = layoutParams
-
         }
 
         doneAdapter.setDoneClickListener(object : DoneAdapter.OnDoneClickListener{
@@ -164,6 +179,7 @@ class DoneActivity : AppCompatActivity() {
                 binding.flDoneWrite.visibility = View.VISIBLE
             }
         })
+
     }
 
     private fun setButtonsDestination() {
@@ -201,20 +217,38 @@ class DoneActivity : AppCompatActivity() {
 
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
+            binding.scrollView.post {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
-        binding.rcDoneList.setOnClickListener {
+        binding.rcDoneList.rootView.setOnClickListener {
+            binding.scrollView.post {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
         binding.rootView.setOnClickListener {
             hideKeyboard()  // visibility보다 먼저 처리해야 함
             binding.flDoneWrite.visibility = View.GONE
+            binding.scrollView.post {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
+            }
         }
         binding.subRootView.setOnClickListener {
             hideKeyboard()  // visibility보다 먼저 처리해야 함
             binding.flDoneWrite.visibility = View.GONE
+            binding.scrollView.post {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
+            }
+        }
+    }
+
+    fun scrollingDown() {
+        binding.scrollView.post {
+            binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 

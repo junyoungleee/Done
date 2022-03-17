@@ -1,6 +1,5 @@
 package com.palette.done.view.main.done
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxItemDecoration
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -37,14 +35,14 @@ class DoneCategoryFragment : Fragment() {
         DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
     }
 
-
-    private val categoryAdapter = CategoryAdapter()
+    private lateinit var categoryAdapter : CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDoneCategoryBinding.inflate(inflater, container, false)
 
+        categoryAdapter = CategoryAdapter(requireActivity())
         initCategoryRecyclerView()
 
         return binding.root
@@ -65,13 +63,13 @@ class DoneCategoryFragment : Fragment() {
             addItemDecoration(decoration)
         }
         categoryVM.category.observe(viewLifecycleOwner) {
-            it.let { categoryAdapter.submitList(it) }
+            categoryAdapter.submitList(it)
         }
+
         categoryAdapter.setCategoryClickListener(object : CategoryAdapter.OnCategoryClickListener{
             override fun onCategoryClick(v: View, category: Category) {
                 categoryVM._selectedCategory.value = category.categoryNo
             }
         })
     }
-
 }

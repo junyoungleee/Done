@@ -16,11 +16,11 @@ class CategoryViewModel(val dbRepo: DoneRepository) : ViewModel() {
         _selectedCategory.value = 0
     }
 
-    fun getSelectedCategory(): Int? {
-        return if(selectedCategory.value != 0) {
-            selectedCategory.value
-        } else {
+    fun getSelectedCategoryAsDone(): Int? {
+        return if(selectedCategory.value == 0) {
             null
+        } else {
+            selectedCategory.value
         }
     }
 }

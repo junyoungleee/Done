@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Plan
@@ -93,6 +94,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         with(binding.rcItem) {
             adapter = planAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = null
         }
         planVM.planList.observe(this) { planList ->
             Log.d("plan_list_size", "${planList.size}")
@@ -126,6 +128,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         with(binding.rcItem) {
             adapter = routineAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = null
         }
         routineVM.routineList.observe(this) { routineList ->
             Log.d("routine_list_size", "${routineList.size}")
