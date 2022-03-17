@@ -27,6 +27,7 @@ import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
 import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.my.MyActivity
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.MainViewModel
 import com.palette.done.viewmodel.MainViewModelFactory
@@ -59,8 +60,16 @@ class MainActivity : AppCompatActivity() {
             doneCountList = mainVM.getDoneCountMap()
             setCalendarView()
         }
-
         setCalendarSubHeader()
+
+        setButtonsDestination()
+    }
+
+    private fun setButtonsDestination() {
+        binding.btnMy.setOnClickListener {
+            val intent = Intent(this, MyActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setCalendarView() {

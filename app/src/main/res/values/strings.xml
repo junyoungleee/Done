@@ -129,4 +129,43 @@
     <string name="routine_item_edit">루틴 수정</string>
     <string name="routine_hint_add">루틴을 입력해보세요</string>
 
+    <!-- 마이 페이지 -->
+    <string name="my_title">MY</string>
+    <string name="my_report_all_done">전체 Done</string>
+    <string name="my_report_plan">플랜 달성률</string>
+    <string name="my_report_this_month_done">이번달 Done</string>
+    <string name="my_report_btn">내 리포트 확인하기</string>
+    <string name="my_report_not_open">추후 오픈 예정이에요!\n기대해주세요😎</string>
+
+    <string name="my_menu_premium">프리미엄</string>
+    <string name="my_menu_notice">공지사항</string>
+    <string name="my_menu_inquiry">문의하기</string>
+    <string name="my_menu_term_of_use">이용약관</string>
+    <string name="my_menu_privacy">개인정보 보호약관</string>
+    <string name="my_menu_version">버전</string>
+
+    <string name="my_edit_title">내 정보 수정</string>
+    <string name="my_edit_nickname_title">닉네임 수정</string>
+    <string name="my_edit_type_title">기록유형 설정</string>
+    <string name="my_edit_alarm_title">알림 설정</string>
+    <string name="my_edit_password_title">비밀번호 변경</string>
+    <string name="my_edit_log_out">로그아웃</string>
+    <string name="my_edit_quit">회원탈퇴</string>
+
+    <string name="my_level_left">개 Done이 남았어요! 화이팅 👍🏻</string>
+    <string name="level">LV.</string>
+
+    <string name="level_title">등급 안내</string>
+    <string name="level_my">내 등급</string>
+    <string name="level_1_3">LV.1~LV.3</string>
+    <string name="level_1_3_detail">해냄과 함께 기록을 시작하는 단계네요:)</string>
+    <string name="level_4_6">LV.4~LV.6</string>
+    <string name="level_4_6_detail">기록 습관이 생기고 있는 해린이네요!👏🏻</string>
+    <string name="level_7_8">LV.7~LV.8</string>
+    <string name="level_7_8_detail">나만의 던리스트를 꾸준히 만들어가고 있어요!</string>
+    <string name="level_9_10">LV.9~LV.10</string>
+    <string name="level_9_10_detail">진정한 갓생러!</string>
+
+    <string name="nickname">닉네임</string>
+    <string name="edit">수정하기</string>
 </resources>
