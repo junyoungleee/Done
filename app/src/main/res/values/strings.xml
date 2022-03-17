@@ -22,6 +22,11 @@
     <string name="landing_start">시작하기</string>
     <string name="start_login">이메일로 시작하기</string>
     <string name="start_login_kakao">카카오로 시작하기</string>
+    <string name="start_detail">시작하기 버튼 클릭 시</string>
+    <string name="start_term_of_use"><u>이용약관</u></string>
+    <string name="start_privacy"><u>개인정보보호정책</u></string>
+    <string name="start_detail_2">&#160;및&#160;</string>
+    <string name="start_detail_3">에 동의하게 됩니다. </string>
 
     <!-- 로그인페이지 -->
     <string name="login_title">시작하기</string>
@@ -31,7 +36,7 @@
     <string name="login_title_pwd_new">해냄과의 첫 만남!\n비밀번호를 입력해주세요.</string>
     <string name="login_title_pwd_old">오랜만이네요!\n비밀번호를 입력해주세요</string>
     <string name="login_hint_email">이메일 주소 입력</string>
-    <string name="login_hint_pwd">비밀번호 입력 (영문, 숫자포함 8자리)</string>
+    <string name="login_hint_pwd">비밀번호 입력 (영문, 숫자포함 8~16자리)</string>
     <string name="login_hint_pwd2">비밀번호 재입력</string>
     <string name="login_wrong_email">이메일 형식으로 입력해주세요</string>
     <string name="login_wrong_pwd">비밀번호 형식으로 입력해주세요</string>

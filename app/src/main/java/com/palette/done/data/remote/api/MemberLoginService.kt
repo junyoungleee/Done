@@ -15,4 +15,8 @@ interface MemberLoginService {
 
     @POST("/api/auth/signup")
     fun postSignUp(@Body data: MemberAccount): Call<MemberSignUpResponse>
+
+    @POST("/api/auth/password")
+    fun postPwdEmail(@Body data: CheckEmail): Call<CheckEmailResponse>
+
 }

@@ -46,6 +46,8 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
+//        // 로그인 테스트
+//        intent = Intent(this, LandingActivity::class.java)
 
         CoroutineScope(Dispatchers.IO).launch {
             // delay(3000L)

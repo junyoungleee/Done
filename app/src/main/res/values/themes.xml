@@ -14,6 +14,11 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_regular</item>
         <!-- Customize your theme here. -->
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
     </style>
 
     <!-- Text -->
@@ -47,6 +52,11 @@
         <item name="android:textColor">@color/contextColor</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="start_detail_text">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="find_pwd_explain">
@@ -155,7 +165,7 @@
 
     <style name="all_edittext_pwd" parent="all_edittext">
         <item name="android:inputType">textPassword</item>
-        <item name="android:maxLength">8</item>
+        <item name="android:maxLength">16</item>
     </style>
 
     <style name="done_edittext">

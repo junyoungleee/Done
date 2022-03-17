@@ -12,8 +12,8 @@ class InputForm {
     }
 
     fun checkPwdPattern(pwd: String): Boolean {
-        // 비밀번호 정규식 : 영문, 숫자 포함 8자리
-        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9]).{7}.\$")
+        // 비밀번호 정규식 : 영문, 숫자 포함 8~16자
+        val pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9]).{8,16}.\$")
         return pattern.matcher(pwd).matches()
     }
 }
