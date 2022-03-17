@@ -6,5 +6,5 @@
     <dimen name="today_record_height">110dp</dimen>
     <dimen name="all_sticker_size">115dp</dimen>
 
-    <dimen name="dialog_size">300dp</dimen>
+    <dimen name="dialog_size">320dp</dimen>
 </resources>

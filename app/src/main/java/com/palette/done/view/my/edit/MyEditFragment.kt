@@ -6,14 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.palette.done.R
+import com.palette.done.databinding.DialogEmptyListBinding
+import com.palette.done.databinding.FragmentMyEditBinding
+import com.palette.done.view.main.DoneDialog
 
 class MyEditFragment : Fragment() {
 
+    private var _binding: FragmentMyEditBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_edit, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
+    : View? {
+        _binding = FragmentMyEditBinding.inflate(inflater, container, false)
+
+        showOutDialog()
+        return binding.root
+    }
+
+    private fun showOutDialog() {
+        binding.tvLogOut.setOnClickListener {
+            val dialog = OutDialog(Out.LOG_OUT)
+            dialog.show(parentFragmentManager, "OutDialog")
+        }
+        binding.tvQuit.setOnClickListener {
+            val dialog = OutDialog(Out.QUIT)
+            dialog.show(parentFragmentManager, "OutDialog")
+        }
     }
 
 }

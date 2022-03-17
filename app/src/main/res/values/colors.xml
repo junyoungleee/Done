@@ -30,6 +30,7 @@
     <color name="doneLightColor">#FFF4E7</color>
 
     <color name="cardElevation">#66000000</color>
+    <color name="dialogSubTextColor">#80000000</color>
 
     <color name="mainDoneListColor">#0066FF</color>
 </resources>
