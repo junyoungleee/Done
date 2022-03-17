@@ -142,7 +142,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                             setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                             setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                             setOnClickListener {
-                                val category = categoryVM.getSelectedCategory()
+                                val category = categoryVM.getSelectedCategoryAsDone()
                                 val tag = doneEditVM.getSelectedHashTag()
                                 val routine = doneEditVM.getSelectedRoutineTag()
 
@@ -171,7 +171,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                             else -> ""
                         }
                         setOnClickListener {
-                            val category = categoryVM.getSelectedCategory()
+                            val category = categoryVM.getSelectedCategoryAsDone()
                             val tag = doneEditVM.getSelectedHashTag()
                             val routine = doneEditVM.getSelectedRoutineTag()
 
@@ -248,7 +248,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     private fun setCategoryImage() {
         categoryVM.selectedCategory.observe(viewLifecycleOwner) { id ->
             when(id) {
-                0 -> {
+                0, null -> {
                     // 카테고리가 없는 경우
                     Log.d("category_id_0", "$id")
                     binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
@@ -256,8 +256,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 else -> {
                     // 카테고리가 선택되어 있는 경우
                     Log.d("category_id", "$id")
-//                    val imgId = resources.getIdentifier("category_$id", "drawable", requireActivity().packageName)
-//                    binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), imgId))
+                    val imgId = resources.getIdentifier("ic_category_$id", "drawable", requireActivity().packageName)
+                    binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), imgId))
                     binding.btnCategory.setOnClickListener {
                         if (isCategoryOpen) {
                             categoryVM.initSelectedCategory()
@@ -280,6 +280,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 if (isEditPopupOpen) {
                     isEditPopupOpen = false
                     setInputFrameLayout()
+                    (activity as DoneActivity).scrollingDown()
                 }
                 if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
                     binding.etDone.hint = getString(R.string.done_list_write_hint)
@@ -316,6 +317,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
             if (isEditPopupOpen) {
                 // 카테고리, 루틴, 해시태그 입력창이 열리게 하기
                 hideKeyboard()
+                delay(10)
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 binding.flWriteContainer.visibility = View.VISIBLE
                 delay(100)
@@ -329,6 +331,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 delay(100)
                 binding.flWriteContainer.visibility = View.GONE
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                delay(100)
+                (activity as DoneActivity).scrollingDown()
             }
         }
     }
