@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.palette.done.R
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityFindPwdBinding
+import com.palette.done.viewmodel.LoginViewModel
+import com.palette.done.viewmodel.LoginViewModelFactory
 import com.palette.done.viewmodel.PatternCheckViewModel
 
 class FindPwdActivity : AppCompatActivity() {
@@ -15,6 +19,9 @@ class FindPwdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFindPwdBinding
 
     private val patternVM : PatternCheckViewModel by viewModels()
+    private val loginVM : LoginViewModel by viewModels { LoginViewModelFactory(
+        MemberRepository()
+    ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +36,19 @@ class FindPwdActivity : AppCompatActivity() {
         lateinit var intent: Intent
         // 이메일 전송 버튼
         binding.btnSendEmail.setOnClickListener {
-            intent = Intent(this, AfterFindPwdActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            loginVM.postEmailPwd(binding.etEmail.text.toString())
+            loginVM.isPwdEmailSent.observe(this) { sent ->
+                if(sent) {
+                    intent = Intent(this, AfterFindPwdActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+            }
         }
 
         // 툴바 백버튼
         binding.btnBack.setOnClickListener {
-
+            finish()
         }
     }
 

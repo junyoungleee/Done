@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import com.palette.done.DoneApplication
 import com.palette.done.data.remote.model.member.*
 import com.palette.done.data.remote.repository.MemberRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +21,9 @@ class LoginViewModel(private val repository: MemberRepository) : ViewModel(){
 
     var isNew : MutableLiveData<Boolean> = MutableLiveData<Boolean>(true)
     var _email: MutableLiveData<String> = MutableLiveData("")
+
+    var _isPwdEmailSent: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isPwdEmailSent: LiveData<Boolean> get() = _isPwdEmailSent
 
     fun postEmailCheck(email: String) {
         viewModelScope.launch {
@@ -84,6 +89,21 @@ class LoginViewModel(private val repository: MemberRepository) : ViewModel(){
                 }
 
                 override fun onFailure(call: Call<MemberSignUpResponse>, t: Throwable) {
+                    Log.d("retrofit_failure", "${t.message}")
+                }
+            })
+        }
+    }
+
+    fun postEmailPwd(email: String) {
+        viewModelScope.launch {
+            repository.postEmailPwd(CheckEmail(email)).enqueue(object : Callback<CheckEmailResponse> {
+                override fun onResponse(call: Call<CheckEmailResponse>, response: Response<CheckEmailResponse>) {
+                    _isPwdEmailSent.value = true
+                }
+
+                override fun onFailure(call: Call<CheckEmailResponse>, t: Throwable) {
+                    isResponse.value = false
                     Log.d("retrofit_failure", "${t.message}")
                 }
             })

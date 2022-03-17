@@ -33,6 +33,10 @@ class MemberRepository {
         return loginApi.postSignUp(account)
     }
 
+    fun postEmailPwd(email: CheckEmail): Call<CheckEmailResponse> {
+        return loginApi.postPwdEmail(email)
+    }
+
     // 유저 정보
     fun patchMemberProfile(profile: MemberProfile): Call<MemberProfileResponse> {
         return profileApi.patchMemberProfile(profile)
