@@ -17,6 +17,10 @@ class MyActivity : AppCompatActivity() {
 
         setButtonsDestination()
 
+        setProfile()
+        setLevel()
+        setReport()
+
         setContentView(binding.root)
     }
 
@@ -24,7 +28,7 @@ class MyActivity : AppCompatActivity() {
         val data = DoneApplication.pref
         with(binding.layoutMyProfile) {
             tvType.text = LevelType.type.getValue(data.type!!)
-            tvTypeCoin.text = data.type!!
+            tvTypeCoin.text = data.type.toString().uppercase()
             tvNickname.text = data.nickname!!
             val lv = data.level
             tvLevelWithName.text = "${LevelType.getLevel(lv)} LV.$lv"
@@ -35,10 +39,16 @@ class MyActivity : AppCompatActivity() {
         val data = DoneApplication.pref
         with(binding.layoutMyLevel) {
             val level = data.level
-            tvLevelProgressStart.text = "LV.$level"
-            tvLevelProgressEnd.text = "LV.${level+1}"
+            if(level == 10) {
+                tvLevelProgressStart.text = "LV.$level"
+                tvLevelProgressEnd.text = ""
+            } else {
+                tvLevelProgressStart.text = "LV.$level"
+                tvLevelProgressEnd.text = "LV.${level+1}"
+            }
+
             tvLevelLeftDetail.text = getString(R.string.my_level_left)
-            pbLevel.progress = 50 //
+//            pbLevel.progress = 50
         }
     }
 

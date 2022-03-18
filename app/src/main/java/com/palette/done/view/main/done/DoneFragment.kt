@@ -54,7 +54,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     private val util = Util()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDoneBinding.inflate(inflater, container, false)
 
         binding.flWriteContainer.layoutParams =
@@ -148,7 +148,6 @@ class DoneFragment(mode: DoneMode) : Fragment() {
 
                                 // recyclerview 추가
                                 val date = doneDateVM.getTitleDate()
-                                Log.d("date_save", "$date")
                                 doneEditVM.addDoneList(date, binding.etDone.text.toString(), category, tag, routine)
 
                                 // Done 추가 후, 초기화
@@ -186,7 +185,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         (activity as DoneActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_PLAN -> {
-                                        planVM.insertPlan(done, null)
+                                        planVM.insertPlan(done, category)
                                         binding.etDone.text.clear()
                                     }
                                     DoneMode.EDIT_PLAN -> {
@@ -195,7 +194,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_ROUTINE -> {
-                                        routineVM.insertRoutine(done, null)
+                                        routineVM.insertRoutine(done, category)
                                         binding.etDone.text.clear()
                                     }
                                     DoneMode.EDIT_ROUTINE -> {

@@ -217,16 +217,16 @@ class DoneActivity : AppCompatActivity() {
 
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
-            binding.scrollView.post {
-                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
-            }
+//            binding.scrollView.post {
+//                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+//            }
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
         binding.rcDoneList.rootView.setOnClickListener {
-            binding.scrollView.post {
-                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
-            }
+//            binding.scrollView.post {
+//                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+//            }
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }

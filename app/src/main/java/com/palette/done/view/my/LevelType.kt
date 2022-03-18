@@ -5,7 +5,7 @@ object LevelType {
     val type = mapOf(Pair("p", "즉흥러"), Pair("j", "계획러"))
 
     var levelName = ""
-    fun getLevel(lv: Int) {
+    fun getLevel(lv: Int): String {
         levelName = when(lv) {
             in(1..3) -> level[0]
             in(4..6) -> level[1]
@@ -13,5 +13,6 @@ object LevelType {
             in(9..10) -> level[3]
             else -> ""
         }
+        return levelName
     }
 }
