@@ -40,7 +40,7 @@ class OutDialog(var outMode: Out) : DialogFragment() {
             }
             Out.QUIT -> {
                 with(binding) {
-                    tvOutTitle.text = getString(R.string.my_dialog_log_out)
+                    tvOutTitle.text = getString(R.string.my_dialog_quit)
                     tvOutDetail.visibility = View.VISIBLE
                     btnRight.text = getString(R.string.no)
                     btnLeft.text = getString(R.string.yes)
@@ -51,7 +51,12 @@ class OutDialog(var outMode: Out) : DialogFragment() {
             }
         }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 

@@ -26,11 +26,11 @@ class MyEditFragment : Fragment() {
     private fun showOutDialog() {
         binding.tvLogOut.setOnClickListener {
             val dialog = OutDialog(Out.LOG_OUT)
-            dialog.show(parentFragmentManager, "OutDialog")
+            dialog.show(requireActivity().supportFragmentManager, "OutDialog")
         }
         binding.tvQuit.setOnClickListener {
             val dialog = OutDialog(Out.QUIT)
-            dialog.show(parentFragmentManager, "OutDialog")
+            dialog.show(requireActivity().supportFragmentManager, "OutDialog")
         }
     }
 
