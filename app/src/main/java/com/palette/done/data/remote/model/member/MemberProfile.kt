@@ -22,3 +22,25 @@ data class MemberProfileResponse(
     val message: String?,
     val is_success: Boolean
 )
+
+data class MemberTypeResponse(
+    val item: MemberType?,
+    val messsage: String?,
+    val is_success: Boolean
+)
+
+data class MemberType(
+    val type: String
+)
+
+data class MemberAlarmResponse(
+    val item: MemberAlarm,
+    val message: String?,
+    val is_success: Boolean
+)
+
+data class MemberAlarm(
+    val alarm_time: String,
+    val alarm_cycle: String,
+    val is_recv_alarm: Boolean
+)

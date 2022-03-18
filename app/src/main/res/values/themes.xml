@@ -311,5 +311,21 @@
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
-    <!-- CardView -->
+    <!-- Dialog -->
+    <style name="dialog_card">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="android:layout_width">320dp</item>
+    </style>
+
+    <style name="dialog_main_text">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="dialog_sub_text" parent="dialog_main_text">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/dialogSubTextColor</item>
+    </style>
 </resources>
