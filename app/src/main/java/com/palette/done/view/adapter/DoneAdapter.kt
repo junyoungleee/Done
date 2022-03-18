@@ -1,8 +1,11 @@
 package com.palette.done.view.adapter
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +16,7 @@ import com.palette.done.databinding.ItemDoneBinding
  * ActivityDone
  *  던리스트 Recyclerview Adapter
  */
-class DoneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator())  {
+class DoneAdapter(val context: Context): ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator())  {
 
     private lateinit var doneClickListener: OnDoneClickListener
 
@@ -27,6 +30,14 @@ class DoneAdapter: ListAdapter<Done, DoneAdapter.DoneViewHolder>(DoneComparator(
     override fun onBindViewHolder(holder: DoneViewHolder, position: Int) {
         val done = getItem(position)
         with(holder.binding) {
+            val category = done.categoryNo
+            if (category != null) {
+                val name = "ic_category_$category"
+                val imgId = context.resources.getIdentifier(name, "drawable", context.packageName)
+                ivDoneCategory.setImageDrawable(ContextCompat.getDrawable(context, imgId))
+            } else {
+                ivDoneCategory.setImageDrawable(null)
+            }
             tvDoneContent.text = done.content
             tvDoneContent.setOnClickListener {
                 doneClickListener.onDoneRootClick(it)

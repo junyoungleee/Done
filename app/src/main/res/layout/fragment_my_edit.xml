@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.my.edit.MyEditFragment">
+
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:padding="11dp"
+        android:src="@drawable/img_profile_done"
+        android:background="@drawable/my_oval_stroke_oragne"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/ll_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_profile"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/nickname"
+            style="@style/my_menu_text"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/done_sub_title_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_marginEnd="6dp"
+                android:includeFontPadding="false"
+                android:text="느슨한갓생" />
+
+            <TextView
+                android:id="@+id/tv_nickname_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/spoqa_han_sans_neo_light"
+                android:gravity="center"
+                android:text="@string/edit"
+                android:textColor="@color/contextMiniColor"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/disableColor"
+        app:layout_constraintTop_toBottomOf="@id/ll_profile"
+        app:layout_constraintStart_toStartOf="@id/ll_profile"
+        app:layout_constraintEnd_toEndOf="@id/ll_profile"/>
+
+    <LinearLayout
+        android:id="@+id/ll_type"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="37dp"
+        app:layout_constraintTop_toBottomOf="@id/ll_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/my_edit_type_title"
+            style="@style/my_menu_text"/>
+
+        <ImageButton
+            android:id="@+id/btn_edit_type"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:padding="20dp"
+            android:src="@drawable/ic_menu" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/disableColor"
+        app:layout_constraintTop_toBottomOf="@id/ll_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/ll_pwd_change"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toBottomOf="@id/ll_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/my_edit_password_title"
+            style="@style/my_menu_text"/>
+        <ImageButton
+            android:id="@+id/btn_edit_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_menu"
+            android:background="@null"
+            android:padding="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_log_out"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/my_edit_log_out"
+            android:includeFontPadding="false"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="@color/contextColor"
+            style="@style/all_mini_text"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="16dp"
+            android:background="@color/black"/>
+        <TextView
+            android:id="@+id/tv_quit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/my_edit_quit"
+            android:includeFontPadding="false"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="@color/contextColor"
+            style="@style/all_mini_text"/>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

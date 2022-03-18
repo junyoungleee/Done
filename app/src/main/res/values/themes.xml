@@ -88,6 +88,7 @@
         <item name="android:textColor">@color/doneHintColor</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">5sp</item>
+        <item name="android:translationY">-2.48sp</item>
     </style>
 
     <style name="today_text" parent="done_hint_text">
@@ -97,6 +98,43 @@
     <style name="today_hint_text">
         <item name="android:textColor">@color/doneDetailColor</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- MY -->
+
+    <style name="my_done_mini_text">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/mainDoneColor</item>
+    </style>
+
+    <style name="my_done_level_text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/mainDoneColor</item>
+    </style>
+
+    <style name="my_level_indicator_text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/doneHintColor</item>
+    </style>
+
+    <style name="my_menu_text">
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/contextColor</item>
+    </style>
+
+    <style name="my_report_topic_text">
+        <item name="android:textColor">@color/contextColor</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="my_report_text">
+        <item name="fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:textColor">@color/contextColor</item>
+        <item name="android:textSize">22dp</item>
+        <item name="android:gravity">center|center_horizontal</item>
     </style>
 
     <!-- TEXT PLAN & ROUTINE -->
@@ -273,4 +311,5 @@
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
     </style>
 
+    <!-- CardView -->
 </resources>

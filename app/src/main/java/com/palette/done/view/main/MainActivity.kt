@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
@@ -27,6 +28,7 @@ import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
 import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.my.MyActivity
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.MainViewModel
 import com.palette.done.viewmodel.MainViewModelFactory
@@ -59,8 +61,16 @@ class MainActivity : AppCompatActivity() {
             doneCountList = mainVM.getDoneCountMap()
             setCalendarView()
         }
-
         setCalendarSubHeader()
+
+        setButtonsDestination()
+    }
+
+    private fun setButtonsDestination() {
+        binding.btnMy.setOnClickListener {
+            val intent = Intent(this, MyActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setCalendarView() {
@@ -145,6 +155,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+        // 깜빡임 제거
+        val animator = binding.calendarView.itemAnimator
+        if (animator is SimpleItemAnimator) {
+            animator.supportsChangeAnimations = false
         }
     }
 
