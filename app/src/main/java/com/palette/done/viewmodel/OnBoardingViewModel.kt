@@ -27,24 +27,26 @@ class OnBoardingViewModel(private val repository: MemberRepository): ViewModel()
     val week = arrayListOf<String>("Mon","Tue","Wed","Thu","Fri","Sat","Sun")
 
     fun patchMemberProfile() {
-        val alarmTime = "${alarmHour.value}:${alarmMin.value}"
+//        val alarmTime = "${alarmHour.value}:${alarmMin.value}"
+//
+//        // "Mon,Tue" <- 요일 추가시 ,붙임
+//        val selectedWeek = alarmWeekday.value!!.sorted()
+//        var alarmCycle = ""
+//        for(i in selectedWeek.indices) {
+//            alarmCycle += week[selectedWeek[i]]+","
+//        }
+//        alarmCycle = alarmCycle.substring(0 until alarmCycle.length-1)
+//        Log.d("ob_vm_cycle", "$alarmCycle")
+//
+//        val profile = MemberProfile(nickname.value.toString(), userType.value.toString(), alarmTime, alarmCycle)
 
-        // "Mon,Tue" <- 요일 추가시 ,붙임
-        val selectedWeek = alarmWeekday.value!!.sorted()
-        var alarmCycle = ""
-        for(i in selectedWeek.indices) {
-            alarmCycle += week[selectedWeek[i]]+","
-        }
-        alarmCycle = alarmCycle.substring(0 until alarmCycle.length-1)
-        Log.d("ob_vm_cycle", "$alarmCycle")
-
-        val profile = MemberProfile(nickname.value.toString(), userType.value.toString(), alarmTime, alarmCycle)
+        val profile = MemberProfile(nickname.value.toString(), userType.value.toString(), "", "")
 
         with(DoneApplication.pref) {
             nickname = this@OnBoardingViewModel.nickname.value.toString()
             type = this@OnBoardingViewModel.userType.value.toString()
-            this.alarmTime = alarmTime
-            this.alarmCycle = alarmCycle
+//            this.alarmTime = alarmTime
+//            this.alarmCycle = alarmCycle
         }
 
         viewModelScope.launch {

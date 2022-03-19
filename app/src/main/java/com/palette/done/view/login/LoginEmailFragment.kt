@@ -1,15 +1,19 @@
 package com.palette.done.view.login
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.FragmentLoginEmailBinding
 import com.palette.done.data.remote.repository.MemberRepository
@@ -27,10 +31,14 @@ class LoginEmailFragment : Fragment() {
     ) }
     private val patternVM : PatternCheckViewModel by viewModels()
 
+    private var rootHeight = -1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginEmailBinding.inflate(inflater, container, false)
+
+        setKeyboardHeight()
 
         // 다음 fragment 이동
         val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_login)
@@ -61,11 +69,41 @@ class LoginEmailFragment : Fragment() {
     }
 
     private fun setNextButtonEnable() {
-        binding.etEmail.addTextChangedListener(patternVM.onEmailTextWatcher())
+        binding.etEmail.setOnEditorActionListener{ view, action, event ->
+            val handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                patternVM.checkEmail(view.text.toString())
+            }
+            handled
+        }
+//        binding.etEmail.addTextChangedListener(patternVM.onEmailTextWatcher())
         patternVM.emailResult.observe(viewLifecycleOwner) {
             checkEmail(it)
             binding.btnNext.isEnabled = (patternVM.emailResult.value == true) && (binding.etEmail.text.toString() != "")
         }
+    }
+
+    private fun setKeyboardHeight() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener{
+            override fun onGlobalLayout() {
+                if (rootHeight == -1) rootHeight = binding.root.height
+                val visibleFrameSize = Rect()
+                binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
+                val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+                val keyboard = rootHeight - heightExceptKeyboard
+                Log.d("keyboard", "$keyboard")
+                Log.d("keyboard", "$keyboard")
+                if (DoneApplication.pref.keyboard != keyboard && keyboard != 0) {
+                    DoneApplication.pref.keyboard = keyboard
+                    Log.d("keyboard_pref", "${DoneApplication.pref.keyboard}")
+                    binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                } else {
+                    if (keyboard != 0) {
+                        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                }
+            }
+        })
     }
 
     override fun onResume() {

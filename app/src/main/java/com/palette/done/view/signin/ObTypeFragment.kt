@@ -1,6 +1,7 @@
 package com.palette.done.view.signin
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObTypeBinding
 import com.palette.done.data.remote.repository.MemberRepository
+import com.palette.done.view.main.MainActivity
 import com.palette.done.viewmodel.OnBoardingViewModel
 import com.palette.done.viewmodel.OnBoardingViewModelFactory
 
@@ -25,7 +27,7 @@ class ObTypeFragment : Fragment() {
     ) }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentObTypeBinding.inflate(inflater, container, false)
 
         onBoardingVM.nickname.observe(viewLifecycleOwner) {
@@ -42,7 +44,6 @@ class ObTypeFragment : Fragment() {
         _binding = null
     }
 
-
     private fun setTypeButton() {
         binding.llTypeJ.setOnClickListener {
             onBoardingVM.userType.value = "j"
@@ -58,11 +59,26 @@ class ObTypeFragment : Fragment() {
         }
     }
 
+//    private fun setNextButton() {
+//        val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_on_boarding)
+//        binding.btnNext.setOnClickListener {
+//            viewPager?.currentItem = 2
+//            setIndicator() // 다음 버튼 클릭 시 indicator 수정
+//        }
+//    }
+
     private fun setNextButton() {
-        val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_on_boarding)
+        // 기존 스택 없애고 메인 화면이 루트
         binding.btnNext.setOnClickListener {
-            viewPager?.currentItem = 2
-            setIndicator() // 다음 버튼 클릭 시 indicator 수정
+            onBoardingVM.patchMemberProfile()
+            onBoardingVM.patchSuccess.observe(viewLifecycleOwner) {
+                if (it) {
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+            }
         }
     }
 

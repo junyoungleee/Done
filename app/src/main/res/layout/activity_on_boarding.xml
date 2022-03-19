@@ -41,7 +41,8 @@
             android:id="@+id/iv_indicator_third"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/ic_indicator_left" />
+            android:src="@drawable/ic_indicator_left"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -82,9 +83,10 @@ class LoginPwdFragment : Fragment() {
                 loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
                     if (loginVM.isLoginSuccess.value!!) {
                         startActivity(intent)
+                    } else {
+                        checkLogin(false)
                     }
                 }
-                startActivity(intent)
             }
         }
     }
@@ -94,6 +96,18 @@ class LoginPwdFragment : Fragment() {
             binding.etPwd.setBackgroundResource(R.drawable.all_et_background_error)
             binding.etPwd.setTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
             binding.tvWrongSign.setText(R.string.login_wrong_pwd)
+        } else {
+            binding.etPwd.setBackgroundResource(R.drawable.all_et_background_selector)
+            binding.etPwd.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.tvWrongSign.text = ""
+        }
+    }
+
+    private fun checkLogin(check: Boolean) {
+        if (!check) {
+            binding.etPwd.setBackgroundResource(R.drawable.all_et_background_error)
+            binding.etPwd.setTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
+            binding.tvWrongSign.setText(R.string.login_fail)
         } else {
             binding.etPwd.setBackgroundResource(R.drawable.all_et_background_selector)
             binding.etPwd.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
@@ -114,8 +128,22 @@ class LoginPwdFragment : Fragment() {
     }
 
     private fun checkBothPwd(new: Boolean) {
-        binding.etPwd.addTextChangedListener(patternVM.onPwdTextWatcher())
-        binding.etPwdAgain.addTextChangedListener(patternVM.onPwd2TextWatcher())
+        binding.etPwd.setOnEditorActionListener{ view, action, event ->
+            val handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                patternVM.checkPwd(view.text.toString())
+            }
+            handled
+        }
+        binding.etPwdAgain.setOnEditorActionListener{ view, action, event ->
+            val handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                patternVM.checkPwd2(view.text.toString())
+            }
+            handled
+        }
+//        binding.etPwd.addTextChangedListener(patternVM.onPwdTextWatcher())
+//        binding.etPwdAgain.addTextChangedListener(patternVM.onPwd2TextWatcher())
 
         // 기존유저인 경우 비밀번호만 확인함
         patternVM.pwdResult.observe(viewLifecycleOwner) {
