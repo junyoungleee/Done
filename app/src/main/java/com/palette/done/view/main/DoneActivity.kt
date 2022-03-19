@@ -157,6 +157,7 @@ class DoneActivity : AppCompatActivity() {
                     .setOnMenuItemClickListener { menu, item ->
                         when(menu) {
                             0 -> {
+                                // 수정
                                 popup.dismiss()
                                 doneVM.oldDone = done
                                 doneVM.oldDoneIndex = position
@@ -165,6 +166,7 @@ class DoneActivity : AppCompatActivity() {
                                 binding.flDoneWrite.visibility = View.VISIBLE
                             }
                             1 -> {
+                                // 삭제
                                 doneVM.deleteDoneList(done.doneId)
                                 popup.dismiss()
                             }

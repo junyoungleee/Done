@@ -64,7 +64,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
 
         setTitle()
 
-        setCategoryButtonClick()
+        setCategoryAction()
         setWriteButtons()
         setEditText()
 
@@ -230,27 +230,36 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         }
     }
 
-    private fun setCategoryButtonClick() {
-        binding.btnCategory.setOnClickListener {
-            if (!isEditPopupOpen) {
-                isEditPopupOpen = !isEditPopupOpen
-            }
-            isCategoryOpen = true
-            setInputFrameLayout()
-            binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
-            parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
-
-            setCategoryImage()
+    private fun categoryOpen() {
+        if (!isEditPopupOpen) {
+            isEditPopupOpen = !isEditPopupOpen
         }
+        isCategoryOpen = true
+        setInputFrameLayout()
+        parentFragmentManager.beginTransaction()
+            .replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
     }
 
-    private fun setCategoryImage() {
+    private fun closeCategory() {
+        isCategoryOpen = false
+    }
+
+    private fun setCategoryAction() {
         categoryVM.selectedCategory.observe(viewLifecycleOwner) { id ->
             when(id) {
                 0, null -> {
                     // 카테고리가 없는 경우
                     Log.d("category_id_0", "$id")
-                    binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
+                    // 카테고리가 없을 때, 버튼을 누르면 무조건 카테고리 팝업 열리고 빈 이미지
+                    binding.btnCategory.setOnClickListener {
+                        categoryOpen()
+                        binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
+                    }
+                    // 카테고리가 없을 때, 팝엽 열리면 빈 이미지 / 닫히면 기본 이미지
+                    when(isCategoryOpen) {
+                        true -> binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
+                        false -> binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_category))
+                    }
                 }
                 else -> {
                     // 카테고리가 선택되어 있는 경우
@@ -258,18 +267,15 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                     val imgId = resources.getIdentifier("ic_category_$id", "drawable", requireActivity().packageName)
                     binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), imgId))
                     binding.btnCategory.setOnClickListener {
-                        if (isCategoryOpen) {
+                        if(isCategoryOpen) {
                             categoryVM.initSelectedCategory()
+                        } else {
+                            categoryOpen()
                         }
                     }
                 }
             }
         }
-    }
-
-    private fun closeCategory() {
-        isCategoryOpen = false
-        binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_category))
     }
 
     private fun setEditText() {
