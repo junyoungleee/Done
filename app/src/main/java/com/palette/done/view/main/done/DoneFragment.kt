@@ -181,7 +181,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         val new = Done(old.doneId, old.date, done, category, tag, routine)
                                         Log.d("done_edit", "id = ${old.doneId}")
                                         doneEditVM.updateDoneList(new)
-                                        hideKeyboard()
+//                                        hideKeyboard()
                                         (activity as DoneActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_PLAN -> {
@@ -190,7 +190,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     }
                                     DoneMode.EDIT_PLAN -> {
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
-                                        hideKeyboard()
+//                                        hideKeyboard()
                                         (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_ROUTINE -> {
@@ -231,17 +231,17 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     }
 
     private fun categoryOpen() {
-        if (!isEditPopupOpen) {
-            isEditPopupOpen = !isEditPopupOpen
-        }
+        isEditPopupOpen = true
         isCategoryOpen = true
         setInputFrameLayout()
-        parentFragmentManager.beginTransaction()
-            .replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
+        parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
     }
 
     private fun closeCategory() {
         isCategoryOpen = false
+        if (categoryVM.getSelectedCategoryAsDone() == null) {
+            binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_category))
+        }
     }
 
     private fun setCategoryAction() {
@@ -285,7 +285,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 if (isEditPopupOpen) {
                     isEditPopupOpen = false
                     setInputFrameLayout()
-                    (activity as DoneActivity).scrollingDown()
+//                    (activity as DoneActivity).scrollingDown()
                 }
                 if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
                     binding.etDone.hint = getString(R.string.done_list_write_hint)
@@ -322,7 +322,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
             if (isEditPopupOpen) {
                 // 카테고리, 루틴, 해시태그 입력창이 열리게 하기
                 hideKeyboard()
-                delay(10)
+                delay(25)
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 binding.flWriteContainer.visibility = View.VISIBLE
                 delay(100)
@@ -337,7 +337,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 binding.flWriteContainer.visibility = View.GONE
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 delay(100)
-                (activity as DoneActivity).scrollingDown()
+//                (activity as DoneActivity).scrollingDown()
             }
         }
     }

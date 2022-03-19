@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.palette.done.R
-import com.palette.done.databinding.DialogEmptyListBinding
 import com.palette.done.databinding.FragmentMyEditBinding
-import com.palette.done.view.main.DoneDialog
 
 class MyEditFragment : Fragment() {
 

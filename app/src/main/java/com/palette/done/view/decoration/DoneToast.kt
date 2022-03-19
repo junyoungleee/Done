@@ -20,7 +20,11 @@ object DoneToast {
         val inflater = LayoutInflater.from(context)
         val binding: ToastDoneBinding = DataBindingUtil.inflate(inflater, R.layout.toast_done, null, false)
 
-        binding.tvToastTitle.text = "[$doneContent]"
+        binding.tvToastTitle.text = if (cheerMsg != "") {
+            "[$doneContent]"
+        } else {
+            "$doneContent"
+        }
         binding.tvCheerUpMsg.text = cheerMsg
 
         return Toast(context).apply {

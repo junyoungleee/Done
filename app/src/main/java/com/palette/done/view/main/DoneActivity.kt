@@ -3,28 +3,27 @@ package com.palette.done.view.main
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Constraints
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.recyclerview.widget.RecyclerView
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityDoneBinding
 import com.palette.done.view.adapter.DoneAdapter
+import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
 import com.palette.done.view.main.today.TodayRecordActivity
 import com.palette.done.view.util.Util
@@ -32,8 +31,10 @@ import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
-import com.skydoves.powermenu.kotlin.showAsDropDown
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
+
 
 class DoneActivity : AppCompatActivity() {
 
@@ -77,7 +78,7 @@ class DoneActivity : AppCompatActivity() {
         routineVM.initRoutine()
         planVM.initPlan()
 
-        showDialog()
+        showEmptyLayout()
 
         setTitleDate()
         setButtonsDestination()
@@ -88,34 +89,53 @@ class DoneActivity : AppCompatActivity() {
         hideKeyboard()
     }
 
-    private fun showDialog() {
-        val empty = intent.getBooleanExtra("is_empty", false)
-        if (empty) {
-            val dialog = DoneDialog()
-            dialog.show(supportFragmentManager, "DoneDialog")
+    private fun setButtonsDestination() {
+        with(binding) {
+            btnCalendarBack.setOnClickListener {
+                finish()
+            }
+            btnPlan.setOnClickListener {
+                val intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
+                val date = dateVM.getTitleDate()
+                intent.putExtra("mode", ItemMode.PLAN.name)
+                intent.putExtra("date", date)  // 현재 던리스트의 날짜
+                startActivity(intent)
+            }
+            llTodayRecord.setOnClickListener {
+                val intent = Intent(this@DoneActivity, TodayRecordActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
-    private fun setKeyboardHeight() {
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener{
-            override fun onGlobalLayout() {
-                if (rootHeight == -1) rootHeight = binding.root.height
-                val visibleFrameSize = Rect()
-                binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
-                val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
-                val keyboard = rootHeight - heightExceptKeyboard
-                Log.d("keyboard", "$keyboard")
-                if (DoneApplication.pref.keyboard != keyboard && keyboard != 0) {
-                    DoneApplication.pref.keyboard = keyboard
-                    Log.d("keyboard_pref", "${DoneApplication.pref.keyboard}")
-                    binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                } else {
-                    if (keyboard != 0) {
-                        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+    private fun showEmptyLayout() {
+        dateVM.doneList.observe(this) {
+            with(binding) {
+                if (it.isEmpty()) {
+                    if (!dateVM.isDateToday()) {
+                        // 리스트가 비어있는데 이전 날인 경우
+                        rcDoneList.isClickable = false
+                        tvDoneList.visibility = View.GONE
+                        layoutEmpty.root.visibility = View.VISIBLE
+                        layoutEmpty.btnWrite.setOnClickListener {
+                            rcDoneList.isClickable = true
+                            tvDoneList.visibility = View.VISIBLE
+                            layoutEmpty.root.visibility = View.GONE
+                        }
+                    } else {
+                        // 리스트가 비어있는데 오늘인 경우
+                        rcDoneList.isClickable = true
+                        tvDoneList.visibility = View.VISIBLE
+                        layoutEmpty.root.visibility = View.GONE
                     }
+                } else {
+                    // 리스트가 있는 경우
+                    rcDoneList.isClickable = true
+                    tvDoneList.visibility = View.VISIBLE
+                    layoutEmpty.root.visibility = View.GONE
                 }
             }
-        })
+        }
     }
 
     private fun initDoneListRecyclerView() {
@@ -140,6 +160,7 @@ class DoneActivity : AppCompatActivity() {
         doneAdapter.setDoneClickListener(object : DoneAdapter.OnDoneClickListener{
             // 던리스트 수정/삭제 메뉴
             override fun onDoneMenuClick(v: View, done: Done, position: Int) {
+                Log.d("done_click", "ok")
                 popup = PowerMenu.Builder(this@DoneActivity)
                     .addItem(PowerMenuItem("수정"))
                     .addItem(PowerMenuItem("삭제"))
@@ -181,35 +202,21 @@ class DoneActivity : AppCompatActivity() {
                 binding.flDoneWrite.visibility = View.VISIBLE
             }
         })
-
-    }
-
-    private fun setButtonsDestination() {
-        with(binding) {
-            btnCalendarBack.setOnClickListener {
-                finish()
-            }
-            btnPlan.setOnClickListener {
-                val intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
-                val date = dateVM.getTitleDate()
-                intent.putExtra("mode", ItemMode.PLAN.name)
-                intent.putExtra("date", date)  // 현재 던리스트의 날짜
-                startActivity(intent)
-            }
-            llTodayRecord.setOnClickListener {
-                val intent = Intent(this@DoneActivity, TodayRecordActivity::class.java)
-                startActivity(intent)
-            }
-        }
     }
 
     private fun setTitleDate() {
         with(binding) {
             btnDayBefore.setOnClickListener {
+                closeEditFrame()
                 dateVM.clickedBackwardDay()
             }
             btnDayAfter.setOnClickListener {
-                dateVM.clickedForwardDay()
+                closeEditFrame()
+                if (dateVM.isDateToday()) {
+                    DoneToast.createToast(this@DoneActivity, getString(R.string.toast_after_today), "")?.show()
+                } else {
+                    dateVM.clickedForwardDay()
+                }
             }
         }
         dateVM.titleDate.observe(this) {
@@ -219,29 +226,29 @@ class DoneActivity : AppCompatActivity() {
 
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
-//            binding.scrollView.post {
-//                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
-//            }
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
         }
-        binding.rcDoneList.rootView.setOnClickListener {
-//            binding.scrollView.post {
-//                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
-//            }
-            supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
-            binding.flDoneWrite.visibility = View.VISIBLE
+        binding.rcDoneList.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP)
+                v.performClick()
+            else
+                false
+        }
+        binding.rcDoneList.setOnClickListener {
+            if (it.isClickable) {
+                supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
+                binding.flDoneWrite.visibility = View.VISIBLE
+            }
         }
         binding.rootView.setOnClickListener {
-            hideKeyboard()  // visibility보다 먼저 처리해야 함
-            binding.flDoneWrite.visibility = View.GONE
+            closeEditFrame()
             binding.scrollView.post {
                 binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
             }
         }
         binding.subRootView.setOnClickListener {
-            hideKeyboard()  // visibility보다 먼저 처리해야 함
-            binding.flDoneWrite.visibility = View.GONE
+            closeEditFrame()
             binding.scrollView.post {
                 binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
             }
@@ -255,6 +262,7 @@ class DoneActivity : AppCompatActivity() {
     }
 
     fun closeEditFrame() {
+        hideKeyboard() // visibility보다 먼저 처리해야 함
         binding.flDoneWrite.visibility = View.GONE
     }
 
@@ -263,5 +271,27 @@ class DoneActivity : AppCompatActivity() {
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
     }
 
+    private fun setKeyboardHeight() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener{
+            override fun onGlobalLayout() {
+                if (rootHeight == -1) rootHeight = binding.root.height
+                val visibleFrameSize = Rect()
+                binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
+                val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+                val keyboard = rootHeight - heightExceptKeyboard
+                Log.d("keyboard", "$keyboard")
+                if (DoneApplication.pref.keyboard != keyboard && keyboard != 0) {
+                    DoneApplication.pref.keyboard = keyboard
+                    Log.d("keyboard_pref", "${DoneApplication.pref.keyboard}")
+                    binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                } else {
+                    if (keyboard != 0) {
+                        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                }
+            }
+        })
+    }
 
 }
+

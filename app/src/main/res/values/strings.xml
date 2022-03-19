@@ -89,6 +89,7 @@
     <string name="main_btn_my">MY</string>
     <string name="main_title_count_done">이번달 Done&#160;</string>
     <string name="main_sub_title_cheer">대단해요</string>
+    <string name="toast_after_today">오늘 이후의 날짜는 아직 작성할 수 없어요</string>
 
     <!-- 던리스트 페이지 -->
     <string name="done_btn_plan">플랜</string>

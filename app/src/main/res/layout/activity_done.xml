@@ -15,7 +15,9 @@
         android:src="@drawable/ic_calendar"
         android:background="@null"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="7dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/left_margin"/>
 
@@ -130,16 +132,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
-                android:paddingStart="15dp"
                 android:paddingTop="20dp"
-                android:paddingEnd="15dp"
                 android:paddingBottom="20dp"
                 android:minHeight="280dp"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_done_list" />
+
+            <include
+                android:id="@+id/layout_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                layout="@layout/layout_done_empty"
+                app:layout_constraintTop_toTopOf="@id/rc_done_list"
+                app:layout_constraintEnd_toEndOf="@id/rc_done_list"
+                app:layout_constraintBottom_toBottomOf="@id/rc_done_list"
+                app:layout_constraintStart_toStartOf="@id/rc_done_list"/>
 
             <TextView
                 android:id="@+id/tv_today_title"

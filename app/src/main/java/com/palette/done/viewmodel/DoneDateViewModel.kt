@@ -4,16 +4,26 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.db.datasource.DoneRepository
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class DoneDateViewModel(val dbRepo: DoneRepository) : ViewModel() {
 
     val format = SimpleDateFormat("yyyy-MM-dd")
+    val dc = DecimalFormat("00")
 
     var calendar: MutableLiveData<Calendar> = MutableLiveData(Calendar.getInstance())
     var calDate: MutableLiveData<String> = MutableLiveData("")  // YYYY-MM-DD
     var titleDate: MutableLiveData<String> = MutableLiveData("")  // YY.MM.DD
+
+    private val todayDate = LocalDate.now()
+    val today = "${todayDate.year}-${dc.format(todayDate.month.value)}-${todayDate.dayOfMonth}"
+
+    fun isDateToday(): Boolean {
+        return today == calDate.value
+    }
 
     var doneList: LiveData<List<Done>> = Transformations.switchMap(calDate) {
         dbRepo.getAllDoneInDate(it).asLiveData()
@@ -21,13 +31,12 @@ class DoneDateViewModel(val dbRepo: DoneRepository) : ViewModel() {
 
     fun setTitleDate(date: String) {
         calDate.value = date
-
         var tDate = date
         tDate = tDate.replace("-", ".")
         tDate = tDate.substring(2)
         titleDate.value = tDate
+        Log.d("date_vm_1", "${calDate.value}")
         Log.d("date_vm", "${titleDate.value}")
-        Log.d("date_list", "${doneList.value?.size}")
     }
 
     fun getTitleDate(): String {
