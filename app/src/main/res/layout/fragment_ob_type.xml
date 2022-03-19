@@ -23,7 +23,6 @@
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="오늘도해냄"
                 android:layout_marginRight="0dp"
                 style="@style/start_title_text" />
             <TextView
@@ -49,9 +48,11 @@
             android:id="@+id/ll_type_j"
             android:layout_width="0dp"
             android:layout_height="165dp"
-            android:hint="@string/ob_hint_nickname"
             android:orientation="horizontal"
             android:elevation="30dp"
+            android:gravity="center_horizontal"
+            android:outlineAmbientShadowColor="@color/cardElevation"
+            android:outlineSpotShadowColor="@color/cardElevation"
             android:background="@drawable/ob_type_ll_round_selector"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintTop_toBottomOf="@id/tv_title2"
@@ -60,38 +61,45 @@
             app:layout_constraintRight_toLeftOf="@id/right_margin">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
+                android:layout_margin="16dp"
+                android:src="@drawable/img_dd_type_j"
                 android:background="@color/white"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="6dp">
+                android:gravity="center_vertical"
+                android:padding="9dp">
                 <TextView
-                    android:layout_width="191dp"
-                    android:layout_height="33dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/type_j"
                     android:textSize="22sp"
                     android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                    android:textColor="@color/contextColor"/>
+                    android:textColor="@color/contextColor"
+                    android:includeFontPadding="false"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/type_j_subtitle"
-                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="36dp"
                     android:textSize="16sp"
                     android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                    android:textColor="@color/contextColor"/>
+                    android:textColor="@color/contextColor"
+                    android:includeFontPadding="false"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="13dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
                     android:text="@string/type_j_content"
-                    style="@style/all_mini_text"/>
+                    style="@style/all_mini_text"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="4sp"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -99,10 +107,12 @@
             android:id="@+id/ll_type_p"
             android:layout_width="0dp"
             android:layout_height="165dp"
-            android:hint="@string/ob_hint_nickname"
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
             android:elevation="30dp"
+            android:outlineAmbientShadowColor="@color/cardElevation"
+            android:outlineSpotShadowColor="@color/cardElevation"
+            android:gravity="center_horizontal"
             android:background="@drawable/ob_type_ll_round_selector"
             app:layout_constraintTop_toBottomOf="@id/ll_type_j"
             app:layout_constraintBottom_toTopOf="@id/tv_type_detail"
@@ -110,38 +120,46 @@
             app:layout_constraintRight_toLeftOf="@id/right_margin">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/img_dd_type_p"
                 android:background="@color/white"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="6dp">
+                android:gravity="center_vertical"
+                android:padding="9dp">
                 <TextView
-                    android:layout_width="191dp"
-                    android:layout_height="33dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/type_p"
                     android:textSize="22sp"
                     android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                    android:textColor="@color/contextColor"/>
+                    android:textColor="@color/contextColor"
+                    android:includeFontPadding="false"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/type_p_subtitle"
-                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="54dp"
                     android:textSize="16sp"
                     android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                    android:textColor="@color/contextColor"/>
+                    android:textColor="@color/contextColor"
+                    android:includeFontPadding="false"/>
+
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="13dp"
+                    style="@style/all_mini_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="4sp"
                     android:text="@string/type_p_content"
-                    style="@style/all_mini_text"/>
+                    android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
 

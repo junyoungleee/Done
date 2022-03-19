@@ -5,6 +5,7 @@ import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewTreeObserver
 import androidx.fragment.app.Fragment
 import com.palette.done.DoneApplication
 import com.palette.done.R
@@ -15,15 +16,10 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnBoardingBinding
 
-    private var rootHeight = -1
-    private var keyboardHeight = -1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setKeyboardHeight()
 
         setBackButtonAndIndicator()
         setViewPager()
@@ -36,39 +32,31 @@ class OnBoardingActivity : AppCompatActivity() {
     }
 
     private fun setBackButton() {
-        var current = binding.viewPagerOnBoarding.currentItem
+        val current = binding.viewPagerOnBoarding.currentItem
         when(current) {
+            0 -> {
+                finish()
+            }
             1 ->{
                 binding.viewPagerOnBoarding.currentItem = 0
                 binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_left)
                 binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)}
-            2 -> {
-                binding.viewPagerOnBoarding.currentItem = 1
-                binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_now)
-                binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)
-            }
+//            2 -> {
+//                binding.viewPagerOnBoarding.currentItem = 1
+//                binding.ivIndicatorSecond.setImageResource(R.drawable.ic_indicator_now)
+//                binding.ivIndicatorThird.setImageResource(R.drawable.ic_indicator_left)
+//            }
         }
     }
 
     private fun setViewPager() {
-        val fragments = arrayListOf<Fragment>(ObNicknameFragment(), ObTypeFragment(), ObAlarmFragment())
+//        val fragments = arrayListOf<Fragment>(ObNicknameFragment(), ObTypeFragment(), ObAlarmFragment()) <- 알람 추후 개발
+        val fragments = arrayListOf<Fragment>(ObNicknameFragment(), ObTypeFragment())
         val adapter = ViewPagerAdapter(this, fragments)
         binding.viewPagerOnBoarding.adapter = adapter
         binding.viewPagerOnBoarding.isUserInputEnabled = false  // swipe action 제거
     }
 
-    private fun setKeyboardHeight() {
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            if (rootHeight == -1) rootHeight = binding.root.height
-            val visibleFrameSize = Rect()
-            binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
-            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
-            if (heightExceptKeyboard < rootHeight && DoneApplication.pref.keyboard == -1) {
-                DoneApplication.pref.keyboard = rootHeight - heightExceptKeyboard
-                Log.d("keyboard_height", "$keyboardHeight")
-            }
-        }
-    }
 
     override fun onBackPressed() {
 //        super.onBackPressed()

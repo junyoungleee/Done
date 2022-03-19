@@ -41,7 +41,7 @@ class ObAlarmFragment : Fragment() {
 
     private var minutePicker: NumberPicker? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentObAlarmBinding.inflate(inflater, container, false)
 
         onBoardingVM.alarmWeekday.observe(viewLifecycleOwner) {
@@ -94,49 +94,6 @@ class ObAlarmFragment : Fragment() {
             binding.tpAlarmTime.minute
         }
     }
-
-//    private fun setAmPmSpinner() {
-//        val ampm = resources.getStringArray(R.array.ampm)
-//
-//        val adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, ampm)
-//        binding.spAmPm.adapter = adapter
-//        binding.spAmPm.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                onBoardingVM.alarmAmPm.value = binding.spAmPm.getItemAtPosition(position).toString()
-//            }
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                onBoardingVM.alarmAmPm.value = binding.spAmPm.getItemAtPosition(0).toString()
-//            }
-//        }
-//    }
-//
-//    private fun setHourSpinner() {
-//        val hours = resources.getStringArray(R.array.hour)
-//        val adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, hours)
-//        binding.spHour.adapter = adapter
-//        binding.spHour.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                onBoardingVM.alarmHour.value = binding.spHour.getItemAtPosition(position).toString().toInt()
-//            }
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                onBoardingVM.alarmHour.value = binding.spHour.getItemAtPosition(0).toString().toInt()
-//            }
-//        }
-//    }
-//
-//    private fun setMinSpinner() {
-//        val mins = resources.getStringArray(R.array.min)
-//        val adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, mins)
-//        binding.spMin.adapter = adapter
-//        binding.spMin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                onBoardingVM.alarmMin.value = binding.spMin.getItemAtPosition(position).toString().toInt()
-//            }
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                onBoardingVM.alarmMin.value = binding.spMin.getItemAtPosition(0).toString().toInt()
-//            }
-//        }
-//    }
 
     private fun setTimeTicker() {
         binding.tpAlarmTime.hour = 9

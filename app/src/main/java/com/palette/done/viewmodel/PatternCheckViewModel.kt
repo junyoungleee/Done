@@ -2,6 +2,8 @@ package com.palette.done.viewmodel
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +30,7 @@ class PatternCheckViewModel: ViewModel(){
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                _emailResult.value = inputForm.checkEmailPattern(s.toString())
+//                _emailResult.value = inputForm.checkEmailPattern(s.toString())
             }
             override fun afterTextChanged(s: Editable?) {
                 _emailResult.value = inputForm.checkEmailPattern(s.toString())
@@ -41,12 +43,12 @@ class PatternCheckViewModel: ViewModel(){
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                _pwdResult.value = inputForm.checkPwdPattern(s.toString())
-                _pwd.value = s.toString()
-                // 재입력이 이미 입력되어 있는 상태에서 비밀번호가 바뀐 경우
-                if (!_pwd2.value.equals("")) {
-                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
-                }
+//                _pwdResult.value = inputForm.checkPwdPattern(s.toString())
+//                _pwd.value = s.toString()
+//                // 재입력이 이미 입력되어 있는 상태에서 비밀번호가 바뀐 경우
+//                if (!_pwd2.value.equals("")) {
+//                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
+//                }
             }
             override fun afterTextChanged(s: Editable?) {
                 _pwdResult.value = inputForm.checkPwdPattern(s.toString())
@@ -56,6 +58,23 @@ class PatternCheckViewModel: ViewModel(){
                 }
             }
         }
+    }
+
+    fun checkPwd(pwd: String) {
+        _pwdResult.value = inputForm.checkPwdPattern(pwd)
+        _pwd.value = pwd
+        if (!_pwd2.value.equals("")) {
+            _pwd2Result.value = (pwd2.value.toString() == (pwd))
+        }
+    }
+
+    fun checkPwd2(pwd2: String) {
+        _pwd2Result.value = (pwd.value.toString() == (pwd2))
+        _pwd2.value = pwd2
+    }
+
+    fun checkEmail(email: String) {
+        _emailResult.value = inputForm.checkEmailPattern(email)
     }
 
     fun onPwd2TextWatcher(): TextWatcher {

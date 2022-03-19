@@ -46,6 +46,8 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
+//        intent = Intent(this, LandingActivity::class.java)
+
         CoroutineScope(Dispatchers.IO).launch {
             // delay(3000L)
             delay(3000L)
