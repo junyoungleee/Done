@@ -3,6 +3,7 @@ package com.palette.done.view.my
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.ActivityMyBinding
@@ -21,14 +22,23 @@ class MyActivity : AppCompatActivity() {
         setLevel()
         setReport()
 
+        setPremium()
+
         setContentView(binding.root)
+    }
+
+    private fun setPremium() {
+        binding.layoutMyProfile.ivPremiumBadge.visibility = if (DoneApplication.pref.premium) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
     }
 
     private fun setProfile() {
         val data = DoneApplication.pref
         with(binding.layoutMyProfile) {
             tvType.text = LevelType.type.getValue(data.type!!)
-            tvTypeCoin.text = data.type.toString().uppercase()
             tvNickname.text = data.nickname!!
             val lv = data.level
             tvLevelWithName.text = "${LevelType.getLevel(lv)} LV.$lv"
