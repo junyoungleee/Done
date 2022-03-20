@@ -39,12 +39,6 @@ class DoneAdapter(val context: Context): ListAdapter<Done, DoneAdapter.DoneViewH
                 ivDoneCategory.setImageDrawable(null)
             }
             tvDoneContent.text = done.content
-            tvDoneContent.setOnClickListener {
-                doneClickListener.onDoneRootClick(it)
-            }
-            ivDoneCategory.setOnClickListener {
-                doneClickListener.onDoneRootClick(it)
-            }
             btnDoneMenu.setOnClickListener {
                 doneClickListener.onDoneMenuClick(it, done, position)
             }
@@ -63,7 +57,6 @@ class DoneAdapter(val context: Context): ListAdapter<Done, DoneAdapter.DoneViewH
 
     interface OnDoneClickListener {
         fun onDoneMenuClick(v: View, done: Done, position: Int)
-        fun onDoneRootClick(v: View)
     }
 
     fun setDoneClickListener(onDoneClickListener: OnDoneClickListener) {

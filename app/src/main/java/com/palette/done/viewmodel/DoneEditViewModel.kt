@@ -37,7 +37,7 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
         _selectedRoutineTag.value = Routine(0, "", null)
     }
 
-    fun getSelectedRoutineTag(): Int? {
+    fun getSelectedRoutineTagNo(): Int? {
         return if (selectedRoutineTag.value!!.routineNo == 0) {
             null
         } else {
@@ -49,7 +49,7 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
         _selectedHashtag.value = Tags(0, "", 0)
     }
 
-    fun getSelectedHashTag(): Int? {
+    fun getSelectedHashTagNo(): Int? {
         return if (selectedHashtag.value!!.tag_no == 0) {
             null
         } else {
@@ -77,7 +77,7 @@ class DoneEditViewModel(private val serverRepo: DoneServerRepository,
         dbRepo.deleteDone(doneNo)
     }
 
-    fun addDoneList(date: String, content: String, category: Int?, tag: Int?, routine: Int?) {
+    fun addDoneList(content: String, date: String, category: Int?, tag: Int?, routine: Int?) {
         // room & server 저장
         viewModelScope.launch {
             serverRepo.postDone(Dones(content, date, category, tag, routine))

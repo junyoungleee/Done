@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
+import com.palette.done.data.remote.model.dones.Dones
 import com.palette.done.databinding.FragmentDoneBinding
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.view.main.DoneActivity
@@ -122,6 +123,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         binding.etDone.addTextChangedListener(doneEditVM.onDoneTextWatcher())
         doneEditVM.done.observe(viewLifecycleOwner) { done ->
             when(editMode) {
+                // 던리스트 작성 / 수정
                 DoneMode.DONE -> {
                     if (done == "") {
                         with(binding.btnWrite) {
@@ -143,22 +145,37 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                             setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                             setOnClickListener {
                                 val category = categoryVM.getSelectedCategoryAsDone()
-                                val tag = doneEditVM.getSelectedHashTag()
-                                val routine = doneEditVM.getSelectedRoutineTag()
+                                var tag = doneEditVM.getSelectedHashTagNo()
+                                var routine = doneEditVM.getSelectedRoutineTagNo()
+
+                                if (tag != null) {
+                                    val selected = doneEditVM.selectedHashtag.value!!
+                                    if (selected.name != done || selected.category_no != category) {
+                                        tag = null
+                                    }
+                                }
+                                if (routine != null) {
+                                    val selected = doneEditVM.selectedRoutineTag.value!!
+                                    if (selected.content != done || selected.categoryNo != category) {
+                                        routine = null
+                                    }
+                                }
 
                                 // recyclerview 추가
                                 val date = doneDateVM.getTitleDate()
-                                doneEditVM.addDoneList(date, binding.etDone.text.toString(), category, tag, routine)
+                                doneEditVM.addDoneList(binding.etDone.text.toString(), date, category, tag, routine)
 
                                 // Done 추가 후, 초기화
                                 binding.etDone.text.clear()
                                 doneEditVM.initSelectedHashTag()
                                 doneEditVM.initSelectedRoutineTag()
                                 categoryVM.initSelectedCategory()
+
                             }
                         }
                     }
                 }
+                // 플랜, 루틴 작성 / 수정
                 else -> {
                     with(binding.btnWrite) {
                         setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
@@ -171,17 +188,33 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                         }
                         setOnClickListener {
                             val category = categoryVM.getSelectedCategoryAsDone()
-                            val tag = doneEditVM.getSelectedHashTag()
-                            val routine = doneEditVM.getSelectedRoutineTag()
+                            var tag = doneEditVM.getSelectedHashTagNo()
+                            var routine = doneEditVM.getSelectedRoutineTagNo()
 
                             if (done != "") {
                                 when (editMode) {
                                     DoneMode.EDIT_DONE -> {
                                         val old = doneEditVM.oldDone
+                                        // 해시태그였던 경우 -> 카테고리/컨텐츠변
+                                        if (old.tagNo != null) {
+                                            if (old.tagNo == tag) {
+                                                // 카테고리나 컨텐츠만 변경된 경우 -> 더 이상 태그가 아님
+                                                if (old.categoryNo != category || old.content != done) {
+                                                    tag = null
+                                                }
+                                            }
+                                        }
+                                        // 루틴이었던 경우
+                                        if (old.routineNo != null) {
+                                            if (old.routineNo == routine) {
+                                                // 카테고리나 컨텐츠만 변경된 경우 -> 더 이상 태그가 아님
+                                                if (old.categoryNo != category || old.content != done) {
+                                                    routine = null
+                                                }
+                                            }
+                                        }
                                         val new = Done(old.doneId, old.date, done, category, tag, routine)
-                                        Log.d("done_edit", "id = ${old.doneId}")
                                         doneEditVM.updateDoneList(new)
-//                                        hideKeyboard()
                                         (activity as DoneActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_PLAN -> {
@@ -190,7 +223,6 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     }
                                     DoneMode.EDIT_PLAN -> {
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
-//                                        hideKeyboard()
                                         (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_ROUTINE -> {

@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.palette.done.DoneApplication
@@ -31,6 +32,8 @@ import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -54,6 +57,9 @@ class DoneActivity : AppCompatActivity() {
     private val categoryVM: CategoryViewModel by viewModels() {
         CategoryViewModelFactory(DoneApplication().doneRepository)
     }
+
+    val PREMIUM_DONELIST_SIZE = 50
+    val NORMAL_DONELIST_SIZE = 8
 
     private var doneAdapter = DoneAdapter(this)
     private lateinit var popup: PowerMenu
@@ -82,6 +88,7 @@ class DoneActivity : AppCompatActivity() {
 
         setTitleDate()
         setButtonsDestination()
+        setPremium()
 
         initDoneListRecyclerView()
 
@@ -196,11 +203,6 @@ class DoneActivity : AppCompatActivity() {
                     .build()
                 popup.showAsDropDown(v, v.measuredWidth/2-popup.contentViewWidth+util.dpToPx(14), -v.measuredHeight/2-util.dpToPx(6))
             }
-
-            override fun onDoneRootClick(v: View) {
-                supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
-                binding.flDoneWrite.visibility = View.VISIBLE
-            }
         })
     }
 
@@ -223,6 +225,7 @@ class DoneActivity : AppCompatActivity() {
             binding.tvDate.text = dateVM.titleDate.value
         }
     }
+
 
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
@@ -266,6 +269,26 @@ class DoneActivity : AppCompatActivity() {
         binding.flDoneWrite.visibility = View.GONE
     }
 
+    private fun setPremium() {
+        dateVM.doneList.observe(this) { list ->
+            if (DoneApplication.pref.premium) {
+                if(list.size == PREMIUM_DONELIST_SIZE) {
+                    binding.rcDoneList.isClickable = false
+                    closeEditFrame() // editFrame 열려있으면 닫아야 함
+                } else {
+                    binding.rcDoneList.isClickable = true
+                }
+            } else {
+                if(list.size == NORMAL_DONELIST_SIZE) {
+                    binding.rcDoneList.isClickable = false
+                    closeEditFrame() // editFrame 열려있으면 닫아야 함
+                } else {
+                    binding.rcDoneList.isClickable = true
+                }
+            }
+        }
+    }
+
     private fun hideKeyboard() {
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
@@ -292,6 +315,8 @@ class DoneActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
 }
 
