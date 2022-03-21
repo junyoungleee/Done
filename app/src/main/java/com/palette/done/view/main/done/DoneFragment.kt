@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -136,6 +137,9 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                 setInputFrameLayout()
                                 parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneTagFragment()).commit()
                                 closeCategory()
+
+                                (activity as DoneActivity).scrollingDown()
+                                Log.d("scroll_click", "ok")
                             }
                         }
                     } else {
@@ -147,7 +151,6 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                 val category = categoryVM.getSelectedCategoryAsDone()
                                 var tag = doneEditVM.getSelectedHashTagNo()
                                 var routine = doneEditVM.getSelectedRoutineTagNo()
-
                                 if (tag != null) {
                                     val selected = doneEditVM.selectedHashtag.value!!
                                     if (selected.name != done || selected.category_no != category) {
@@ -220,6 +223,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     DoneMode.ADD_PLAN -> {
                                         planVM.insertPlan(done, category)
                                         binding.etDone.text.clear()
+                                        categoryVM.initSelectedCategory()
                                     }
                                     DoneMode.EDIT_PLAN -> {
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
@@ -228,6 +232,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     DoneMode.ADD_ROUTINE -> {
                                         routineVM.insertRoutine(done, category)
                                         binding.etDone.text.clear()
+                                        categoryVM.initSelectedCategory()
                                     }
                                     DoneMode.EDIT_ROUTINE -> {
                                         routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)
@@ -317,10 +322,13 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 if (isEditPopupOpen) {
                     isEditPopupOpen = false
                     setInputFrameLayout()
-//                    (activity as DoneActivity).scrollingDown()
                 }
                 if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
                     binding.etDone.hint = getString(R.string.done_list_write_hint)
+                }
+                if (editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+                    (activity as DoneActivity).scrollingDown()
+                    Log.d("scroll_click", "ok")
                 }
                 closeCategory()
             }
@@ -354,7 +362,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
             if (isEditPopupOpen) {
                 // 카테고리, 루틴, 해시태그 입력창이 열리게 하기
                 hideKeyboard()
-                delay(25)
+                delay(10)
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 binding.flWriteContainer.visibility = View.VISIBLE
                 delay(100)
@@ -364,12 +372,11 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                 // 카테고리, 루틴, 해시태그 입력창이 닫히게 하기
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 showKeyboard()
-                binding.etDone.requestFocus()
                 delay(100)
+                binding.etDone.requestFocus()
                 binding.flWriteContainer.visibility = View.GONE
                 requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 delay(100)
-//                (activity as DoneActivity).scrollingDown()
             }
         }
     }
@@ -377,11 +384,17 @@ class DoneFragment(mode: DoneMode) : Fragment() {
     private fun hideKeyboard() {
         val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
+        if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+            (activity as DoneActivity).makeScreenLong()
+        }
     }
 
     private fun showKeyboard() {
         val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.showSoftInput(view, 0)
+        if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+            (activity as DoneActivity).makeScreenOriginal()
+        }
     }
 
     override fun onDestroyView() {

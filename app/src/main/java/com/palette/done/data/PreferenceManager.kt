@@ -18,6 +18,7 @@ class PreferenceManager (context: Context) {
     private val USER_ALARM_CYCLE = "alarm_cycle"
     private val USER_ALARM_TIME = "alarm_time"
     private val LEVEL = "level"
+    private val PREMIUM = "premium"
 
     private val ACCESS_TOKEN = "token"
     private val KEYBOARD_HEIGHT = "keyboard_height"
@@ -62,6 +63,10 @@ class PreferenceManager (context: Context) {
     var level: Int
         get() = prefs.getInt(LEVEL, 1)
         set(value) = prefs.edit().putInt(LEVEL, value).apply()
+
+    var premium: Boolean
+        get() = prefs.getBoolean(PREMIUM, false)
+        set(value) = prefs.edit().putBoolean(PREMIUM, value).apply()
     // ---------------------------------------------------------------------------------------------
     var token: String?
         get() = prefs.getString(ACCESS_TOKEN, "")

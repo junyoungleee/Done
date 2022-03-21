@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/today_btn_sticker"
                     style="@style/done_sub_title_text"
-                    android:fontFamily="@font/spoqa_han_sans_neo_regular"/>
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"/>
             </LinearLayout>
 
             <ImageView
@@ -107,7 +107,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/today_btn_text"
                     style="@style/done_sub_title_text"
-                    android:fontFamily="@font/spoqa_han_sans_neo_regular"/>
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"/>
             </LinearLayout>
 
             <EditText
@@ -131,13 +131,13 @@
                 android:gravity="top|start"
                 style="@style/today_edittext"
                 android:hint="@string/today_text_hint"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/fl_sticker"
+        android:id="@+id/fl_today_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/done_write_box_round"

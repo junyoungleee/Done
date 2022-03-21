@@ -254,6 +254,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.llAddItem.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.ADD_PLAN)).commit()
             binding.flItemWrite.visibility = View.VISIBLE
+            categoryVM.initSelectedCategory()
         }
     }
 
@@ -261,6 +262,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.llAddItem.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.ADD_ROUTINE)).commit()
             binding.flItemWrite.visibility = View.VISIBLE
+            categoryVM.initSelectedCategory()
         }
     }
 

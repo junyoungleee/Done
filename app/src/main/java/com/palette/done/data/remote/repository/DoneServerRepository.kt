@@ -10,9 +10,13 @@ class DoneServerRepository {
     private val doneApi: DoneService by lazy {
         ApiBuilder.retrofit.create(DoneService::class.java)
     }
-
+    // 메인 -----------------------------------------------------------------------------------------
     fun getCategories(): Call<CategoryResponse> {
         return doneApi.getCategories()
+    }
+
+    fun getCountInMonth(yMonth: String): Call<CountResponse> {
+        return doneApi.getDoneCountInMonth(yMonth)
     }
 
     // 던리스트 -------------------------------------------------------------------------------------
@@ -30,6 +34,15 @@ class DoneServerRepository {
 
     fun getDoneAndTodayRecord(date: String): Call<DonesAndTodayResponse> {
         return doneApi.getDoneListAndTodayRecord(date)
+    }
+
+    // 오늘 한마디 -----------------------------------------------------------------------------------
+    fun postTodayRecord(todayRecords: TodayRecords): Call<TodayRecordsResponse> {
+        return doneApi.postTodayRecord(todayRecords)
+    }
+
+    fun patchTodayRecord(todayRecords: TodayRecordsUpdate, todayNo: Int): Call<TodayRecordsResponse> {
+        return doneApi.patchTodayRecord(todayRecords, todayNo)
     }
 
     // 플랜 ----------------------------------------------------------------------------------------

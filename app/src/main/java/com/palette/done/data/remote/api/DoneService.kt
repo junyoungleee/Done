@@ -9,6 +9,9 @@ interface DoneService {
     @GET("/api/categories")
     fun getCategories(): Call<CategoryResponse>
 
+    @GET("/api/dones/count")
+    fun getDoneCountInMonth(@Query("yMonth") yMonth: String): Call<CountResponse>
+
     // 던리스트 -------------------------------------------------------------------------------------
     @POST("/api/dones")
     fun postDones(@Body data: Dones): Call<DonesResponse>
@@ -26,6 +29,8 @@ interface DoneService {
     @POST("/api/dones/today-record")
     fun postTodayRecord(@Body data: TodayRecords): Call<TodayRecordsResponse>
 
+    @PATCH("api/dones/today-record/{todayNo}")
+    fun patchTodayRecord(@Body data: TodayRecordsUpdate, @Path("todayNo") todayNo: Int): Call<TodayRecordsResponse>
 
     // 플랜 -----------------------------------------------------------------------------------------
     @POST("/api/plans")

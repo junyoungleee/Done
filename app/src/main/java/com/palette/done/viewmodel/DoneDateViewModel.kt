@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.db.datasource.DoneRepository
+import com.palette.done.data.db.entity.TodayRecord
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -28,6 +29,7 @@ class DoneDateViewModel(val dbRepo: DoneRepository) : ViewModel() {
     var doneList: LiveData<List<Done>> = Transformations.switchMap(calDate) {
         dbRepo.getAllDoneInDate(it).asLiveData()
     }
+
 
     fun setTitleDate(date: String) {
         calDate.value = date
@@ -68,6 +70,11 @@ class DoneDateViewModel(val dbRepo: DoneRepository) : ViewModel() {
         calendar.value!!.add(Calendar.DATE, -1)
         Log.d("date_backward", "${calendar.value!!.time}")
         transCalendarToString()
+    }
+
+
+    var todayRecord: LiveData<TodayRecord> = Transformations.switchMap(calDate) {
+        dbRepo.getTodayRecord(it).asLiveData()
     }
 }
 

@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.palette.done.R
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityDoneBinding
+import com.palette.done.databinding.LayoutDoneEmptyBinding
 import com.palette.done.view.adapter.DoneAdapter
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
@@ -42,6 +44,7 @@ import java.util.*
 class DoneActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDoneBinding
+
     private val dateVM: DoneDateViewModel by viewModels() {
         DoneDateViewModelFactory((application as DoneApplication).doneRepository)
     }
@@ -92,6 +95,8 @@ class DoneActivity : AppCompatActivity() {
 
         initDoneListRecyclerView()
 
+        showTodayRecord()
+
         popEditFrame()
         hideKeyboard()
     }
@@ -110,33 +115,44 @@ class DoneActivity : AppCompatActivity() {
             }
             llTodayRecord.setOnClickListener {
                 val intent = Intent(this@DoneActivity, TodayRecordActivity::class.java)
+                val date = dateVM.getTitleDate()
+                val today = dateVM.todayRecord.value
+                val empty = today == null
+                Log.d("empty", "${empty}")
+                intent.putExtra("date", date)
+                intent.putExtra("empty", empty)
                 startActivity(intent)
             }
         }
     }
 
+
     private fun showEmptyLayout() {
         dateVM.doneList.observe(this) {
-            with(binding) {
-                if (it.isEmpty()) {
-                    if (!dateVM.isDateToday()) {
-                        // 리스트가 비어있는데 이전 날인 경우
+            if (it.isEmpty()) {
+                if (!dateVM.isDateToday()) {
+                    // 리스트가 비어있는데 이전 날인 경우
+                    with(binding) {
                         rcDoneList.isClickable = false
                         tvDoneList.visibility = View.GONE
                         layoutEmpty.root.visibility = View.VISIBLE
                         layoutEmpty.btnWrite.setOnClickListener {
-                            rcDoneList.isClickable = true
-                            tvDoneList.visibility = View.VISIBLE
+                            binding.rcDoneList.isClickable = true
+                            binding.tvDoneList.visibility = View.VISIBLE
                             layoutEmpty.root.visibility = View.GONE
                         }
-                    } else {
-                        // 리스트가 비어있는데 오늘인 경우
+                    }
+                } else {
+                    // 리스트가 비어있는데 오늘인 경우
+                    with(binding) {
                         rcDoneList.isClickable = true
                         tvDoneList.visibility = View.VISIBLE
                         layoutEmpty.root.visibility = View.GONE
                     }
-                } else {
-                    // 리스트가 있는 경우
+                }
+            } else {
+                // 리스트가 있는 경우
+                with(binding) {
                     rcDoneList.isClickable = true
                     tvDoneList.visibility = View.VISIBLE
                     layoutEmpty.root.visibility = View.GONE
@@ -206,6 +222,65 @@ class DoneActivity : AppCompatActivity() {
         })
     }
 
+    // 오늘한마디 ------------------------------------------------------------------------------------
+    private fun showTodayRecord() {
+        dateVM.todayRecord.observe(this) { tr ->
+            with(binding) {
+                if (tr == null) {
+                    // 오늘의 한마디가 없는 경우
+                    ivTodayRecordSticker.visibility = View.GONE
+                    viewTodayStickerTopMargin.visibility = View.GONE
+                    viewTodayStickerBottomMargin.visibility = View.GONE
+
+                    tvTodayRecordText.text = getString(R.string.done_today_hint)
+                    tvTodayRecordText.visibility = View.VISIBLE
+                } else {
+                    // 텍스트만 있는 경우
+                    if (tr.todaySticker == null && tr.todayWord != null) {
+                        ivTodayRecordSticker.visibility = View.GONE
+                        viewTodayStickerTopMargin.visibility = View.GONE
+                        viewTodayStickerBottomMargin.visibility = View.GONE
+
+                        tvTodayRecordText.visibility = View.VISIBLE
+                        tvTodayRecordText.text = tr.todayWord
+                    }else if (tr.todaySticker != null && tr.todayWord == null ) {
+                        // 스티커만 있는 경우
+                        ivTodayRecordSticker.visibility = View.VISIBLE
+                        viewTodayStickerTopMargin.visibility = View.VISIBLE
+                        viewTodayStickerBottomMargin.visibility = View.VISIBLE
+
+                        val stickerName = "img_sticker_${tr.todaySticker}"
+                        val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
+                        ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
+
+                        tvTodayRecordText.visibility = View.GONE
+                    } else if (tr.todaySticker == null && tr.todayWord == null) {
+                        // 저장했었다가 사용자가 내용을 다 삭제한 경우
+                        ivTodayRecordSticker.visibility = View.GONE
+                        viewTodayStickerTopMargin.visibility = View.GONE
+                        viewTodayStickerBottomMargin.visibility = View.GONE
+
+                        tvTodayRecordText.text = getString(R.string.done_today_hint)
+                        tvTodayRecordText.visibility = View.VISIBLE
+                    } else {
+                        // 둘 다 있는 경우
+                        ivTodayRecordSticker.visibility = View.VISIBLE
+                        viewTodayStickerTopMargin.visibility = View.GONE
+                        viewTodayStickerBottomMargin.visibility = View.GONE
+
+//                        val stickerName = "img_sticker_${tr.todaySticker}"
+//                        val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
+//                        ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
+
+                        tvTodayRecordText.visibility = View.VISIBLE
+                        tvTodayRecordText.text = tr.todayWord
+                    }
+                }
+            }
+        }
+    }
+
+    // 전체 -----------------------------------------------------------------------------------------
     private fun setTitleDate() {
         with(binding) {
             btnDayBefore.setOnClickListener {
@@ -226,11 +301,11 @@ class DoneActivity : AppCompatActivity() {
         }
     }
 
-
     private fun popEditFrame() {
         binding.tvDoneList.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
+            makeScreenOriginal()
         }
         binding.rcDoneList.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP)
@@ -242,25 +317,46 @@ class DoneActivity : AppCompatActivity() {
             if (it.isClickable) {
                 supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
                 binding.flDoneWrite.visibility = View.VISIBLE
+                makeScreenOriginal()
             }
         }
         binding.rootView.setOnClickListener {
             closeEditFrame()
+            makeScreenOriginal()
             binding.scrollView.post {
                 binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
             }
         }
         binding.subRootView.setOnClickListener {
             closeEditFrame()
+            makeScreenOriginal()
             binding.scrollView.post {
                 binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
             }
         }
+        binding.flDoneWrite.isClickable = false
+        binding.flDoneWrite.setOnClickListener {
+
+        }
+    }
+
+    fun makeScreenLong() {
+        binding.subRootView.setPadding(0, 0, 0, DoneApplication.pref.keyboard+util.dpToPx(20))
+    }
+
+    fun makeScreenOriginal() {
+        binding.subRootView.setPadding(0, 0, 0, util.dpToPx(20))
     }
 
     fun scrollingDown() {
-        binding.scrollView.post {
-            binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        val height = resources.getDimension(R.dimen.done_item_height)
+        dateVM.doneList.observe(this) { list ->
+            var dp = if (list.size <= 4) {
+                0
+            } else {
+                (height*(list.size - 4)).toInt()
+            }
+            binding.scrollView.smoothScrollTo(0, binding.rcDoneList.top+dp)
         }
     }
 
