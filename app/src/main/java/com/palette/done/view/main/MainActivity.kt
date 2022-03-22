@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     private fun setCalendarView() {
         setCalendarHeader()
         with(binding.calendarView) {
+            itemAnimator = null  // 깜빡임 제거
             doOnPreDraw {
                 daySize = Size(binding.calendarView.width/7, util.dpToPx(86))
             }
@@ -128,7 +129,9 @@ class MainActivity : AppCompatActivity() {
                                 container.date.setTextColor(ContextCompat.getColor(context, R.color.calendarColor))
                                 container.today.visibility = View.INVISIBLE
                                 if (day.date.isAfter(today)) {
-                                    container.view.isClickable = false
+                                    container.view.setOnClickListener {
+                                        DoneToast.createToast(this@MainActivity, getString(R.string.toast_after_today), "")?.show()
+                                    }
                                 }
                             }
                         }
@@ -157,10 +160,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // 깜빡임 제거
-        val animator = binding.calendarView.itemAnimator
-        if (animator is SimpleItemAnimator) {
-            animator.supportsChangeAnimations = false
-        }
+//        val animator = binding.calendarView.itemAnimator
+//        if (animator is SimpleItemAnimator) {
+//            animator.supportsChangeAnimations = false
+//        }
+
     }
 
     private fun setCalendarHeader() {

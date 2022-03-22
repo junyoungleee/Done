@@ -29,6 +29,15 @@ class DoneRepository(private val doneDao: DoneDAO) {
         return doneDao.getAllDoneCountInMonth(date)
     }
 
+    // 오늘한마디 ---------------------------------------------------------------------
+    suspend fun insertTodayRecord(today: TodayRecord) {
+        doneDao.insertTodayRecord(today)
+    }
+
+    fun getTodayRecord(date: String): Flow<TodayRecord> {
+        return doneDao.getTodayRecord(date)
+    }
+
     // 플랜 --------------------------------------------------------------------------
     suspend fun insertPlan(plan: Plan) {
         doneDao.insertPlan(plan)

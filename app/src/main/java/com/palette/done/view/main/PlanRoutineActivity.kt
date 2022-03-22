@@ -10,6 +10,7 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ScrollView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -25,6 +26,7 @@ import com.palette.done.view.adapter.PlanAdapter
 import com.palette.done.view.adapter.RoutineAdapter
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
+import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import java.util.*
 
@@ -45,6 +47,8 @@ class PlanRoutineActivity() : AppCompatActivity() {
     private lateinit var itemMode: ItemMode  // 플랜, 루틴 모드
     private lateinit var date: String  // Plan을 던리스트로 저장할 날짜
     private var isEditMode: Boolean = false  // 편집 모드
+
+    private var util = Util()
 
     private lateinit var planAdapter: PlanAdapter
     private lateinit var routineAdapter: RoutineAdapter
@@ -83,6 +87,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
             isEditMode = !isEditMode
             setEditMode()
             hideKeyboard()
+            makeScreenOriginal()
             binding.flItemWrite.visibility = View.GONE
         }
 
@@ -111,6 +116,8 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
             override fun onEditButtonClick(v: View, plan: Plan) {
                 // 플랜 수정
+                hideKeyboard()
+                scrollingUp()
                 planVM.selectedEditPlan = plan
                 categoryVM._selectedCategory.value = plan.categoryNo
                 supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.EDIT_PLAN)).commit()
@@ -137,6 +144,8 @@ class PlanRoutineActivity() : AppCompatActivity() {
         routineAdapter.setRoutineItemClickListener(object : RoutineAdapter.OnRoutineItemClickListener {
             override fun onEditButtonClick(v: View, routine: Routine) {
                 // 루틴 수정
+                hideKeyboard()
+                scrollingUp()
                 routineVM.selectedEditRoutine = routine
                 categoryVM._selectedCategory.value = routine.categoryNo
                 supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.EDIT_ROUTINE)).commit()
@@ -254,6 +263,9 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.llAddItem.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.ADD_PLAN)).commit()
             binding.flItemWrite.visibility = View.VISIBLE
+            categoryVM.initSelectedCategory()
+            hideKeyboard()
+            makeScreenLong()
         }
     }
 
@@ -261,6 +273,9 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.llAddItem.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flItemWrite.id, DoneFragment(DoneMode.ADD_ROUTINE)).commit()
             binding.flItemWrite.visibility = View.VISIBLE
+            categoryVM.initSelectedCategory()
+            hideKeyboard()
+            makeScreenLong()
         }
     }
 
@@ -268,7 +283,32 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.root.setOnClickListener {
             hideKeyboard()
             binding.flItemWrite.visibility = View.GONE
+            makeScreenOriginal()
         }
+    }
+
+    fun makeScreenLong() {
+        binding.llSubRoot.setPadding(0, 0, 0, DoneApplication.pref.keyboard+util.dpToPx(110))
+    }
+
+    fun makeScreenOriginal() {
+        binding.llSubRoot.setPadding(0, 0, 0, util.dpToPx(10))
+    }
+
+    fun planScrollingDown() {
+        planVM.planList.observe(this) {
+            binding.scrollView.smoothScrollTo(0, binding.rcItem.bottom)
+        }
+    }
+
+    fun routineScrollingDown() {
+        routineVM.routineList.observe(this) {
+            binding.scrollView.smoothScrollTo(0, binding.rcItem.bottom)
+        }
+    }
+
+    private fun scrollingUp() {
+        binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
     }
 
     private fun hideKeyboard() {
@@ -277,7 +317,9 @@ class PlanRoutineActivity() : AppCompatActivity() {
     }
 
     fun closeEditFrame() {
+        hideKeyboard()
         binding.flItemWrite.visibility = View.GONE
+        makeScreenOriginal()
     }
 
     private fun setPlanDetailTextSpan() {

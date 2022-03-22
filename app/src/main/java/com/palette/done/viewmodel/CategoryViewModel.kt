@@ -8,7 +8,7 @@ import com.palette.done.data.remote.repository.DoneServerRepository
 class CategoryViewModel(val dbRepo: DoneRepository) : ViewModel() {
 
     var _selectedCategory: MutableLiveData<Int> = MutableLiveData(0)
-    val selectedCategory get() = _selectedCategory
+    val selectedCategory: LiveData<Int> get() = _selectedCategory
 
     var category: LiveData<List<Category>> = dbRepo.getCategory().asLiveData()
 

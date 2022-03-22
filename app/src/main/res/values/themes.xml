@@ -88,7 +88,6 @@
         <item name="android:textColor">@color/doneHintColor</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">5sp</item>
-        <item name="android:translationY">-2.48sp</item>
     </style>
 
     <style name="today_text" parent="done_hint_text">

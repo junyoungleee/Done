@@ -2,22 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:background="@color/doneBoxColor"
     android:layout_width="match_parent"
-    android:layout_height="35dp">
+    android:layout_height="@dimen/done_item_height">
 
     <ImageView
         android:id="@+id/iv_done_category"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="68dp"
+        android:layout_height="match_parent"
+        android:paddingEnd="14dp"
+        android:paddingStart="29dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:src="@null"
         android:background="@null"/>
 
     <TextView
         android:id="@+id/tv_done_content"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|start"
         android:layout_weight="1"
         style="@style/done_item_text"/>
 
@@ -28,6 +32,5 @@
         android:src="@drawable/ic_done_edit"
         android:background="@null"
         android:paddingStart="5dp"
-        android:paddingEnd="5dp"/>
-
+        android:paddingEnd="20dp"/>
 </LinearLayout>

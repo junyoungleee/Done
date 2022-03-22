@@ -8,21 +8,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.FragmentDoneBinding
-import com.palette.done.databinding.FragmentTodayRecordBinding
+import com.palette.done.databinding.FragmentTodayStickerBinding
+import com.palette.done.viewmodel.TodayRecordViewModel
+import com.palette.done.viewmodel.TodayRecordViewModelFactory
+import com.palette.done.viewmodel.TodayStickerViewModel
 
-class TodayRecordFragment : Fragment() {
+class TodayStickerFragment : Fragment() {
 
-    private var _binding: FragmentTodayRecordBinding? = null
+    private var _binding: FragmentTodayStickerBinding? = null
     private val binding get() = _binding!!
+
+    private val stickerVM : TodayStickerViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentTodayRecordBinding.inflate(inflater, container, false)
+        _binding = FragmentTodayStickerBinding.inflate(inflater, container, false)
 
         binding.llSticker.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DoneApplication.pref.keyboard)
+
 
 
         return binding.root

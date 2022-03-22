@@ -40,8 +40,15 @@ data class TodayRecords (
     val date: String,
     @SerializedName("content")
     val content: String?,
-    @SerializedName("sticker")
-    val sticker: Int?
+    @SerializedName("sticker_no")
+    val sticker_no: Int?
+)
+
+data class TodayRecordsUpdate(
+    @SerializedName("content")
+    val content: String?,
+    @SerializedName("sticker_no")
+    val sticker_no: Int?
 )
 
 data class TodayRecordsResponse(

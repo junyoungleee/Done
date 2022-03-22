@@ -67,7 +67,7 @@ class MainViewModel(private val serverRepo: DoneServerRepository,
                                 200 -> {
                                     val list = response.body()!!.item!!.categories
                                     for (c in list) {
-                                        Log.d("routine_server", "${c.name}")
+                                        Log.d("category_server", "${c.name}")
                                         val category = Category(c.category_no, c.name)
                                         insertOrUpdateCategoryInDB(category)
                                     }

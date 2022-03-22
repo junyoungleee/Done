@@ -15,17 +15,20 @@
         android:src="@drawable/ic_calendar"
         android:background="@null"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="7dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/left_margin"/>
+        app:layout_constraintStart_toStartOf="@id/left_margin"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_plan"
         android:text="@string/done_btn_plan"
         android:layout_marginTop="28dp"
-        app:layout_constraintRight_toRightOf="@id/right_margin"
+        android:layout_gravity="center"
+        style="@style/done_button_stroke"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/done_button_stroke"/>
+        app:layout_constraintEnd_toEndOf="@id/right_margin"/>
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -33,9 +36,11 @@
         android:layout_height="0dp"
         android:scrollbars="none"
         android:overScrollMode="never"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
         app:layout_constraintTop_toBottomOf="@id/btn_plan"
-        app:layout_constraintRight_toRightOf="@id/right_margin"
-        app:layout_constraintLeft_toLeftOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="30dp">
+            android:paddingBottom="20dp">
 
             <LinearLayout
                 android:id="@+id/ll_date"
@@ -130,16 +135,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
-                android:paddingStart="15dp"
                 android:paddingTop="20dp"
-                android:paddingEnd="15dp"
                 android:paddingBottom="20dp"
                 android:minHeight="280dp"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_done_list" />
+
+            <include
+                android:id="@+id/layout_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                layout="@layout/layout_done_empty"
+                app:layout_constraintTop_toTopOf="@id/rc_done_list"
+                app:layout_constraintEnd_toEndOf="@id/rc_done_list"
+                app:layout_constraintBottom_toBottomOf="@id/rc_done_list"
+                app:layout_constraintStart_toStartOf="@id/rc_done_list"/>
 
             <TextView
                 android:id="@+id/tv_today_title"
@@ -162,20 +174,32 @@
                 android:background="@drawable/done_box_round"
                 app:layout_constraintTop_toBottomOf="@id/tv_today_title">
 
+                <View
+                    android:id="@+id/view_today_sticker_top_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@null"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/iv_today_record_sticker"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"/>
+
                 <ImageView
                     android:id="@+id/iv_today_record_sticker"
                     android:layout_width="@dimen/all_sticker_size"
                     android:layout_height="@dimen/all_sticker_size"
                     android:layout_gravity="center_horizontal"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/img_dd_type_j"
+                    app:layout_constraintTop_toBottomOf="@id/view_today_sticker_top_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="gone"/>
 
                 <View
-                    android:id="@+id/view_today_record_divider"
+                    android:id="@+id/view_today_sticker_bottom_margin"
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="5dp"
                     android:background="@null"
                     app:layout_constraintTop_toBottomOf="@id/iv_today_record_sticker"
                     app:layout_constraintStart_toStartOf="parent"
@@ -190,14 +214,12 @@
                     android:layout_marginEnd="17dp"
                     android:layout_marginTop="9dp"
                     android:layout_marginBottom="9dp"
-                    android:lines="3"
                     android:lineHeight="25sp"
                     android:text="@string/done_today_hint"
                     style="@style/done_hint_text"
-                    app:layout_constraintTop_toBottomOf="@id/view_today_record_divider"
+                    app:layout_constraintTop_toBottomOf="@id/view_today_sticker_bottom_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:visibility="visible"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -210,6 +232,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/done_write_box_round"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

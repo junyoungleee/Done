@@ -15,8 +15,10 @@
         <activity android:name=".view.my.MyEditActivity"></activity>
         <activity android:name=".view.my.MyActivity" />
         <activity android:name=".view.main.today.TodayRecordActivity" />
-        <activity android:name=".view.main.PlanRoutineActivity" />
-        <activity android:name=".view.main.DoneActivity" />
+        <activity android:name=".view.main.PlanRoutineActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".view.main.DoneActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.SplashActivity"
             android:exported="true">

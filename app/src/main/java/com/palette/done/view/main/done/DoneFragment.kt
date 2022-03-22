@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
+import com.palette.done.data.remote.model.dones.Dones
 import com.palette.done.databinding.FragmentDoneBinding
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.view.main.DoneActivity
@@ -60,15 +62,18 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         binding.flWriteContainer.layoutParams =
             LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DoneApplication.pref.keyboard)
 
-        binding.etDone.requestFocus()
+        binding.flWriteContainer.visibility = View.GONE
 
         setTitle()
-
-        setCategoryButtonClick()
+        setCategoryAction()
         setWriteButtons()
         setEditText()
 
         setTagClickListener()
+
+        binding.etDone.clearFocus()
+        binding.etDone.requestFocus()
+        showKeyboard()
 
         return binding.root
     }
@@ -122,6 +127,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         binding.etDone.addTextChangedListener(doneEditVM.onDoneTextWatcher())
         doneEditVM.done.observe(viewLifecycleOwner) { done ->
             when(editMode) {
+                // 던리스트 작성 / 수정
                 DoneMode.DONE -> {
                     if (done == "") {
                         with(binding.btnWrite) {
@@ -134,6 +140,8 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                 setInputFrameLayout()
                                 parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneTagFragment()).commit()
                                 closeCategory()
+
+                                (activity as DoneActivity).scrollingDown()
                             }
                         }
                     } else {
@@ -143,22 +151,36 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                             setPadding(util.dpToPx(12), util.dpToPx(0), util.dpToPx(12), util.dpToPx(0))
                             setOnClickListener {
                                 val category = categoryVM.getSelectedCategoryAsDone()
-                                val tag = doneEditVM.getSelectedHashTag()
-                                val routine = doneEditVM.getSelectedRoutineTag()
+                                var tag = doneEditVM.getSelectedHashTagNo()
+                                var routine = doneEditVM.getSelectedRoutineTagNo()
+                                if (tag != null) {
+                                    val selected = doneEditVM.selectedHashtag.value!!
+                                    if (selected.name != done || selected.category_no != category) {
+                                        tag = null
+                                    }
+                                }
+                                if (routine != null) {
+                                    val selected = doneEditVM.selectedRoutineTag.value!!
+                                    if (selected.content != done || selected.categoryNo != category) {
+                                        routine = null
+                                    }
+                                }
 
                                 // recyclerview 추가
                                 val date = doneDateVM.getTitleDate()
-                                doneEditVM.addDoneList(date, binding.etDone.text.toString(), category, tag, routine)
+                                doneEditVM.addDoneList(binding.etDone.text.toString(), date, category, tag, routine)
 
                                 // Done 추가 후, 초기화
                                 binding.etDone.text.clear()
                                 doneEditVM.initSelectedHashTag()
                                 doneEditVM.initSelectedRoutineTag()
                                 categoryVM.initSelectedCategory()
+
                             }
                         }
                     }
                 }
+                // 플랜, 루틴 작성 / 수정
                 else -> {
                     with(binding.btnWrite) {
                         setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
@@ -171,31 +193,48 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                         }
                         setOnClickListener {
                             val category = categoryVM.getSelectedCategoryAsDone()
-                            val tag = doneEditVM.getSelectedHashTag()
-                            val routine = doneEditVM.getSelectedRoutineTag()
+                            var tag = doneEditVM.getSelectedHashTagNo()
+                            var routine = doneEditVM.getSelectedRoutineTagNo()
 
                             if (done != "") {
                                 when (editMode) {
                                     DoneMode.EDIT_DONE -> {
                                         val old = doneEditVM.oldDone
+                                        // 해시태그였던 경우 -> 카테고리/컨텐츠변
+                                        if (old.tagNo != null) {
+                                            if (old.tagNo == tag) {
+                                                // 카테고리나 컨텐츠만 변경된 경우 -> 더 이상 태그가 아님
+                                                if (old.categoryNo != category || old.content != done) {
+                                                    tag = null
+                                                }
+                                            }
+                                        }
+                                        // 루틴이었던 경우
+                                        if (old.routineNo != null) {
+                                            if (old.routineNo == routine) {
+                                                // 카테고리나 컨텐츠만 변경된 경우 -> 더 이상 태그가 아님
+                                                if (old.categoryNo != category || old.content != done) {
+                                                    routine = null
+                                                }
+                                            }
+                                        }
                                         val new = Done(old.doneId, old.date, done, category, tag, routine)
-                                        Log.d("done_edit", "id = ${old.doneId}")
                                         doneEditVM.updateDoneList(new)
-                                        hideKeyboard()
                                         (activity as DoneActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_PLAN -> {
                                         planVM.insertPlan(done, category)
                                         binding.etDone.text.clear()
+                                        categoryVM.initSelectedCategory()
                                     }
                                     DoneMode.EDIT_PLAN -> {
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
-                                        hideKeyboard()
                                         (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                     DoneMode.ADD_ROUTINE -> {
                                         routineVM.insertRoutine(done, category)
                                         binding.etDone.text.clear()
+                                        categoryVM.initSelectedCategory()
                                     }
                                     DoneMode.EDIT_ROUTINE -> {
                                         routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)
@@ -230,27 +269,43 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         }
     }
 
-    private fun setCategoryButtonClick() {
-        binding.btnCategory.setOnClickListener {
-            if (!isEditPopupOpen) {
-                isEditPopupOpen = !isEditPopupOpen
-            }
-            isCategoryOpen = true
-            setInputFrameLayout()
-            binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
-            parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
+    private fun categoryOpen() {
+        isEditPopupOpen = true
+        isCategoryOpen = true
+        setInputFrameLayout()
+        parentFragmentManager.beginTransaction().replace(binding.flWriteContainer.id, DoneCategoryFragment()).commit()
+    }
 
-            setCategoryImage()
+    private fun closeCategory() {
+        isCategoryOpen = false
+        if (categoryVM.getSelectedCategoryAsDone() == null) {
+            binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_category))
         }
     }
 
-    private fun setCategoryImage() {
+    private fun setCategoryAction() {
         categoryVM.selectedCategory.observe(viewLifecycleOwner) { id ->
             when(id) {
                 0, null -> {
                     // 카테고리가 없는 경우
                     Log.d("category_id_0", "$id")
-                    binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
+                    // 카테고리가 없을 때, 버튼을 누르면 무조건 카테고리 팝업 열리고 빈 이미지
+                    binding.btnCategory.setOnClickListener {
+                        categoryOpen()
+                        if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+                            (activity as DoneActivity).scrollingDown()
+                        } else if (editMode == DoneMode.ADD_PLAN || editMode == DoneMode.EDIT_PLAN) {
+                            (activity as PlanRoutineActivity).planScrollingDown()
+                        } else {
+                            (activity as PlanRoutineActivity).routineScrollingDown()
+                        }
+                        binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
+                    }
+                    // 카테고리가 없을 때, 팝엽 열리면 빈 이미지 / 닫히면 기본 이미지
+                    when(isCategoryOpen) {
+                        true -> binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
+                        false -> binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_category))
+                    }
                 }
                 else -> {
                     // 카테고리가 선택되어 있는 경우
@@ -258,18 +313,15 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                     val imgId = resources.getIdentifier("ic_category_$id", "drawable", requireActivity().packageName)
                     binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), imgId))
                     binding.btnCategory.setOnClickListener {
-                        if (isCategoryOpen) {
+                        if(isCategoryOpen) {
                             categoryVM.initSelectedCategory()
+                        } else {
+                            categoryOpen()
                         }
                     }
                 }
             }
         }
-    }
-
-    private fun closeCategory() {
-        isCategoryOpen = false
-        binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_category))
     }
 
     private fun setEditText() {
@@ -278,11 +330,17 @@ class DoneFragment(mode: DoneMode) : Fragment() {
             setOnClickListener {
                 if (isEditPopupOpen) {
                     isEditPopupOpen = false
-                    setInputFrameLayout()
-                    (activity as DoneActivity).scrollingDown()
                 }
+                setInputFrameLayout()
                 if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
                     binding.etDone.hint = getString(R.string.done_list_write_hint)
+                }
+                if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+                    (activity as DoneActivity).scrollingDown()
+                } else if (editMode == DoneMode.ADD_PLAN || editMode == DoneMode.EDIT_PLAN) {
+                    (activity as PlanRoutineActivity).planScrollingDown()
+                } else {
+                    (activity as PlanRoutineActivity).routineScrollingDown()
                 }
                 closeCategory()
             }
@@ -315,39 +373,54 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         lifecycleScope.launch {
             if (isEditPopupOpen) {
                 // 카테고리, 루틴, 해시태그 입력창이 열리게 하기
-                hideKeyboard()
-                delay(10)
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 binding.flWriteContainer.visibility = View.VISIBLE
+                hideKeyboard()
                 delay(100)
                 binding.etDone.requestFocus()
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             } else {
                 // 카테고리, 루틴, 해시태그 입력창이 닫히게 하기
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 showKeyboard()
+                delay(100)
+                binding.flWriteContainer.visibility = View.VISIBLE
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                delay(100)
                 binding.etDone.requestFocus()
-                delay(100)
-                binding.flWriteContainer.visibility = View.GONE
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-                delay(100)
-                (activity as DoneActivity).scrollingDown()
             }
+
         }
     }
 
     private fun hideKeyboard() {
         val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
+        if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+            (activity as DoneActivity).makeScreenLong()
+        } else {
+            (activity as PlanRoutineActivity).makeScreenLong()
+        }
     }
 
     private fun showKeyboard() {
         val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.showSoftInput(view, 0)
+        inputManager.showSoftInput(binding.etDone, InputMethodManager.SHOW_IMPLICIT)
+        if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+            (activity as DoneActivity).makeScreenLong()
+        }else {
+            (activity as PlanRoutineActivity).makeScreenLong()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("fragment_oncreate", "true")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("edit_destroy", "true")
         _binding = null
     }
 }

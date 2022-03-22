@@ -7,4 +7,6 @@
     <dimen name="all_sticker_size">115dp</dimen>
 
     <dimen name="dialog_size">320dp</dimen>
+
+    <dimen name="done_item_height">35dp</dimen>
 </resources>
