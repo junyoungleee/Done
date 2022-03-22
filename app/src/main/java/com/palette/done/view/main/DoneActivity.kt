@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
@@ -77,6 +78,7 @@ class DoneActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setKeyboardHeight()
+        binding.flDoneWrite.visibility = View.GONE
 
         val clickedDate = intent.getStringExtra("clickedDate")
         Log.d("date_clicked", "${clickedDate}")
@@ -87,11 +89,9 @@ class DoneActivity : AppCompatActivity() {
         routineVM.initRoutine()
         planVM.initPlan()
 
-        showEmptyLayout()
-
         setTitleDate()
         setButtonsDestination()
-        setPremium()
+        checkEmptyAndPremium()
 
         initDoneListRecyclerView()
 
@@ -127,7 +127,7 @@ class DoneActivity : AppCompatActivity() {
     }
 
 
-    private fun showEmptyLayout() {
+    private fun checkEmptyAndPremium() {
         dateVM.doneList.observe(this) {
             if (it.isEmpty()) {
                 if (!dateVM.isDateToday()) {
@@ -141,6 +141,7 @@ class DoneActivity : AppCompatActivity() {
                             binding.tvDoneList.visibility = View.VISIBLE
                             layoutEmpty.root.visibility = View.GONE
                         }
+                        Log.d("rc_clickable", "${rcDoneList.isClickable}")
                     }
                 } else {
                     // 리스트가 비어있는데 오늘인 경우
@@ -153,9 +154,30 @@ class DoneActivity : AppCompatActivity() {
             } else {
                 // 리스트가 있는 경우
                 with(binding) {
-                    rcDoneList.isClickable = true
                     tvDoneList.visibility = View.VISIBLE
                     layoutEmpty.root.visibility = View.GONE
+                }
+                // 프리미엄 체크
+                if (DoneApplication.pref.premium) {
+                    if(it.size == PREMIUM_DONELIST_SIZE) {
+                        binding.rcDoneList.isClickable = false
+                        binding.tvDoneList.isClickable = false
+                        closeEditFrame() // editFrame 열려있으면 닫아야 함
+                        makeScreenOriginal()
+                    } else {
+                        binding.rcDoneList.isClickable = true
+                        binding.tvDoneList.isClickable = true
+                    }
+                } else {
+                    if(it.size == NORMAL_DONELIST_SIZE) {
+                        binding.rcDoneList.isClickable = false
+                        binding.tvDoneList.isClickable = false
+                        closeEditFrame() // editFrame 열려있으면 닫아야 함
+                        makeScreenOriginal()
+                    } else {
+                        binding.rcDoneList.isClickable = true
+                        binding.tvDoneList.isClickable = true
+                    }
                 }
             }
         }
@@ -198,6 +220,7 @@ class DoneActivity : AppCompatActivity() {
                     .setWidth(util.dpToPx(108))
                     .setAnimation(MenuAnimation.SHOWUP_TOP_RIGHT)
                     .setSelectedMenuColor(ContextCompat.getColor(this@DoneActivity, R.color.doneDetailColor))
+                    .setLifecycleOwner(this@DoneActivity)
                     .setOnMenuItemClickListener { menu, item ->
                         when(menu) {
                             0 -> {
@@ -208,6 +231,7 @@ class DoneActivity : AppCompatActivity() {
                                 categoryVM._selectedCategory.value = done.categoryNo
                                 supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.EDIT_DONE)).commit()
                                 binding.flDoneWrite.visibility = View.VISIBLE
+                                hideKeyboard()
                             }
                             1 -> {
                                 // 삭제
@@ -305,7 +329,8 @@ class DoneActivity : AppCompatActivity() {
         binding.tvDoneList.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
             binding.flDoneWrite.visibility = View.VISIBLE
-            makeScreenOriginal()
+            hideKeyboard()
+            scrollingUp()
         }
         binding.rcDoneList.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP)
@@ -315,9 +340,11 @@ class DoneActivity : AppCompatActivity() {
         }
         binding.rcDoneList.setOnClickListener {
             if (it.isClickable) {
+                Log.d("rc_click", "true")
                 supportFragmentManager.beginTransaction().replace(binding.flDoneWrite.id, DoneFragment(DoneMode.DONE)).commit()
                 binding.flDoneWrite.visibility = View.VISIBLE
-                makeScreenOriginal()
+                hideKeyboard()
+                scrollingUp()
             }
         }
         binding.rootView.setOnClickListener {
@@ -360,29 +387,13 @@ class DoneActivity : AppCompatActivity() {
         }
     }
 
+    private fun scrollingUp() {
+        binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
+    }
+
     fun closeEditFrame() {
         hideKeyboard() // visibility보다 먼저 처리해야 함
         binding.flDoneWrite.visibility = View.GONE
-    }
-
-    private fun setPremium() {
-        dateVM.doneList.observe(this) { list ->
-            if (DoneApplication.pref.premium) {
-                if(list.size == PREMIUM_DONELIST_SIZE) {
-                    binding.rcDoneList.isClickable = false
-                    closeEditFrame() // editFrame 열려있으면 닫아야 함
-                } else {
-                    binding.rcDoneList.isClickable = true
-                }
-            } else {
-                if(list.size == NORMAL_DONELIST_SIZE) {
-                    binding.rcDoneList.isClickable = false
-                    closeEditFrame() // editFrame 열려있으면 닫아야 함
-                } else {
-                    binding.rcDoneList.isClickable = true
-                }
-            }
-        }
     }
 
     private fun hideKeyboard() {

@@ -30,6 +30,13 @@ class DoneDateViewModel(val dbRepo: DoneRepository) : ViewModel() {
         dbRepo.getAllDoneInDate(it).asLiveData()
     }
 
+    fun getDoneListSize(): Int {
+        return if (doneList == null) {
+            0
+        } else {
+            doneList.value!!.size
+        }
+    }
 
     fun setTitleDate(date: String) {
         calDate.value = date

@@ -62,15 +62,18 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         binding.flWriteContainer.layoutParams =
             LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DoneApplication.pref.keyboard)
 
-        binding.etDone.requestFocus()
+        binding.flWriteContainer.visibility = View.GONE
 
         setTitle()
-
         setCategoryAction()
         setWriteButtons()
         setEditText()
 
         setTagClickListener()
+
+        binding.etDone.clearFocus()
+        binding.etDone.requestFocus()
+        showKeyboard()
 
         return binding.root
     }
@@ -139,7 +142,6 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                 closeCategory()
 
                                 (activity as DoneActivity).scrollingDown()
-                                Log.d("scroll_click", "ok")
                             }
                         }
                     } else {
@@ -290,6 +292,13 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                     // 카테고리가 없을 때, 버튼을 누르면 무조건 카테고리 팝업 열리고 빈 이미지
                     binding.btnCategory.setOnClickListener {
                         categoryOpen()
+                        if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+                            (activity as DoneActivity).scrollingDown()
+                        } else if (editMode == DoneMode.ADD_PLAN || editMode == DoneMode.EDIT_PLAN) {
+                            (activity as PlanRoutineActivity).planScrollingDown()
+                        } else {
+                            (activity as PlanRoutineActivity).routineScrollingDown()
+                        }
                         binding.btnCategory.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_empty_category))
                     }
                     // 카테고리가 없을 때, 팝엽 열리면 빈 이미지 / 닫히면 기본 이미지
@@ -321,14 +330,17 @@ class DoneFragment(mode: DoneMode) : Fragment() {
             setOnClickListener {
                 if (isEditPopupOpen) {
                     isEditPopupOpen = false
-                    setInputFrameLayout()
                 }
+                setInputFrameLayout()
                 if (editMode == DoneMode.DONE && binding.etDone.text.isEmpty()) {
                     binding.etDone.hint = getString(R.string.done_list_write_hint)
                 }
-                if (editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
+                if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
                     (activity as DoneActivity).scrollingDown()
-                    Log.d("scroll_click", "ok")
+                } else if (editMode == DoneMode.ADD_PLAN || editMode == DoneMode.EDIT_PLAN) {
+                    (activity as PlanRoutineActivity).planScrollingDown()
+                } else {
+                    (activity as PlanRoutineActivity).routineScrollingDown()
                 }
                 closeCategory()
             }
@@ -361,23 +373,23 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         lifecycleScope.launch {
             if (isEditPopupOpen) {
                 // 카테고리, 루틴, 해시태그 입력창이 열리게 하기
-                hideKeyboard()
-                delay(10)
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 binding.flWriteContainer.visibility = View.VISIBLE
+                hideKeyboard()
                 delay(100)
                 binding.etDone.requestFocus()
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             } else {
                 // 카테고리, 루틴, 해시태그 입력창이 닫히게 하기
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 showKeyboard()
                 delay(100)
-                binding.etDone.requestFocus()
-                binding.flWriteContainer.visibility = View.GONE
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                binding.flWriteContainer.visibility = View.VISIBLE
+//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 delay(100)
+                binding.etDone.requestFocus()
             }
+
         }
     }
 
@@ -386,19 +398,29 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
         if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
             (activity as DoneActivity).makeScreenLong()
+        } else {
+            (activity as PlanRoutineActivity).makeScreenLong()
         }
     }
 
     private fun showKeyboard() {
         val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.showSoftInput(view, 0)
+        inputManager.showSoftInput(binding.etDone, InputMethodManager.SHOW_IMPLICIT)
         if(editMode == DoneMode.DONE || editMode == DoneMode.EDIT_DONE) {
-            (activity as DoneActivity).makeScreenOriginal()
+            (activity as DoneActivity).makeScreenLong()
+        }else {
+            (activity as PlanRoutineActivity).makeScreenLong()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("fragment_oncreate", "true")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("edit_destroy", "true")
         _binding = null
     }
 }
