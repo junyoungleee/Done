@@ -178,17 +178,35 @@
     <string name="level">LV.</string>
 
     <!-- My : 등급 안내 -->
-    <string name="level_title">등급 안내</string>
-    <string name="level_my">내 등급</string>
-    <string name="level_1_3">LV.1~LV.3</string>
-    <string name="level_1_3_detail">해냄과 함께 기록을 시작하는 단계네요:)</string>
-    <string name="level_4_6">LV.4~LV.6</string>
-    <string name="level_4_6_detail">기록 습관이 생기고 있는 해린이네요!👏🏻</string>
-    <string name="level_7_8">LV.7~LV.8</string>
-    <string name="level_7_8_detail">나만의 던리스트를 꾸준히 만들어가고 있어요!</string>
-    <string name="level_9_10">LV.9~LV.10</string>
-    <string name="level_9_10_detail">진정한 갓생러!</string>
+    <string name="grade_title">등급 안내</string>
+    <string name="grade_my">내 등급</string>
+    <string name="grade_1">새싹해냄이</string>
+    <string name="grade_1_level">LV.1~LV.3</string>
+    <string name="grade_1_detail">해냄과 함께 기록을 시작하는 단계네요:)</string>
+    <string name="grade_2">해린이</string>
+    <string name="grade_2_level">LV.4~LV.6</string>
+    <string name="grade_2_detail">기록 습관이 생기고 있는 해린이네요!👏🏻</string>
+    <string name="grade_3">프로해냄러</string>
+    <string name="grade_3_level">LV.7~LV.8</string>
+    <string name="grade_3_detail">나만의 던리스트를 꾸준히 만들어가고 있어요!</string>
+    <string name="grade_4">갓생해린이</string>
+    <string name="grade_4_level">LV.9~LV.10</string>
+    <string name="grade_4_detail">진정한 갓생러!</string>
 
     <string name="nickname">닉네임</string>
     <string name="edit">수정하기</string>
-</resources>
+
+    <!-- My: 프리미엄 -->
+    <string name="premium">프리미엄</string>
+    <string name="premium_title">추후 오픈 예정이에요 : )</string>
+    <string name="premium_sub_title">Premium 해냄으로\n더 많은 기능을 사용해보세요 </string>
+    <string name="premium_done_cnt_title">일별 던리스트 개수</string>
+    <string name="premium_category_cnt_title">카테고리 아이콘</string>
+    <string name="premium_not">일반</string>
+    <string name="premium_not_done_cnt">8개</string>
+    <string name="premium_not_category_cnt">6종</string>
+    <string name="premium_done_cnt">50개</string>
+    <string name="premium_category_cnt">+6종=12종</string>
+    <string name="premium_later">스티커, 달력스킨 등 추후 다양한 혜택이\n추가될 예정이니 기대해주세요! 😎</string>
+
+ </resources>

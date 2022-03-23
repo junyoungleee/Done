@@ -1,4 +1,4 @@
-package com.palette.done.view.my.edit
+package com.palette.done.view.my.menu
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.palette.done.R
 import com.palette.done.databinding.DialogOutBinding
@@ -32,6 +35,7 @@ class OutDialog(var outMode: Out) : DialogFragment() {
                     tvOutTitle.text = getString(R.string.my_dialog_log_out)
                     tvOutDetail.visibility = View.GONE
                     btnLeft.text = getString(R.string.no)
+                    btnLeft.background = ContextCompat.getDrawable(requireActivity(), R.drawable.dialog_out_btn_round)
                     btnRight.text = getString(R.string.yes)
                     btnRight.setOnClickListener {
 
@@ -43,6 +47,7 @@ class OutDialog(var outMode: Out) : DialogFragment() {
                     tvOutTitle.text = getString(R.string.my_dialog_quit)
                     tvOutDetail.visibility = View.VISIBLE
                     btnRight.text = getString(R.string.no)
+                    btnRight.background = ContextCompat.getDrawable(requireActivity(), R.drawable.dialog_out_btn_round)
                     btnLeft.text = getString(R.string.yes)
                     btnLeft.setOnClickListener {
 

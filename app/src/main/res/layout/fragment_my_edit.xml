@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingStart="20dp"
+    android:paddingTop="18dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.my.edit.MyEditFragment">
+    tools:context=".view.my.menu.MyEditFragment">
 
     <ImageView
         android:id="@+id/iv_profile"

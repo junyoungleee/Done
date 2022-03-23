@@ -137,12 +137,5 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_version"
             style="@style/my_menu_text"/>
-        <ImageButton
-            android:id="@+id/btn_menu_version"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
     </LinearLayout>
 </LinearLayout>

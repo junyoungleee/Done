@@ -1,10 +1,11 @@
-package com.palette.done.view.my.edit
+package com.palette.done.view.my.menu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.palette.done.DoneApplication
 import com.palette.done.databinding.FragmentMyEditBinding
 
 class MyEditFragment : Fragment() {
@@ -16,8 +17,26 @@ class MyEditFragment : Fragment() {
     : View? {
         _binding = FragmentMyEditBinding.inflate(inflater, container, false)
 
+        binding.tvNickname.text = DoneApplication.pref.nickname
+
+        setButtonsDestination()
         showOutDialog()
+
         return binding.root
+    }
+
+    private fun setButtonsDestination() {
+        with(binding) {
+            tvNicknameEdit.setOnClickListener {
+                // 닉네임 수정화면 연결
+            }
+            btnEditType.setOnClickListener {
+
+            }
+            btnEditPwd.setOnClickListener {
+
+            }
+        }
     }
 
     private fun showOutDialog() {
