@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Done</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_version">1.0</string>
 
     <!-- 공통 -->
     <string name="all_hint_email">이메일 주소 입력</string>
@@ -167,15 +168,23 @@
     <string name="my_edit_nickname_title">닉네임 수정</string>
     <string name="my_edit_type_title">기록유형 설정</string>
     <string name="my_edit_alarm_title">알림 설정</string>
-    <string name="my_edit_password_title">비밀번호 변경</string>
+    <string name="my_edit_pwd_title">비밀번호 변경</string>
+    <string name="my_edit_pwd_sub_title">새로운 비밀번호를\n입력해 주세요.</string>
     <string name="my_edit_log_out">로그아웃</string>
     <string name="my_dialog_log_out">로그아웃 하시겠어요?</string>
     <string name="my_edit_quit">회원탈퇴</string>
     <string name="my_dialog_quit">정말 탈퇴하실건가요?</string>
     <string name="my_dialog_quit_detail">그동안 저장된 데이터가 모두 사라집니다.</string>
 
+    <string name="my_nickname_wrong_same">현재와 같은 닉네임을 입력했어요.</string>
+    <string name="my_pwd_wrong_same">현재 비밀번호와 같아요.</string>
+
     <string name="my_level_left">개 Done이 남았어요! 화이팅 👍🏻</string>
     <string name="level">LV.</string>
+
+    <string name="nickname">닉네임</string>
+    <string name="edit">수정하기</string>
+    <string name="my_edit_type_btn">수정 완료</string>
 
     <!-- My : 등급 안내 -->
     <string name="grade_title">등급 안내</string>
@@ -193,9 +202,6 @@
     <string name="grade_4_level">LV.9~LV.10</string>
     <string name="grade_4_detail">진정한 갓생러!</string>
 
-    <string name="nickname">닉네임</string>
-    <string name="edit">수정하기</string>
-
     <!-- My: 프리미엄 -->
     <string name="premium">프리미엄</string>
     <string name="premium_title">추후 오픈 예정이에요 : )</string>
@@ -209,4 +215,4 @@
     <string name="premium_category_cnt">+6종=12종</string>
     <string name="premium_later">스티커, 달력스킨 등 추후 다양한 혜택이\n추가될 예정이니 기대해주세요! 😎</string>
 
- </resources>
+</resources>

@@ -12,4 +12,10 @@ interface MemberProfileService {
 
     @PATCH("/api/profile/nickname")
     fun patchMemberNickname(@Body data: MemberNickname): Call<MemberProfileResponse>
+
+    @PATCH("/api/profile/type")
+    fun patchMemberType(): Call<MemberTypeResponse>
+
+    @PATCH("/api/profile/password")
+    fun patchMemberPwd(@Body data: MemberPwd): Call<MemberChangePwdResponse>
 }

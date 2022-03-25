@@ -2,11 +2,13 @@ package com.palette.done.viewmodel
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.palette.done.DoneApplication
 import com.palette.done.view.util.InputForm
 
 class PatternCheckViewModel: ViewModel(){
@@ -16,12 +18,14 @@ class PatternCheckViewModel: ViewModel(){
     var _pwd2: MutableLiveData<String> = MutableLiveData("")
     var _pwdResult: MutableLiveData<Boolean> = MutableLiveData(true)
     var _pwd2Result: MutableLiveData<Boolean> = MutableLiveData(true)
+    var _pwdEditNotSame: MutableLiveData<Boolean> = MutableLiveData(true)
 
     val emailResult: LiveData<Boolean> get() = _emailResult
     val pwd: LiveData<String> get() = _pwd
     val pwd2: LiveData<String> get() = _pwd2
     val pwdResult: LiveData<Boolean> get() = _pwdResult
     val pwd2Result: LiveData<Boolean> get() = _pwd2Result
+    val pwdEditNotSame: LiveData<Boolean> get() = _pwdEditNotSame
 
     val inputForm = InputForm()
 
@@ -71,6 +75,12 @@ class PatternCheckViewModel: ViewModel(){
     fun checkPwd2(pwd2: String) {
         _pwd2Result.value = (pwd.value.toString() == (pwd2))
         _pwd2.value = pwd2
+    }
+
+    fun checkEditPwd() {
+        val old = DoneApplication.pref.pwd
+        val notSame = !(pwd.value == old || pwd2.value == old) // 같지 않으면 true
+        _pwdEditNotSame.value = notSame && _pwd2Result.value!! && _pwdResult.value!!
     }
 
     fun checkEmail(email: String) {

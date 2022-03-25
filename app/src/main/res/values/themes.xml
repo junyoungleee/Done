@@ -293,6 +293,12 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="my_next_button">
+        <item name="android:background">@null</item>
+        <item name="android:paddingStart">30dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:src">@drawable/ic_menu</item>
+    </style>
 
     <!-- Spinner -->
     <style name="ob_alarm_timepicker">

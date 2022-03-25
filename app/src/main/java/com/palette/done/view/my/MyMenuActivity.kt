@@ -29,16 +29,16 @@ class MyMenuActivity : AppCompatActivity() {
     private fun setFragment() {
         when(mode) {
             MyMode.PROFILE_EDIT -> {
-                binding.tvMyEditTitle.text = getString(R.string.my_edit_title)
-                supportFragmentManager.beginTransaction().replace(binding.flEdit.id, MyEditFragment()).commit()
+                binding.tvMyMenuTitle.text = getString(R.string.my_edit_title)
+                supportFragmentManager.beginTransaction().replace(binding.flMenu.id, MyEditFragment()).commit()
             }
             MyMode.PREMIUM -> {
-                binding.tvMyEditTitle.text = getString(R.string.premium)
-                supportFragmentManager.beginTransaction().replace(binding.flEdit.id, MyPremiumFragment()).commit()
+                binding.tvMyMenuTitle.text = getString(R.string.premium)
+                supportFragmentManager.beginTransaction().replace(binding.flMenu.id, MyPremiumFragment()).commit()
             }
             MyMode.GRADE -> {
-                binding.tvMyEditTitle.text = getString(R.string.grade_title)
-                supportFragmentManager.beginTransaction().replace(binding.flEdit.id, MyGradeFragment()).commit()
+                binding.tvMyMenuTitle.text = getString(R.string.grade_title)
+                supportFragmentManager.beginTransaction().replace(binding.flMenu.id, MyGradeFragment()).commit()
             }
         }
     }

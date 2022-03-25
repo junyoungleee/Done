@@ -99,9 +99,7 @@
             android:id="@+id/btn_edit_type"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
-            android:padding="20dp"
-            android:src="@drawable/ic_menu" />
+            style="@style/my_next_button" />
     </LinearLayout>
 
     <View
@@ -127,21 +125,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/my_edit_password_title"
+            android:text="@string/my_edit_pwd_title"
             style="@style/my_menu_text"/>
         <ImageButton
             android:id="@+id/btn_edit_pwd"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            style="@style/my_next_button"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="42dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,18 +146,18 @@
         <TextView
             android:id="@+id/tv_log_out"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/my_edit_log_out"
             android:includeFontPadding="false"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
+            android:padding="18dp"
             android:textColor="@color/contextColor"
             style="@style/all_mini_text"/>
         <View
             android:layout_width="1dp"
             android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
             android:background="@color/black"/>
         <TextView
             android:id="@+id/tv_quit"
@@ -171,8 +167,7 @@
             android:gravity="center"
             android:text="@string/my_edit_quit"
             android:includeFontPadding="false"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
+            android:padding="18dp"
             android:textColor="@color/contextColor"
             style="@style/all_mini_text"/>
     </LinearLayout>

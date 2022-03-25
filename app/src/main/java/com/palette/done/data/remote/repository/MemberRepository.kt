@@ -42,4 +42,17 @@ class MemberRepository {
         return profileApi.patchMemberProfile(profile)
     }
 
+    // 유저 정보 수정
+    fun patchNewNickName(new: MemberNickname): Call<MemberProfileResponse> {
+        return profileApi.patchMemberNickname(new)
+    }
+
+    fun patchNewType(): Call<MemberTypeResponse> {
+        return profileApi.patchMemberType()
+    }
+
+    fun patchNewPwd(new: MemberPwd): Call<MemberChangePwdResponse> {
+        return profileApi.patchMemberPwd(new)
+    }
+
 }

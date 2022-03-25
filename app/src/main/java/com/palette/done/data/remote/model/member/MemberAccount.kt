@@ -23,3 +23,13 @@ data class MemberSignUpResponse(
     val message: String?,
     val is_success: Boolean
 )
+
+data class MemberPwd(
+    @SerializedName("new_password")
+    val newPassword: String
+)
+
+data class MemberChangePwdResponse(
+    val is_success: Boolean,
+    val message: String?
+)

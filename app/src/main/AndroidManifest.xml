@@ -12,12 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Done">
-        <activity android:name=".view.my.MyMenuActivity"></activity>
+        <activity android:name=".view.my.MyEditActivity"/>
+        <activity android:name=".view.my.MyMenuActivity" />
         <activity android:name=".view.my.MyActivity" />
         <activity android:name=".view.main.today.TodayRecordActivity" />
-        <activity android:name=".view.main.PlanRoutineActivity"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".view.main.DoneActivity"
+        <activity
+            android:name=".view.main.PlanRoutineActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".view.main.DoneActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.SplashActivity"

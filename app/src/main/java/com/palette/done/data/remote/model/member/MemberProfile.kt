@@ -25,7 +25,7 @@ data class MemberProfileResponse(
 
 data class MemberTypeResponse(
     val item: MemberType?,
-    val messsage: String?,
+    val message: String?,
     val is_success: Boolean
 )
 

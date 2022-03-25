@@ -30,6 +30,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:imeOptions="actionDone"
             style="@style/all_edittext_pwd"/>
 
         <EditText

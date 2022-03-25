@@ -78,6 +78,9 @@ class MyActivity : AppCompatActivity() {
 
     private fun setButtonsDestination() {
         with(binding) {
+            btnBack.setOnClickListener {
+                finish()
+            }
             layoutMyProfile.btnEditProfile.setOnClickListener {
                 val intent = Intent(this@MyActivity, MyMenuActivity::class.java)
                 intent.putExtra("mode", MyMode.PROFILE_EDIT.name)
@@ -122,5 +125,10 @@ class MyActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setProfile()
     }
 }

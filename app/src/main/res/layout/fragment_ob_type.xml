@@ -8,41 +8,53 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="44dp">
 
         <LinearLayout
             android:id="@+id/ll_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/left_margin"
-            app:layout_constraintRight_toLeftOf="@id/right_margin">
-
-            <TextView
-                android:id="@+id/tv_nickname"
+            app:layout_constraintStart_toStartOf="@id/left_margin"
+            app:layout_constraintEnd_toEndOf="@id/right_margin">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="0dp"
-                style="@style/start_title_text" />
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/left_margin"
+                app:layout_constraintEnd_toEndOf="@id/right_margin">
+
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginTop="62dp"
+                    style="@style/start_title_text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ob_title_type_hi"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginTop="62dp"
+                    style="@style/start_title_text" />
+            </LinearLayout>
+
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_title2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ob_title_type_hi"
-                android:layout_marginLeft="0dp"
+                android:text="@string/ob_title_type_question"
+                android:layout_marginTop="5sp"
+                app:layout_constraintTop_toBottomOf="@id/ll_title"
+                app:layout_constraintStart_toStartOf="@id/left_margin"
+                app:layout_constraintEnd_toEndOf="@id/right_margin"
                 style="@style/start_title_text" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_title2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/ob_title_type_question"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toBottomOf="@id/ll_title"
-            app:layout_constraintLeft_toRightOf="@id/left_margin"
-            app:layout_constraintRight_toLeftOf="@id/right_margin"
-            style="@style/start_title_text" />
 
         <LinearLayout
             android:id="@+id/ll_type_j"
@@ -55,10 +67,10 @@
             android:outlineSpotShadowColor="@color/cardElevation"
             android:background="@drawable/ob_type_ll_round_selector"
             app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@id/tv_title2"
+            app:layout_constraintTop_toBottomOf="@id/ll_title"
             app:layout_constraintBottom_toTopOf="@id/ll_type_p"
-            app:layout_constraintLeft_toRightOf="@id/left_margin"
-            app:layout_constraintRight_toLeftOf="@id/right_margin">
+            app:layout_constraintStart_toStartOf="@id/left_margin"
+            app:layout_constraintEnd_toEndOf="@id/right_margin">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -115,9 +127,9 @@
             android:gravity="center_horizontal"
             android:background="@drawable/ob_type_ll_round_selector"
             app:layout_constraintTop_toBottomOf="@id/ll_type_j"
-            app:layout_constraintBottom_toTopOf="@id/tv_type_detail"
-            app:layout_constraintLeft_toRightOf="@id/left_margin"
-            app:layout_constraintRight_toLeftOf="@id/right_margin">
+            app:layout_constraintBottom_toTopOf="@id/ll_btn_and_detail"
+            app:layout_constraintStart_toStartOf="@id/left_margin"
+            app:layout_constraintEnd_toEndOf="@id/right_margin">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -163,26 +175,39 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_type_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ob_hint_type"
-            android:layout_marginBottom="130dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_next"
+        <LinearLayout
+            android:id="@+id/ll_btn_and_detail"
             android:layout_width="0dp"
-            android:text="@string/ob_next"
-            android:layout_marginBottom="56dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@id/left_margin"
+            app:layout_constraintEnd_toEndOf="@id/right_margin"
+            app:layout_constraintBottom_toTopOf="@id/margin_bottom">
+            <TextView
+                android:id="@+id/tv_type_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                android:text="@string/ob_hint_type"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:text="@string/ob_next"
+                android:layout_marginBottom="56dp"
+                android:enabled="false"
+                style="@style/all_button"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/margin_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/left_margin"
-            app:layout_constraintRight_toLeftOf="@id/right_margin"
-            android:enabled="false"
-            style="@style/all_button"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_margin"

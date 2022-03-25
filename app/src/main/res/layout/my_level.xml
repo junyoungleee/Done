@@ -9,10 +9,9 @@
 
     <ImageView
         android:id="@+id/iv_grade_donedone"
-        android:layout_width="75dp"
-        android:layout_height="85dp"
-        android:src="@drawable/img_grade_4"
-        android:scaleType="fitCenter"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:src="@drawable/img_grade_2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -21,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="2dp"
         app:layout_constraintStart_toEndOf="@id/iv_grade_donedone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
