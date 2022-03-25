@@ -34,4 +34,6 @@
     <color name="dialogSubTextColor">#80000000</color>
 
     <color name="mainDoneListColor">#0066FF</color>
+    <color name="stickerDividerColor">#1AB1B1B1</color>
+    <color name="stickerDisableColor">#B3B3B3</color>
 </resources>

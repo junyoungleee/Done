@@ -17,6 +17,7 @@
 
     <string name="yes">네</string>
     <string name="no">아니요</string>
+    <string name="ok">확인</string>
 
     <!-- 랜딩페이지 -->
     <string name="landing_start">시작하기</string>
@@ -215,4 +216,16 @@
     <string name="premium_category_cnt">+6종=12종</string>
     <string name="premium_later">스티커, 달력스킨 등 추후 다양한 혜택이\n추가될 예정이니 기대해주세요! 😎</string>
 
+    <!-- 스티커 페이지 -->
+    <string name="sticker">스티커</string>
+    <string name="sticker_detail">획득한 스티커는\n‘오늘 한마디’에서 사용할 수 있어요!</string>
+    <string name="sticker_type_1">해냄 100% 즐기기</string>
+    <string name="sticker_type_1_detail">해냄의 다양한 기능을 적극적으로 활용해보세요!😎</string>
+    <string name="sticker_type_2">나도 이제 프로 기록러</string>
+    <string name="sticker_type_2_detail">프로 해냄러로 가는 길!🔥 </string>
+    <string name="sticker_type_3">스페셜</string>
+    <string name="sticker_type_3_detail">프로 해냄러로 가는 길!🔥 </string>
+    <string name="sticker_later">추가 예정이에요!\n기대해주세요🍀</string>
+
+    <string name="sticker_get_title">스티커 획득!</string>
 </resources>

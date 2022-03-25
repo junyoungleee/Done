@@ -25,14 +25,14 @@ import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.DoneCount
 import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.data.remote.repository.StickerServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.my.MyActivity
+import com.palette.done.view.my.sticker.StickerActivity
 import com.palette.done.view.util.Util
-import com.palette.done.viewmodel.MainViewModel
-import com.palette.done.viewmodel.MainViewModelFactory
-import com.palette.done.viewmodel.RoutineViewModelFactory
+import com.palette.done.viewmodel.*
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.YearMonth
@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
     private val mainVM: MainViewModel by viewModels() {
         MainViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
+    private val stickerVM: StickerViewModel by viewModels() {
+        StickerViewModelFactory(StickerServerRepository(), (application as DoneApplication).stickerRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             setCalendarView()
         }
         setCalendarSubHeader()
+        stickerVM.getAllSticker()
 
         setButtonsDestination()
     }
@@ -69,6 +73,10 @@ class MainActivity : AppCompatActivity() {
     private fun setButtonsDestination() {
         binding.btnMy.setOnClickListener {
             val intent = Intent(this, MyActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnSticker.setOnClickListener {
+            val intent = Intent(this, StickerActivity::class.java)
             startActivity(intent)
         }
     }
@@ -159,12 +167,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        // 깜빡임 제거
-//        val animator = binding.calendarView.itemAnimator
-//        if (animator is SimpleItemAnimator) {
-//            animator.supportsChangeAnimations = false
-//        }
-
     }
 
     private fun setCalendarHeader() {

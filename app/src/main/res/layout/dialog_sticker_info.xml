@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/dialog_card">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="@dimen/dialog_size"
+        android:layout_height="360dp"
+        android:gravity="bottom|center">
+
+        <ImageView
+            android:id="@+id/iv_sticker"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@null"
+            android:layout_marginBottom="32dp"/>
+
+        <TextView
+            android:id="@+id/tv_sticker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            style="@style/dialog_main_text"/>
+
+        <TextView
+            android:id="@+id/tv_sticker_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            style="@style/dialog_sub_text"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:text="@string/ok"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            style="@style/dialog_button"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

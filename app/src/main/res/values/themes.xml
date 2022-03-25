@@ -146,12 +146,18 @@
     </style>
 
     <style name="my_report_text">
-        <item name="fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
         <item name="android:textColor">@color/contextColor</item>
         <item name="android:textSize">22sp</item>
         <item name="android:gravity">center|center_horizontal</item>
     </style>
 
+    <style name="all_later_add_text" parent="done_sub_title_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:gravity">center</item>
+    </style>
     <!-- TEXT PLAN & ROUTINE -->
 
     <style name="done_activity_detail">
@@ -199,7 +205,6 @@
     <style name="all_toolbar_back_btn">
         <item name="android:src">@drawable/ic_back</item>
         <item name="android:background">@null</item>
-        <item name="android:paddingRight">10dp</item>
         <item name="android:layout_marginTop">33dp</item>
         <item name="android:layout_marginLeft">20dp</item>
     </style>
@@ -291,6 +296,8 @@
 
     <style name="dialog_button" parent="main_button_solid">
         <item name="android:textSize">18sp</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
     <style name="my_next_button">
@@ -349,5 +356,11 @@
     <style name="dialog_sub_text" parent="dialog_main_text">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/dialogSubTextColor</item>
+    </style>
+
+    <!-- View -->
+    <style name="view_sticker_divider">
+        <item name="android:layout_height">12dp</item>
+        <item name="android:background">@color/stickerDividerColor</item>
     </style>
 </resources>
