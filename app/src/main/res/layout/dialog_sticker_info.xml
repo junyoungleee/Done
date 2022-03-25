@@ -21,15 +21,18 @@
         <TextView
             android:id="@+id/tv_sticker_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="23dp"
             android:layout_marginBottom="8dp"
+            android:text="플랜 오늘함! x10 "
             style="@style/dialog_main_text"/>
 
         <TextView
             android:id="@+id/tv_sticker_detail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="16dp"
             android:layout_marginBottom="30dp"
+            android:includeFontPadding="false"
+            android:text="플랜 오늘 함! 10회 완료👍🏻"
             style="@style/dialog_sub_text"/>
 
         <androidx.appcompat.widget.AppCompatButton
