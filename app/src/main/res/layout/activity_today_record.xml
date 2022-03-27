@@ -7,24 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".view.main.today.TodayRecordActivity">
 
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        style="@style/all_toolbar_back_btn"/>
-
-    <TextView
-        style="@style/all_toolbar_text"
-        android:id="@+id/tv_today_record_title"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/done_today_title"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            style="@style/all_toolbar_back_btn"/>
+
+        <TextView
+            style="@style/all_toolbar_text"
+            android:id="@+id/tv_today_record_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/done_today_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageButton
         android:id="@+id/btn_delete_sticker"
@@ -44,10 +54,10 @@
         android:layout_height="276dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="36dp"
         android:orientation="vertical"
         android:background="@drawable/done_box_round"
-        app:layout_constraintTop_toBottomOf="@id/tv_today_record_title">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
             android:id="@+id/ll_today_sticker"
@@ -130,6 +140,7 @@
                 android:maxLength="45"
                 android:gravity="top|start"
                 style="@style/today_edittext"
+                android:inputType="text"
                 android:hint="@string/today_text_hint"
                 android:visibility="gone"/>
         </LinearLayout>

@@ -19,9 +19,7 @@
             android:id="@+id/btn_back"
             style="@style/all_toolbar_back_btn"
             android:layout_width="21dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp" />
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_sticker_title"
@@ -29,11 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
             android:text="@string/sticker" />
     </androidx.appcompat.widget.Toolbar>
-
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -192,7 +187,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_later_add_sticker"
+                android:id="@+id/tv_later_add_1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/dialogSubTextColor"
@@ -200,6 +195,19 @@
                 style="@style/all_later_add_text"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/divider_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/divider_3"/>
+
+            <TextView
+                android:id="@+id/tv_later_add_2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/dialogSubTextColor"
+                android:text="@string/sticker_later"
+                style="@style/all_later_add_text"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/divider_3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/ll_sticker_type_3"/>
