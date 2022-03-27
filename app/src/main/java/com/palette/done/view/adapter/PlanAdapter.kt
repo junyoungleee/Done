@@ -1,8 +1,10 @@
 package com.palette.done.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +13,7 @@ import com.palette.done.data.db.entity.Plan
 import com.palette.done.databinding.ItemDoneBinding
 import com.palette.done.databinding.ItemPlanRoutineBinding
 
-class PlanAdapter : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator())  {
+class PlanAdapter(val context: Context) : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator())  {
 
     private lateinit var planItemClickListener: OnPlanItemClickListener
     private var editMode = false
@@ -36,7 +38,14 @@ class PlanAdapter : ListAdapter<Plan, PlanAdapter.PlanViewHolder>(PlanComparator
             } else {
                 btnDone.visibility = View.VISIBLE
                 btnEdit.visibility = View.GONE
-                btnDelete.visibility = View.INVISIBLE
+                btnDelete.visibility = View.GONE
+            }
+
+            val cId = plan.categoryNo
+            if (cId != null) {
+                val name = "ic_category_$cId"
+                val imgId = context.resources.getIdentifier(name, "drawable", context.packageName)
+                ivCategory.setImageDrawable(ContextCompat.getDrawable(context, imgId))
             }
 
             btnDone.setOnClickListener {

@@ -66,7 +66,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         when(itemMode) {
             ItemMode.PLAN -> {
                 setPlanDetailTextSpan()
-                planAdapter = PlanAdapter()
+                planAdapter = PlanAdapter(this)
                 initPlanRecyclerView()
                 setPlanAddButton()
                 setPlanAddButtonVisibility()
@@ -74,7 +74,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
             }
             ItemMode.ROUTINE -> {
                 setRoutineDetailTextSpan()
-                routineAdapter = RoutineAdapter()
+                routineAdapter = RoutineAdapter(this)
                 initRoutineRecyclerView()
                 setRoutineAddButton()
                 setRoutineAddButtonVisibility()
@@ -281,6 +281,11 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
     private fun popEditFrame() {
         binding.root.setOnClickListener {
+            hideKeyboard()
+            binding.flItemWrite.visibility = View.GONE
+            makeScreenOriginal()
+        }
+        binding.scrollView.setOnClickListener {
             hideKeyboard()
             binding.flItemWrite.visibility = View.GONE
             makeScreenOriginal()

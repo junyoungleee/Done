@@ -1,8 +1,10 @@
 package com.palette.done.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,7 @@ import com.palette.done.data.db.entity.Plan
 import com.palette.done.data.db.entity.Routine
 import com.palette.done.databinding.ItemPlanRoutineBinding
 
-class RoutineAdapter : ListAdapter<Routine, RoutineAdapter.RoutineViewHolder>(RoutineComparator()){
+class RoutineAdapter(val context: Context) : ListAdapter<Routine, RoutineAdapter.RoutineViewHolder>(RoutineComparator()){
 
     private lateinit var routineItemClickListener: OnRoutineItemClickListener
     private var editMode = false
@@ -33,8 +35,16 @@ class RoutineAdapter : ListAdapter<Routine, RoutineAdapter.RoutineViewHolder>(Ro
                 btnDelete.visibility = View.VISIBLE
             } else {
                 btnEdit.visibility = View.GONE
-                btnDelete.visibility = View.INVISIBLE
+                btnDelete.visibility = View.GONE
             }
+
+            val cId = routine.categoryNo
+            if (cId != null) {
+                val name = "ic_category_$cId"
+                val imgId = context.resources.getIdentifier(name, "drawable", context.packageName)
+                ivCategory.setImageDrawable(ContextCompat.getDrawable(context, imgId))
+            }
+
             btnDone.visibility = View.GONE
             btnEdit.setOnClickListener {
                 routineItemClickListener.onEditButtonClick(it, routine)

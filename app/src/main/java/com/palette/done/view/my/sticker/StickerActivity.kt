@@ -43,6 +43,10 @@ class StickerActivity : AppCompatActivity() {
         binding = ActivityStickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getRealSize(size)
