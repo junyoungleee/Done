@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/dialog_card">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="@dimen/dialog_size"
+        android:layout_height="360dp"
+        android:gravity="bottom|center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginBottom="11dp"
+            android:text="@string/sticker_get_title"
+            style="@style/dialog_main_text"/>
+
+        <ImageView
+            android:id="@+id/iv_sticker"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@null"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_sticker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginBottom="5dp"
+            android:text="플랜 오늘함! x10 "
+            style="@style/dialog_main_text"/>
+
+        <TextView
+            android:id="@+id/tv_sticker_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginBottom="18dp"
+            android:includeFontPadding="false"
+            android:text="플랜 오늘 함! 10회 완료👍🏻"
+            style="@style/dialog_sub_text"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:text="@string/sticker_get_btn"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            style="@style/dialog_button"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

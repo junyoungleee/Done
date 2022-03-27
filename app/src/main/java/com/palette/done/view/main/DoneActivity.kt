@@ -17,6 +17,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,6 +90,8 @@ class DoneActivity : AppCompatActivity() {
         routineVM.initRoutine()
         planVM.initPlan()
 
+        setFirstVisitDialog()
+
         setTitleDate()
         setButtonsDestination()
         checkEmptyAndPremium()
@@ -126,6 +129,18 @@ class DoneActivity : AppCompatActivity() {
         }
     }
 
+    private fun setFirstVisitDialog() {
+        val visit = DoneApplication.pref.todayFirst  // 최근 방문 날짜
+        val today = LocalDate.now().toString()  // 오늘 날짜
+
+        if (visit == "") {
+            // 앱 첫 방문인 경우에만 보여줌
+            val dialog = FirstVisitDoneDialog()
+            dialog.show(this.supportFragmentManager, "FirstDoneDialog")
+            dialog.isCancelable = false
+            DoneApplication.pref.todayFirst = today
+        }
+    }
 
     private fun checkEmptyAndPremium() {
         dateVM.doneList.observe(this) {
@@ -378,7 +393,7 @@ class DoneActivity : AppCompatActivity() {
     fun scrollingDown() {
         val height = resources.getDimension(R.dimen.done_item_height)
         dateVM.doneList.observe(this) { list ->
-            var dp = if (list.size <= 4) {
+            val dp = if (list.size <= 4) {
                 0
             } else {
                 (height*(list.size - 4)).toInt()

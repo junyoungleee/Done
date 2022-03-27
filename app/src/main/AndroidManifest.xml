@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Done">
-        <activity android:name=".view.my.sticker.StickerActivity"></activity>
+        <activity android:name=".view.main.GuidePlanActivity"></activity>
+        <activity android:name=".view.my.sticker.StickerActivity" />
         <activity android:name=".view.my.MyEditActivity" />
         <activity android:name=".view.my.MyMenuActivity" />
         <activity android:name=".view.my.MyActivity" />

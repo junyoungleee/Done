@@ -8,6 +8,7 @@ import javax.inject.Singleton
 
 class PreferenceManager (context: Context) {
     private val FIRST = "first"
+    private val TODAY_FIRST = "today_first"
     private val SIGN_UP = "signup"
 
     private val USER_EMAIL = "email"
@@ -30,6 +31,10 @@ class PreferenceManager (context: Context) {
     var first: Boolean
         get() = prefs.getBoolean(FIRST, true)
         set(value) = prefs.edit().putBoolean(FIRST, value).apply()
+
+    var todayFirst: String?
+        get() = prefs.getString(TODAY_FIRST, "")
+        set(value) = prefs.edit().putString(TODAY_FIRST, value).apply()
 
     var signup: String?
         get() = prefs.getString(SIGN_UP, "")

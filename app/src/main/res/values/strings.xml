@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Done</string>
+    <string name="app_name">해냄</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_version">1.0</string>
 
@@ -92,9 +92,17 @@
     <!-- 메인 페이지 -->
     <string name="main_btn_sticker">스티커</string>
     <string name="main_btn_my">MY</string>
+    <string name="main_year_month">%1$s.%2$s</string>
     <string name="main_title_count_done">이번달 Done&#160;</string>
     <string name="main_sub_title_cheer">대단해요</string>
     <string name="toast_after_today">오늘 이후의 날짜는 아직 작성할 수 없어요</string>
+
+    <string name="main_dialog_j_title">지금 바로 플랜을 작성하실래요?</string>
+    <string name="main_dialog_j_go_to_plan"><u>플랜 알아보기</u></string>
+    <string name="main_dialog_j_btn_plan">네! 플랜 작성할래요!</string>
+    <string name="main_dialog_j_btn_done">아니요, 던리스트 작성할래요!</string>
+    <string name="main_dialog_p_title">지금 바로\n오늘의 던리스트를 작성해 보세요!</string>
+    <string name="main_dialog_p_btn_done">던리스트 작성하러 가기</string>
 
     <!-- 던리스트 페이지 -->
     <string name="done_btn_plan">플랜</string>
@@ -228,4 +236,16 @@
     <string name="sticker_later">추가 예정이에요!\n기대해주세요🍀</string>
 
     <string name="sticker_get_title">스티커 획득!</string>
+    <string name="sticker_get_btn">획득</string>
+
+    <!-- 가이드 -->
+    <string name="tutorial_plan_edit">1. 직접 플랜을 추가하거나 수정할 수 있어요!</string>
+    <string name="tutorial_plan_done">2. Done 버튼을 누르면\n당일 던리스트에 자동으로 입력돼요 💕</string>
+    <string name="tutorial_plan_done_cheer">3. Done 버튼을 누르면\n하단에 응원 메세지가 보여요 👍🏻 </string>
+    <string name="tutorial_plan_popup">[등록금 납부] 플랜 Done ! 👍🏻 해냈군요!</string>
+    <string name="tutorial_plan_back">선택화면으로 돌아가기</string>
+    <string name="tutorial_done_plan">미리 플랜을 세우고\nDone! 버튼 클릭하면 끝!</string>
+    <string name="tutorial_done_tag">해시태그와 루틴 클릭 한번이면\n던리스트 작성 완료!</string>
+    <string name="tutorial_done_category">직접 카테고리 아이콘을 선택하는 재미!</string>
+    <string name="tutorial_done_close">창 닫기</string>
 </resources>

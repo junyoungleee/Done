@@ -31,6 +31,7 @@ import com.palette.done.databinding.CalendarDayLayoutBinding
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.my.MyActivity
 import com.palette.done.view.my.sticker.StickerActivity
+import com.palette.done.view.my.sticker.StickerInfoDialog
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import java.text.DecimalFormat
@@ -67,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         setCalendarSubHeader()
         stickerVM.getAllSticker()
 
+        setFirstLoginDialog()
+
         setButtonsDestination()
     }
 
@@ -81,12 +84,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setFirstLoginDialog() {
+        // pref의 TodayFirst가 어제 날짜인 경우, 띄우기
+        val visit = DoneApplication.pref.todayFirst  // 최근 방문 날짜
+        val today = LocalDate.now().toString()  // 오늘 날짜
+
+        if (visit != today && visit != "") {
+            // 아예 앱을 처음 실행한 경우가 아니며 하루 중 첫 진입인 경우
+            val dialog = FirstVisitDialog()
+            dialog.show(this.supportFragmentManager, "FirstLoginDialog")
+            DoneApplication.pref.todayFirst = today // 하루동안 안보이게 처리
+        }
+    }
+
     private fun setCalendarView() {
         setCalendarHeader()
         with(binding.calendarView) {
             itemAnimator = null  // 깜빡임 제거
             doOnPreDraw {
-                daySize = Size(binding.calendarView.width/7, util.dpToPx(86))
+                daySize = Size(binding.calendarView.width/7, util.dpToPx(84))
             }
 
             val currentMonth = YearMonth.now()
@@ -183,7 +199,7 @@ class MainActivity : AppCompatActivity() {
             }
             calendarView.monthScrollListener = { month ->
                 val year= month.yearMonth.year.toString().substring(2)
-                binding.tvCalendarMonth.text = "${year}.${df.format(month.yearMonth.monthValue)}"
+                binding.tvCalendarMonth.text = getString(R.string.main_year_month, year, df.format(month.yearMonth.monthValue))
                 // 현재 yyyy-MM 값
                 mainVM._yearMonth.value = "${month.yearMonth.year}-${df.format(month.yearMonth.monthValue)}"
             }
