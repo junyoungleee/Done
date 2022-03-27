@@ -4,21 +4,35 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityMyBinding
+import com.palette.done.viewmodel.*
 
 class MyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyBinding
+
+    private val myVM: MyViewModel by viewModels() {
+        MyViewModelFactory(MemberRepository(), (application as DoneApplication).doneRepository)
+    }
+
+    private var leftMessage: String = ""
+    private var percent: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyBinding.inflate(layoutInflater)
 
         setButtonsDestination()
+
+        myVM.getUserProfile()
 
         setProfile()
         setLevel()
@@ -42,8 +56,9 @@ class MyActivity : AppCompatActivity() {
         with(binding.layoutMyProfile) {
             tvType.text = GradeType.type.getValue(data.type!!)
             tvNickname.text = data.nickname!!
-            val lv = data.level
-            tvLevelWithName.text = "${GradeType.getGradeName(lv)} LV.$lv"
+            val level = data.level
+            val gradeName = GradeType.getGradeName(level)
+            tvLevelWithName.text = getString(R.string.my_grade_level, gradeName, level)
         }
     }
 
@@ -52,19 +67,27 @@ class MyActivity : AppCompatActivity() {
         with(binding.layoutMyLevel) {
             tvGradeName.visibility = View.GONE
             val level = data.level
+            val nextLevel = level+1 // 암 온더 넥ㅅㅌ 레벨
             if(level == 10) {
-                tvLevelProgressStart.text = "LV.$level"
+                tvLevelProgressStart.text = getString(R.string.level, level)
                 tvLevelProgressEnd.text = ""
             } else {
-                tvLevelProgressStart.text = "LV.$level"
-                tvLevelProgressEnd.text = "LV.${level+1}"
+                tvLevelProgressStart.text = getString(R.string.level, level)
+                tvLevelProgressEnd.text = getString(R.string.level, nextLevel)
             }
             val grade = GradeType.getGrade(level)
             val imgId = resources.getIdentifier("img_grade_${grade}", "drawable", this@MyActivity.packageName)
             ivGradeDonedone.setImageDrawable(ContextCompat.getDrawable(this@MyActivity, imgId))
 
-            tvLevelLeftDetail.text = getString(R.string.my_level_left)
-//            pbLevel.progress = 50
+            myVM.leftMessage.observe(this@MyActivity) { msg ->
+                tvLevelLeftDetail.text = msg
+                leftMessage = msg
+            }
+
+            myVM.cumulatedData.observe(this@MyActivity) { data ->
+                pbLevel.progress = LevelType.getProgressPercent(level, data)
+                percent = data
+            }
         }
     }
 
@@ -89,6 +112,8 @@ class MyActivity : AppCompatActivity() {
             cvLevel.setOnClickListener {
                 val intent = Intent(this@MyActivity, MyMenuActivity::class.java)
                 intent.putExtra("mode", MyMode.GRADE.name)
+                intent.putExtra("msg", leftMessage)
+                intent.putExtra("percent", percent)
                 startActivity(intent)
             }
         }

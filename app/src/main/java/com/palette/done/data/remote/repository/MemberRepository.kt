@@ -38,6 +38,10 @@ class MemberRepository {
     }
 
     // 유저 정보
+    fun getMemberInfo(): Call<MemberInfoResponse> {
+        return profileApi.getMemberInfo()
+    }
+
     fun patchMemberProfile(profile: MemberProfile): Call<MemberProfileResponse> {
         return profileApi.patchMemberProfile(profile)
     }

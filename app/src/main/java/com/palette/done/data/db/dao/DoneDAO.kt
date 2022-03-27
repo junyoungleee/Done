@@ -18,17 +18,29 @@ interface DoneDAO {
     @Query("SELECT * FROM Done WHERE date = :date ORDER BY doneId ASC")
     fun getAllDoneInDate(date: String): Flow<List<Done>>
 
+    // 모든 던리스트
     @Query("SELECT * FROM Done")
     fun getAllDone(): Flow<List<Done>>
 
+    // 해당 달의 모든 던리스트 수
     @Query("SELECT COUNT(*) FROM Done WHERE date LIKE :yearMonth || '%'")
     fun getAllDoneCountInMonth(yearMonth: String): Flow<Int>
 
+    // 모든 각 날의 던리스트 개수
     @Query("SELECT date, COUNT(*) as count FROM DONE GROUP BY date")
-    fun getDoneCountCountEachDayInMonth(): Flow<List<DoneCount>>
+    fun getDoneCountEachDayInMonth(): Flow<List<DoneCount>>
 
+    // 해당 날의 던리스트 개수
     @Query("SELECT COUNT(*) FROM Done WHERE date = :date")
     suspend fun getAllDoneCountInDate(date: String): Int
+
+    // 던리스트 작성일 수
+    @Query("SELECT COUNT(*) FROM Done GROUP BY date")
+    suspend fun getDoneWriteDays(): Int
+
+    // 던리스트 총 개수
+    @Query("SELECT COUNT(*) FROM Done")
+    suspend fun getAllDoneCount(): Int
 
     // 플랜 -----------------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -69,4 +81,6 @@ interface DoneDAO {
 
     @Query("SELECT * FROM Category")
     fun getCategory(): Flow<List<Category>>
+
+
 }

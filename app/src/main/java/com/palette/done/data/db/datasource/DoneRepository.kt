@@ -22,11 +22,19 @@ class DoneRepository(private val doneDao: DoneDAO) {
     }
 
     fun getDoneCountCountEachDayInMonth(): Flow<List<DoneCount>> {
-        return doneDao.getDoneCountCountEachDayInMonth()
+        return doneDao.getDoneCountEachDayInMonth()
     }
 
     fun getAllDoneCountInMonth(date: String): Flow<Int> {
         return doneDao.getAllDoneCountInMonth(date)
+    }
+
+    suspend fun getDoneWriteDays(): Int {
+        return doneDao.getDoneWriteDays()
+    }
+
+    suspend fun getAllDoneCount(): Int {
+        return doneDao.getAllDoneCount()
     }
 
     // 오늘한마디 ---------------------------------------------------------------------

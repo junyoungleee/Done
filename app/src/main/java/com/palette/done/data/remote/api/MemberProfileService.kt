@@ -3,6 +3,7 @@ package com.palette.done.data.remote.api
 import com.palette.done.data.remote.model.member.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.PATCH
 
 interface MemberProfileService {
@@ -18,4 +19,7 @@ interface MemberProfileService {
 
     @PATCH("/api/profile/password")
     fun patchMemberPwd(@Body data: MemberPwd): Call<MemberChangePwdResponse>
+
+    @GET("/api/profile")
+    fun getMemberInfo(): Call<MemberInfoResponse>
 }

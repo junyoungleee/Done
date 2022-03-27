@@ -188,8 +188,8 @@
     <string name="my_nickname_wrong_same">현재와 같은 닉네임을 입력했어요.</string>
     <string name="my_pwd_wrong_same">현재 비밀번호와 같아요.</string>
 
-    <string name="my_level_left">개 Done이 남았어요! 화이팅 👍🏻</string>
-    <string name="level">LV.</string>
+    <string name="my_grade_level">%1$s LV.%2$d</string>
+    <string name="level">LV.%1$d</string>
 
     <string name="nickname">닉네임</string>
     <string name="edit">수정하기</string>

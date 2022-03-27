@@ -13,12 +13,19 @@ class MyMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyMenuBinding
     private lateinit var mode: MyMode
 
+    private var message: String? = ""
+    private var percent: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyMenuBinding.inflate(layoutInflater)
 
         mode = MyMode.valueOf(intent!!.getStringExtra("mode")!!)
+        message = intent!!.getStringExtra("msg")
+        percent = intent!!.getIntExtra("percent", 0)
+
         setFragment()
+
         setContentView(binding.root)
 
         binding.btnBack.setOnClickListener {
@@ -38,7 +45,12 @@ class MyMenuActivity : AppCompatActivity() {
             }
             MyMode.GRADE -> {
                 binding.tvMyMenuTitle.text = getString(R.string.grade_title)
-                supportFragmentManager.beginTransaction().replace(binding.flMenu.id, MyGradeFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(binding.flMenu.id, MyGradeFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("msg", message)
+                        putInt("percent", percent)
+                    }
+                }).commit()
             }
         }
     }

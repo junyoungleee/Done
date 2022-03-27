@@ -131,6 +131,7 @@
     <!-- MY -->
     <style name="my_done_mini_text">
         <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
         <item name="android:textColor">@color/mainDoneColor</item>
     </style>
 
