@@ -58,8 +58,8 @@ class DoneServerRepository {
         return doneApi.deletePlans(planNo)
     }
 
-    fun donePlan(planNo: Int): Call<DonesResponse> {
-        return doneApi.donePlans(planNo)
+    fun donePlan(date: PlanDone, planNo: Int): Call<DonesResponse> {
+        return doneApi.donePlans(date, planNo)
     }
 
     fun getPlanList(): Call<PlanListResponse> {

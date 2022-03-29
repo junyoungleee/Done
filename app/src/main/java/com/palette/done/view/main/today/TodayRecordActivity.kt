@@ -8,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.palette.done.DoneApplication
 import com.palette.done.data.remote.repository.DoneServerRepository
@@ -15,6 +16,7 @@ import com.palette.done.databinding.ActivityTodayRecordBinding
 import com.palette.done.viewmodel.TodayRecordViewModel
 import com.palette.done.viewmodel.TodayRecordViewModelFactory
 import com.palette.done.viewmodel.TodayStickerViewModel
+import com.palette.done.viewmodel.TodayStickerViewModelFactory
 
 class TodayRecordActivity : AppCompatActivity() {
 
@@ -23,7 +25,9 @@ class TodayRecordActivity : AppCompatActivity() {
     private lateinit var todayVM: TodayRecordViewModel
     private lateinit var todayVMFactory: TodayRecordViewModelFactory
 
-    private val stickerVM : TodayStickerViewModel by viewModels()
+    private val stickerVM : TodayStickerViewModel by viewModels() {
+        TodayStickerViewModelFactory(DoneApplication().stickerRepository)
+    }
 
     private var first = false // 처음 저장인지, 수정인지 확인
     private lateinit var date: String  // 오늘한마디를 저장할 날짜
@@ -66,6 +70,8 @@ class TodayRecordActivity : AppCompatActivity() {
             }
             showKeyboard()
         }
+
+        binding.flTodayEdit.setOnClickListener { }
     }
 
     private fun showData() {
@@ -75,7 +81,7 @@ class TodayRecordActivity : AppCompatActivity() {
                 if (tr.todaySticker != null) {
                     binding.llAddSticker.visibility = View.GONE
                     binding.ivTodaySticker.visibility = View.VISIBLE
-                    val stickerId = resources.getIdentifier("img_sticker_${tr.todaySticker}", "drawable", this.packageName)
+                    val stickerId = resources.getIdentifier("sticker_${tr.todaySticker}", "drawable", this.packageName)
                     binding.ivTodaySticker.setImageDrawable(ContextCompat.getDrawable(this, stickerId))
                     binding.btnDeleteSticker.visibility = View.VISIBLE
                     stickerVM.setTodaySticker(tr.todaySticker)
@@ -100,8 +106,8 @@ class TodayRecordActivity : AppCompatActivity() {
             } else {
                 binding.btnDeleteSticker.visibility = View.VISIBLE
                 binding.ivTodaySticker.visibility = View.VISIBLE
-//                val stickerId = resources.getIdentifier("img_sticker_$id", "drawable", this.packageName)
-//                binding.ivTodaySticker.setImageDrawable(ContextCompat.getDrawable(this, stickerId))
+                val stickerId = resources.getIdentifier("sticker_$id", "drawable", this.packageName)
+                binding.ivTodaySticker.setImageDrawable(ContextCompat.getDrawable(this, stickerId))
                 binding.llAddSticker.visibility = View.GONE
             }
         }
@@ -129,6 +135,10 @@ class TodayRecordActivity : AppCompatActivity() {
     private fun closePopup() {
         with(binding) {
             root.setOnClickListener {
+                binding.flTodayEdit.visibility = View.GONE
+                hideKeyboard()
+            }
+            toolbar.setOnClickListener {
                 binding.flTodayEdit.visibility = View.GONE
                 hideKeyboard()
             }

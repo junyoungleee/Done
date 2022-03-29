@@ -111,6 +111,10 @@ data class PlanListItem(
     val category_no: Int?
 )
 
+data class PlanDone(
+    @SerializedName("date")
+    val date: String)
+
 // 루틴 -----------------------------------------------------------------
 data class Routines(
     @SerializedName("content")

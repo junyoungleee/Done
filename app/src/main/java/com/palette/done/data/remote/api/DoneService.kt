@@ -43,7 +43,7 @@ interface DoneService {
     fun deletePlans(@Path("planNo") planNo: Int): Call<PlansResponse>
 
     @POST("/api/plans/{planNo}")
-    fun donePlans(@Path("planNo") planNo: Int): Call<DonesResponse>
+    fun donePlans(@Body data: PlanDone, @Path("planNo") planNo: Int): Call<DonesResponse>
 
     @GET("/api/plans")
     fun getPlans(): Call<PlanListResponse>
