@@ -108,7 +108,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         planAdapter.setPlanItemClickListener(object : PlanAdapter.OnPlanItemClickListener {
             override fun onDoneButtonClick(v: View, plan: Plan) {
                 // 플랜 Done -> 리스트에서 사라지고 던리스트에 추가
-                planVM.donePlan(plan)
+                planVM.donePlan(plan, date)
                 val idx = Random().nextInt(3)
                 val messages = resources.getStringArray(R.array.plan_message)
                 DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
@@ -290,6 +290,11 @@ class PlanRoutineActivity() : AppCompatActivity() {
             binding.flItemWrite.visibility = View.GONE
             makeScreenOriginal()
         }
+        binding.toolbar.setOnClickListener {
+            hideKeyboard()
+            binding.flItemWrite.visibility = View.GONE
+            makeScreenOriginal()
+        }
     }
 
     fun makeScreenLong() {
@@ -301,14 +306,26 @@ class PlanRoutineActivity() : AppCompatActivity() {
     }
 
     fun planScrollingDown() {
-        planVM.planList.observe(this) {
-            binding.scrollView.smoothScrollTo(0, binding.rcItem.bottom)
+        val height = resources.getDimension(R.dimen.plan_routine_item_height)
+        planVM.planList.observe(this) { list ->
+            val dp = if (list.size <= 4) {
+                0
+            } else {
+                (height*(list.size - 4)).toInt()
+            }
+            binding.scrollView.smoothScrollTo(0, binding.rcItem.top+dp)
         }
     }
 
     fun routineScrollingDown() {
-        routineVM.routineList.observe(this) {
-            binding.scrollView.smoothScrollTo(0, binding.rcItem.bottom)
+        val height = resources.getDimension(R.dimen.plan_routine_item_height)
+        routineVM.routineList.observe(this) { list ->
+            val dp = if (list.size <= 4) {
+                0
+            } else {
+                (height*(list.size - 4)).toInt()
+            }
+            binding.scrollView.smoothScrollTo(0, binding.rcItem.top+dp)
         }
     }
 

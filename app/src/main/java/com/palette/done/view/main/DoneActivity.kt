@@ -288,7 +288,7 @@ class DoneActivity : AppCompatActivity() {
                         viewTodayStickerTopMargin.visibility = View.VISIBLE
                         viewTodayStickerBottomMargin.visibility = View.VISIBLE
 
-                        val stickerName = "img_sticker_${tr.todaySticker}"
+                        val stickerName = "sticker_${tr.todaySticker}"
                         val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
                         ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
 
@@ -307,9 +307,9 @@ class DoneActivity : AppCompatActivity() {
                         viewTodayStickerTopMargin.visibility = View.GONE
                         viewTodayStickerBottomMargin.visibility = View.GONE
 
-//                        val stickerName = "img_sticker_${tr.todaySticker}"
-//                        val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
-//                        ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
+                        val stickerName = "sticker_${tr.todaySticker}"
+                        val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
+                        ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
 
                         tvTodayRecordText.visibility = View.VISIBLE
                         tvTodayRecordText.text = tr.todayWord
@@ -370,6 +370,13 @@ class DoneActivity : AppCompatActivity() {
             }
         }
         binding.subRootView.setOnClickListener {
+            closeEditFrame()
+            makeScreenOriginal()
+            binding.scrollView.post {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
+            }
+        }
+        binding.toolbar.setOnClickListener {
             closeEditFrame()
             makeScreenOriginal()
             binding.scrollView.post {

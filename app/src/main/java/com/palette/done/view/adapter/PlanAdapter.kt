@@ -1,6 +1,7 @@
 package com.palette.done.view.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,8 @@ class PlanAdapter(val context: Context) : ListAdapter<Plan, PlanAdapter.PlanView
                 val name = "ic_category_$cId"
                 val imgId = context.resources.getIdentifier(name, "drawable", context.packageName)
                 ivCategory.setImageDrawable(ContextCompat.getDrawable(context, imgId))
+            } else {
+                ivCategory.setImageDrawable(null)
             }
 
             btnDone.setOnClickListener {

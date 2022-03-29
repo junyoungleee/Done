@@ -238,7 +238,6 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                     }
                                     DoneMode.EDIT_ROUTINE -> {
                                         routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)
-                                        hideKeyboard()
                                         (activity as PlanRoutineActivity).closeEditFrame()
                                     }
                                 }
@@ -373,7 +372,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
         lifecycleScope.launch {
             if (isEditPopupOpen) {
                 // 카테고리, 루틴, 해시태그 입력창이 열리게 하기
-//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 binding.flWriteContainer.visibility = View.VISIBLE
                 hideKeyboard()
                 delay(100)
@@ -384,8 +383,9 @@ class DoneFragment(mode: DoneMode) : Fragment() {
 //                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
                 showKeyboard()
                 delay(100)
-                binding.flWriteContainer.visibility = View.VISIBLE
-//                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                // 순서 바꿔서 해결
+                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                binding.flWriteContainer.visibility = View.GONE
                 delay(100)
                 binding.etDone.requestFocus()
             }

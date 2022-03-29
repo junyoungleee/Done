@@ -43,6 +43,8 @@ class RoutineAdapter(val context: Context) : ListAdapter<Routine, RoutineAdapter
                 val name = "ic_category_$cId"
                 val imgId = context.resources.getIdentifier(name, "drawable", context.packageName)
                 ivCategory.setImageDrawable(ContextCompat.getDrawable(context, imgId))
+            } else {
+                ivCategory.setImageDrawable(null)
             }
 
             btnDone.visibility = View.GONE

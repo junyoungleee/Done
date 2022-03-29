@@ -147,9 +147,9 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
         }
     }
 
-    fun donePlan(plan: Plan) {
+    fun donePlan(plan: Plan, date: String) {
         viewModelScope.launch {
-            serverRepo.donePlan(plan.planNo)
+            serverRepo.donePlan(PlanDone(date), plan.planNo)
                 .enqueue(object : Callback<DonesResponse> {
                     override fun onResponse(call: Call<DonesResponse>, response: Response<DonesResponse>) {
                         if (response.isSuccessful) {
@@ -158,10 +158,8 @@ class PlanViewModel(private val serverRepo: DoneServerRepository,
                                     // db에서 Plan 삭제
                                     deletePlanInDB(plan.planNo)
 
-                                    val format = SimpleDateFormat("yyyy-MM-dd")
-                                    val today = format.format(Calendar.getInstance().time)
                                     val doneNo = response.body()!!.item!!.done_no
-                                    val done = Done(doneNo, today, plan.content, plan.categoryNo, null, null)
+                                    val done = Done(doneNo, date, plan.content, plan.categoryNo, null, null)
                                     insertPlanAsDoneInDB(done)
                                 }
                                 400 -> {
