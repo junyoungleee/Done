@@ -5,15 +5,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
@@ -23,15 +19,16 @@ import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
 import com.palette.done.DoneApplication
 import com.palette.done.R
-import com.palette.done.data.db.entity.DoneCount
+import com.palette.done.data.remote.model.sticker.Stickers
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.data.remote.repository.StickerServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
 import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.main.notice.FirstVisitDialog
+import com.palette.done.view.main.notice.StickerGetDialog
 import com.palette.done.view.my.MyActivity
 import com.palette.done.view.my.sticker.StickerActivity
-import com.palette.done.view.my.sticker.StickerInfoDialog
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import java.text.DecimalFormat
@@ -52,8 +49,8 @@ class MainActivity : AppCompatActivity() {
     private val mainVM: MainViewModel by viewModels() {
         MainViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
-    private val stickerVM: StickerViewModel by viewModels() {
-        StickerViewModelFactory(StickerServerRepository(), (application as DoneApplication).stickerRepository)
+    private val stickerVM: MainStickerViewModel by viewModels() {
+        MainStickerViewModelFactory(StickerServerRepository(), DoneApplication().stickerRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,12 +62,22 @@ class MainActivity : AppCompatActivity() {
             doneCountList = mainVM.getDoneCountMap()
             setCalendarView()
         }
+
         setCalendarSubHeader()
         stickerVM.getAllSticker()
+        stickerVM.getNewSticker()
 
         setFirstLoginDialog()
+        setNewStickerDialog()  // 스티커 다이얼로그 우선
 
         setButtonsDestination()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 화면에 다시 돌아올 때마다 체크
+        stickerVM.getNewSticker()
+        setNewStickerDialog()
     }
 
     private fun setButtonsDestination() {
@@ -94,6 +101,16 @@ class MainActivity : AppCompatActivity() {
             val dialog = FirstVisitDialog()
             dialog.show(this.supportFragmentManager, "FirstLoginDialog")
             DoneApplication.pref.todayFirst = today // 하루동안 안보이게 처리
+        }
+    }
+
+    private fun setNewStickerDialog() {
+        stickerVM.newStickers.observe(this) { stickers ->
+            for (sticker in stickers) {
+                val dialog = StickerGetDialog(sticker)
+                dialog.show(this.supportFragmentManager, "NewStickerDialog")
+                dialog.isCancelable = false  // 버튼으로만 닫을 수 있음
+            }
         }
     }
 

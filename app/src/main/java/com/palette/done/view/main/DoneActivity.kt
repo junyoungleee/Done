@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
@@ -12,23 +11,18 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
-import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityDoneBinding
-import com.palette.done.databinding.LayoutDoneEmptyBinding
 import com.palette.done.view.adapter.DoneAdapter
 import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.main.notice.FirstVisitDoneDialog
 import com.palette.done.view.main.done.DoneFragment
 import com.palette.done.view.main.today.TodayRecordActivity
 import com.palette.done.view.util.Util
@@ -36,9 +30,6 @@ import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
@@ -52,12 +43,6 @@ class DoneActivity : AppCompatActivity() {
     }
     private val doneVM: DoneEditViewModel by viewModels() {
         DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
-    }
-    private val planVM: PlanViewModel by viewModels() {
-        PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
-    }
-    private val routineVM: RoutineViewModel by viewModels() {
-        RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
     }
     private val categoryVM: CategoryViewModel by viewModels() {
         CategoryViewModelFactory(DoneApplication().doneRepository)
@@ -87,8 +72,7 @@ class DoneActivity : AppCompatActivity() {
         dateVM.setTitleDate(clickedDate!!)
         dateVM.transStringToCalendar(clickedDate)
 
-        routineVM.initRoutine()
-        planVM.initPlan()
+
 
         setFirstVisitDialog()
 

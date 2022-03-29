@@ -19,6 +19,8 @@
     <string name="no">아니요</string>
     <string name="ok">확인</string>
 
+    <string name="network_error">연결 상태가 불안정하니 네트워크 상태를 확인해 주세요.</string>
+
     <!-- 랜딩페이지 -->
     <string name="landing_start">시작하기</string>
     <string name="landing_title_1">선택하는 재미!</string>

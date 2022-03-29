@@ -1,7 +1,5 @@
-package com.palette.done.view.main
+package com.palette.done.view.main.notice
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +12,9 @@ import androidx.fragment.app.DialogFragment
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.DialogFirstVisitBinding
+import com.palette.done.view.main.DoneActivity
+import com.palette.done.view.main.ItemMode
+import com.palette.done.view.main.PlanRoutineActivity
 import java.time.LocalDate
 
 class FirstVisitDialog() : DialogFragment() {

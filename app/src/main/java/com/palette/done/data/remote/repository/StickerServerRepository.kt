@@ -22,4 +22,8 @@ class StickerServerRepository {
     fun postGainedSticker(stickerNo: Int): Call<StickerResponse> {
         return stickerApi.postGainedSticker(stickerNo)
     }
+
+    fun getNewSticker(): Call<StickerResponse> {
+        return stickerApi.getNewSticker()
+    }
 }

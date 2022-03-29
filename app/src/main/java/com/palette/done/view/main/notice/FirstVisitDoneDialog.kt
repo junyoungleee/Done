@@ -1,4 +1,4 @@
-package com.palette.done.view.main
+package com.palette.done.view.main.notice
 
 import android.content.Intent
 import android.graphics.Color

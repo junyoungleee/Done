@@ -61,6 +61,9 @@ class PlanRoutineActivity() : AppCompatActivity() {
         itemMode = ItemMode.valueOf(intent!!.getStringExtra("mode")!!)
         date = intent.getStringExtra("date").toString()
 
+        routineVM.initRoutine()
+        planVM.initPlan()
+
         setTitle()
 
         when(itemMode) {

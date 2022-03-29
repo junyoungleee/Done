@@ -17,4 +17,7 @@ interface StickerService {
     @POST("/api/stickers/{stickerNo}")
     fun postGainedSticker(@Path("stickerNo") stickerNo: Int): Call<StickerResponse>
 
+    @GET("/api/stickers/new")
+    fun getNewSticker(): Call<StickerResponse>
+
 }

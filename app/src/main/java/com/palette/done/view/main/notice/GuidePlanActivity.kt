@@ -1,4 +1,4 @@
-package com.palette.done.view.main
+package com.palette.done.view.main.notice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

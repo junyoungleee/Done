@@ -30,7 +30,7 @@ class StickerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStickerBinding
 
     private val stickerVM: StickerViewModel by viewModels() {
-        StickerViewModelFactory(StickerServerRepository(), (application as DoneApplication).stickerRepository)
+        StickerViewModelFactory((application as DoneApplication).stickerRepository)
     }
 
     private var totalWidth: Int = 0
