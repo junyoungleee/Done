@@ -68,7 +68,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
         when(itemMode) {
             ItemMode.PLAN -> {
-                setPlanDetailTextSpan()
+                binding.tvActivityDetail.text = getText(R.string.plan_detail)
                 planAdapter = PlanAdapter(this)
                 initPlanRecyclerView()
                 setPlanAddButton()
@@ -76,7 +76,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
                 binding.tvAddItem.text = getString(R.string.plan_add)
             }
             ItemMode.ROUTINE -> {
-                setRoutineDetailTextSpan()
+                binding.tvActivityDetail.text = getText(R.string.routine_detail)
                 routineAdapter = RoutineAdapter(this)
                 initRoutineRecyclerView()
                 setRoutineAddButton()
@@ -288,7 +288,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
             binding.flItemWrite.visibility = View.GONE
             makeScreenOriginal()
         }
-        binding.scrollView.setOnClickListener {
+        binding.scrollView.getChildAt(0).setOnClickListener {
             hideKeyboard()
             binding.flItemWrite.visibility = View.GONE
             makeScreenOriginal()
@@ -304,7 +304,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
         binding.llSubRoot.setPadding(0, 0, 0, DoneApplication.pref.keyboard+util.dpToPx(110))
     }
 
-    fun makeScreenOriginal() {
+    private fun makeScreenOriginal() {
         binding.llSubRoot.setPadding(0, 0, 0, util.dpToPx(10))
     }
 
@@ -345,24 +345,6 @@ class PlanRoutineActivity() : AppCompatActivity() {
         hideKeyboard()
         binding.flItemWrite.visibility = View.GONE
         makeScreenOriginal()
-    }
-
-    private fun setPlanDetailTextSpan() {
-        SpannableStringBuilder(getString(R.string.plan_detail)).apply {
-            setSpan(
-                StyleSpan(Typeface.BOLD), 0, 19, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-            binding.tvActivityDetail.text = this
-        }
-    }
-
-    private fun setRoutineDetailTextSpan() {
-        SpannableStringBuilder(getString(R.string.routine_detail)).apply {
-            setSpan(
-                StyleSpan(Typeface.BOLD), 0, 23, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-            binding.tvActivityDetail.text = this
-        }
     }
 
     private fun setBackButton() {
