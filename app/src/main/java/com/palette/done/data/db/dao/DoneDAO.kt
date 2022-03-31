@@ -42,6 +42,9 @@ interface DoneDAO {
     @Query("SELECT COUNT(*) FROM Done")
     suspend fun getAllDoneCount(): Int
 
+    @Query("DELETE FROM Done")
+    fun deleteAllDone()
+
     // 플랜 -----------------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlan(plan: Plan)
@@ -51,6 +54,9 @@ interface DoneDAO {
 
     @Query("SELECT * FROM `Plan` ORDER BY planNo")
     fun getAllPlan(): Flow<List<Plan>>
+
+    @Query("DELETE FROM `Plan`")
+    fun deleteAllPlan()
 
     // 루틴 -----------------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -62,6 +68,9 @@ interface DoneDAO {
     @Query("SELECT * FROM Routine ORDER BY routineNo")
     fun getAllRoutine(): Flow<List<Routine>>
 
+    @Query("DELETE FROM Routine")
+    fun deleteAllRoutine()
+
     // 오늘 한마디 -----------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodayRecord(todayRecord: TodayRecord)
@@ -71,6 +80,9 @@ interface DoneDAO {
 
     @Query("SELECT * FROM TodayRecord WHERE date = :date")
     fun getTodayRecord(date: String): Flow<TodayRecord>
+
+    @Query("DELETE FROM TodayRecord")
+    fun deleteAllTodayRecord()
 
     // 카테고리 --------------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)

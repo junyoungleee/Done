@@ -226,6 +226,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         planVM.insertPlan(done, category)
                                         binding.etDone.text.clear()
                                         categoryVM.initSelectedCategory()
+                                        (activity as PlanRoutineActivity).planScrollingDown()
                                     }
                                     DoneMode.EDIT_PLAN -> {
                                         planVM.updatePlan(planVM.selectedEditPlan.planNo, done, category)
@@ -235,6 +236,7 @@ class DoneFragment(mode: DoneMode) : Fragment() {
                                         routineVM.insertRoutine(done, category)
                                         binding.etDone.text.clear()
                                         categoryVM.initSelectedCategory()
+                                        (activity as PlanRoutineActivity).routineScrollingDown()
                                     }
                                     DoneMode.EDIT_ROUTINE -> {
                                         routineVM.updateRoutine(routineVM.selectedEditRoutine.routineNo, done, category)

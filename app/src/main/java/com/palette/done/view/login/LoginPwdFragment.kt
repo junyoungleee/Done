@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.FragmentLoginPwdBinding
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.view.main.MainActivity
@@ -32,7 +33,7 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
         MemberRepository()
     ) }
     private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(
-        MemberRepository()
+        MemberRepository(), DoneServerRepository(), (requireActivity().application as DoneApplication).doneRepository
     ) }
 
     private val patternVM: PatternCheckViewModel by viewModels()
@@ -90,11 +91,16 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
+                // 로그인 성공과 데이터 response 성공 분리하기
                 loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
-                    if (loginVM.isLoginSuccess.value!!) {
-                        startActivity(intent)
-                    } else {
+                    if (!it) {
                         checkLogin(false)
+                    }
+                }
+                loginVM.isDataSaved.observe(viewLifecycleOwner) {
+                    if (it) {
+                        DoneApplication.pref.signup = "true"
+                        startActivity(intent)
                     }
                 }
             }

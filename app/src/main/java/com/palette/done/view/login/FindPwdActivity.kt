@@ -7,7 +7,9 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityFindPwdBinding
 import com.palette.done.viewmodel.LoginViewModel
@@ -20,7 +22,7 @@ class FindPwdActivity : AppCompatActivity() {
 
     private val patternVM : PatternCheckViewModel by viewModels()
     private val loginVM : LoginViewModel by viewModels { LoginViewModelFactory(
-        MemberRepository()
+        MemberRepository(), DoneServerRepository(), DoneApplication().doneRepository
     ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

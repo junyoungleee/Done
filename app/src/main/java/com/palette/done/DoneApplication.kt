@@ -14,7 +14,7 @@ class DoneApplication : Application() {
         lateinit var pref: PreferenceManager
     }
 
-    private val applicationScope = CoroutineScope(SupervisorJob())
+    val applicationScope = CoroutineScope(SupervisorJob())
 
     val database by lazy { DoneDatabase.getDatabase(this)}
     val doneRepository by lazy { DoneRepository(database!!.doneDao()) }

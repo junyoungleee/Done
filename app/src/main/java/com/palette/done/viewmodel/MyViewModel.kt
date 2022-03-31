@@ -62,6 +62,7 @@ class MyViewModel(var serverRepo: MemberRepository,
                                 200 -> {
                                     val info = response.body()!!.item!!
                                     DoneApplication.pref.level = info.level
+                                    DoneApplication.pref.nickname = info.nickname
                                     _leftMessage.value = info.level_message
                                     _planAchieved.value = info.plan_achievement_rate
                                     _thisMonthCount.value = info.this_month_done_count

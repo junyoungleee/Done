@@ -59,3 +59,7 @@ data class MemberInfoResponse(
     val is_success: Boolean,
     val message: String?
 )
+
+data class MemberDeleteResponse(
+    val message: String?
+)

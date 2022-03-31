@@ -180,7 +180,7 @@
     </style>
 
     <style name="done_item_text">
-        <item name="fontFamily">@font/spoqa_han_sans_neo_medium</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
     </style>
@@ -194,7 +194,7 @@
 
     <!-- CALENDAR -->
     <style name="calendar_header_legend">
-        <item name="fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>

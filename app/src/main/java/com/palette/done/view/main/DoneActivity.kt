@@ -313,7 +313,7 @@ class DoneActivity : AppCompatActivity() {
             btnDayAfter.setOnClickListener {
                 closeEditFrame()
                 if (dateVM.isDateToday()) {
-                    DoneToast.createToast(this@DoneActivity, getString(R.string.toast_after_today), "")?.show()
+                    DoneToast.createToast(this@DoneActivity, "", getString(R.string.toast_after_today))?.show()
                 } else {
                     dateVM.clickedForwardDay()
                 }

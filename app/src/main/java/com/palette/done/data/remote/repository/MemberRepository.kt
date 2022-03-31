@@ -46,6 +46,14 @@ class MemberRepository {
         return profileApi.patchMemberProfile(profile)
     }
 
+    fun getMemberType(): Call<MemberTypeResponse> {
+        return profileApi.getMemberType()
+    }
+
+    fun getMemberAlarm(): Call<MemberAlarmResponse> {
+        return profileApi.getMemberAlarm()
+    }
+
     // 유저 정보 수정
     fun patchNewNickName(new: MemberNickname): Call<MemberProfileResponse> {
         return profileApi.patchMemberNickname(new)
@@ -59,4 +67,8 @@ class MemberRepository {
         return profileApi.patchMemberPwd(new)
     }
 
+    // 회원 탈퇴
+    fun deleteMember(): Call<MemberDeleteResponse> {
+        return profileApi.deleteMember()
+    }
 }

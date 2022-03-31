@@ -3,9 +3,16 @@ package com.palette.done.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
+import com.palette.done.DoneApplication
+import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityLoginBinding
 import com.palette.done.view.StartActivity
 import com.palette.done.view.adapter.ViewPagerAdapter
+import com.palette.done.viewmodel.LoginViewModel
+import com.palette.done.viewmodel.LoginViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 class LoginActivity : AppCompatActivity() {

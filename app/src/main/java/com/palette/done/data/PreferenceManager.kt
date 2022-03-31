@@ -24,8 +24,8 @@ class PreferenceManager (context: Context) {
     private val ACCESS_TOKEN = "token"
     private val KEYBOARD_HEIGHT = "keyboard_height"
 
-    private val PREF_NAME = "user_info"
-    private val PREF_MODE = Context.MODE_PRIVATE
+    val PREF_NAME = "user_info"
+    val PREF_MODE = Context.MODE_PRIVATE
     var prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, PREF_MODE)
 
     var first: Boolean

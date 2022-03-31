@@ -20,17 +20,14 @@ import com.palette.done.view.decoration.RecyclerViewDecoration
 import com.palette.done.view.my.menu.Out
 import com.palette.done.view.my.menu.OutDialog
 import com.palette.done.view.util.Util
-import com.palette.done.viewmodel.OnBoardingViewModel
-import com.palette.done.viewmodel.OnBoardingViewModelFactory
-import com.palette.done.viewmodel.StickerViewModel
-import com.palette.done.viewmodel.StickerViewModelFactory
+import com.palette.done.viewmodel.*
 
 class StickerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStickerBinding
 
     private val stickerVM: StickerViewModel by viewModels() {
-        StickerViewModelFactory((application as DoneApplication).stickerRepository)
+        StickerViewModelFactory(StickerServerRepository(), DoneApplication().stickerRepository)
     }
 
     private var totalWidth: Int = 0
@@ -43,6 +40,7 @@ class StickerActivity : AppCompatActivity() {
         binding = ActivityStickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        stickerVM.getAllGainedSticker()
         binding.btnBack.setOnClickListener {
             finish()
         }

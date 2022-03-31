@@ -18,4 +18,7 @@ interface StickerDAO {
 
     @Query("UPDATE Sticker SET get=1 WHERE stickerNo = :stickerNo")
     suspend fun updateGainSticker(stickerNo: Int)
+
+    @Query("UPDATE Sticker SET get=0")
+    fun resetGainedSticker()
 }

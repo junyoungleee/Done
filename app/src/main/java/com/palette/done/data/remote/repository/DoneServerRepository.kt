@@ -32,7 +32,7 @@ class DoneServerRepository {
         return doneApi.deleteDones(doneNo)
     }
 
-    fun getDoneAndTodayRecord(date: String): Call<DonesAndTodayResponse> {
+    fun getDoneAndTodayRecord(date: String?): Call<DonesAndTodayResponse> {
         return doneApi.getDoneListAndTodayRecord(date)
     }
 

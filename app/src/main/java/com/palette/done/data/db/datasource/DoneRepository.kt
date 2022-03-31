@@ -37,6 +37,7 @@ class DoneRepository(private val doneDao: DoneDAO) {
         return doneDao.getAllDoneCount()
     }
 
+
     // 오늘한마디 ---------------------------------------------------------------------
     suspend fun insertTodayRecord(today: TodayRecord) {
         doneDao.insertTodayRecord(today)
@@ -85,4 +86,20 @@ class DoneRepository(private val doneDao: DoneDAO) {
         return doneDao.getCategory()
     }
 
+    // 로그아웃 시 ----------------------------------------------------------------------
+    fun deleteAllDone() {
+        return doneDao.deleteAllDone()
+    }
+
+    fun deleteAllTodayRecord() {
+        return doneDao.deleteAllTodayRecord()
+    }
+
+    fun deleteAllRoutine() {
+        return doneDao.deleteAllRoutine()
+    }
+
+    fun deleteAllPlan() {
+        return doneDao.deleteAllPlan()
+    }
 }

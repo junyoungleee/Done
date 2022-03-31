@@ -114,7 +114,7 @@
     <string name="done_today_hint">오늘을 한마디로 정리하고 스티커로 꾸며보세요! (최대 45자)</string>
     <string name="done_btn_hash_tag">#</string>
     <string name="done_btn_write">입력</string>
-    <string name="done_list_write_hint">작은 일도 괜찮아요, 써보세요!</string>
+    <string name="done_list_write_hint">작은 일도 써보세요!(14자 이하)</string>
     <string name="done_list_write_title">오늘의&#160;</string>
     <string name="done_list_write_title2">번째 Done</string>
 
@@ -145,19 +145,19 @@
     <!-- 플랜 페이지 -->
     <string name="plan_title">플랜</string>
     <string name="plan_edit_title">플랜 편집</string>
-    <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,\nDone List에 입력하세요.</string>
+    <string name="plan_detail"><b>잊지 말아야 할 중요한 플랜을 메모</b>하고,\nDone List에 입력하세요.</string>
     <string name="plan_add">플랜 추가</string>
     <string name="plan_item_edit">플랜 수정</string>
     <string name="plan_btn_done">Done</string>
-    <string name="plan_hint_add">플랜을 입력해보세요</string>
+    <string name="plan_hint_add">플랜을 입력해보세요.(10자 이하)</string>
 
     <!-- 루틴 페이지 -->
     <string name="routine_title">루틴</string>
     <string name="routine_edit_title">루틴 편집</string>
-    <string name="routine_detail">반복되는 Done List를 루틴으로 등록하고,\n쉽게 입력해보세요.</string>
+    <string name="routine_detail"><b>반복되는 Done List를 루틴으로 등록</b>하고,\n쉽게 입력해보세요.</string>
     <string name="routine_add">루틴 추가</string>
     <string name="routine_item_edit">루틴 수정</string>
-    <string name="routine_hint_add">루틴을 입력해보세요</string>
+    <string name="routine_hint_add">루틴을 입력해보세요.(10자 이하)</string>
 
     <!-- 마이 페이지 -->
     <string name="my_title">MY</string>

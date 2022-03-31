@@ -23,7 +23,8 @@ class StickerGetDialog(val sticker: Stickers) : DialogFragment() {
     private val binding get() = _binding!!
 
     private val stickerVM: MainStickerViewModel by activityViewModels() {
-        MainStickerViewModelFactory(StickerServerRepository(), DoneApplication().stickerRepository)
+        MainStickerViewModelFactory(StickerServerRepository(),
+            (requireActivity().application as DoneApplication).stickerRepository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

@@ -21,5 +21,9 @@ class StickerRepository(private val stickerDao: StickerDAO) {
     suspend fun updateGainedSticker(stickerNo: Int) {
         stickerDao.updateGainSticker(stickerNo)
     }
+
+    fun resetAllGainedHistory() {
+        return stickerDao.resetGainedSticker()
+    }
 }
 

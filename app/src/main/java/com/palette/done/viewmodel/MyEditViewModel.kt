@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.palette.done.DoneApplication
 import com.palette.done.data.db.datasource.DoneRepository
 import com.palette.done.data.db.entity.Category
+import com.palette.done.data.db.entity.Member
 import com.palette.done.data.remote.model.dones.CategoryResponse
 import com.palette.done.data.remote.model.member.*
 import com.palette.done.data.remote.repository.MemberRepository

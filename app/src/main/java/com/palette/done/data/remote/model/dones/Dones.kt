@@ -61,24 +61,33 @@ data class TodayNo(val today_no: Int)
 
 // 던리스트 & 오늘 한마디 -------------------------------------------------
 data class DonesAndTodayResponse(
+    val item : AllDoneAndToday?,
     val message: String?,
     val is_success: Boolean
 )
 
-data class DonesAndToday(
-    val dones: List<Done>,
-    val todays: List<TodayRecord>
+data class AllDoneAndToday(
+    val all_dones: List<DonesAndToday>
 )
 
-data class Done(
+data class DonesAndToday(
+    val date: String,
+    val dones: List<DoneServer>,
+    val today_record: TodayRecord
+)
+
+data class DoneServer(
     val done_no: Int,
-    val content: String,
-    val category_no: Int?
+    var content: String,
+    var category_no: Int?,
+    var tag_no: Int?,
+    var routine_no: Int?
 )
 
 data class TodayRecord(
     val today_no: Int,
-    val content: String
+    val content: String?,
+    val sticker_no: Int?
 )
 
 // 플랜 -----------------------------------------------------------------

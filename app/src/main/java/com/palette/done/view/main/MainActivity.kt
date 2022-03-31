@@ -156,6 +156,11 @@ class MainActivity : AppCompatActivity() {
                                 visibility = View.INVISIBLE
                             }
                         }
+                        if (day.date.isAfter(today)) {
+                            container.view.setOnClickListener {
+                                DoneToast.createToast(this@MainActivity, "", getString(R.string.toast_after_today))?.show()
+                            }
+                        }
                     } else {
                         // 이번 달의 날짜인 경우
                         // '오늘' 체크
@@ -171,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                                 container.today.visibility = View.INVISIBLE
                                 if (day.date.isAfter(today)) {
                                     container.view.setOnClickListener {
-                                        DoneToast.createToast(this@MainActivity, getString(R.string.toast_after_today), "")?.show()
+                                        DoneToast.createToast(this@MainActivity, "", getString(R.string.toast_after_today),)?.show()
                                     }
                                 }
                             }

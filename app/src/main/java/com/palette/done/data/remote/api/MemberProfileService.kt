@@ -3,6 +3,7 @@ package com.palette.done.data.remote.api
 import com.palette.done.data.remote.model.member.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 
@@ -22,4 +23,13 @@ interface MemberProfileService {
 
     @GET("/api/profile")
     fun getMemberInfo(): Call<MemberInfoResponse>
+
+    @GET("/api/profile/type")
+    fun getMemberType(): Call<MemberTypeResponse>
+
+    @GET("/api/profile/alarm")
+    fun getMemberAlarm(): Call<MemberAlarmResponse>
+
+    @DELETE("/api/profile")
+    fun deleteMember(): Call<MemberDeleteResponse>
 }

@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.FragmentLoginEmailBinding
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.viewmodel.LoginViewModel
@@ -27,7 +28,7 @@ class LoginEmailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(
-        MemberRepository()
+        MemberRepository(), DoneServerRepository(), (requireActivity().application as DoneApplication).doneRepository
     ) }
     private val patternVM : PatternCheckViewModel by viewModels()
 
@@ -91,7 +92,6 @@ class LoginEmailFragment : Fragment() {
                 binding.root.getWindowVisibleDisplayFrame(visibleFrameSize)
                 val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
                 val keyboard = rootHeight - heightExceptKeyboard
-                Log.d("keyboard", "$keyboard")
                 Log.d("keyboard", "$keyboard")
                 if (DoneApplication.pref.keyboard != keyboard && keyboard != 0) {
                     DoneApplication.pref.keyboard = keyboard
