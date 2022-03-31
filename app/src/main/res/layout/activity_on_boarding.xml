@@ -6,54 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".view.signin.OnBoardingActivity">
 
-
-    <ImageButton
-        android:id="@+id/btn_back"
-        style="@style/all_toolbar_back_btn"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
-        android:layout_marginRight="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_indicator_now" />
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/all_toolbar_back_btn"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_indicator_second"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_indicator_left" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
 
-        <ImageView
-            android:id="@+id/iv_indicator_third"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_indicator_left"
-            android:visibility="gone"/>
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_indicator_now" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_indicator_second"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_indicator_left" />
 
+            <ImageView
+                android:id="@+id/iv_indicator_third"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_indicator_left"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_on_boarding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 

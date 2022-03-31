@@ -26,6 +26,7 @@ import com.palette.done.view.adapter.PlanAdapter
 import com.palette.done.view.adapter.RoutineAdapter
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import java.util.*
@@ -35,17 +36,18 @@ class PlanRoutineActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityPlanRoutineBinding
 
     private val planVM: PlanViewModel by viewModels() {
-        PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        PlanViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val routineVM: RoutineViewModel by viewModels() {
-        RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        RoutineViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val categoryVM: CategoryViewModel by viewModels() {
-        CategoryViewModelFactory(DoneApplication().doneRepository)
+        CategoryViewModelFactory((application as DoneApplication).doneRepository)
     }
 
     private lateinit var itemMode: ItemMode  // 플랜, 루틴 모드
     private lateinit var date: String  // Plan을 던리스트로 저장할 날짜
+    private var count: Int = 0
     private var isEditMode: Boolean = false  // 편집 모드
 
     private var util = Util()
@@ -60,21 +62,25 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
         itemMode = ItemMode.valueOf(intent!!.getStringExtra("mode")!!)
         date = intent.getStringExtra("date").toString()
+        count = intent.getIntExtra("count", 0)
+
+        routineVM.initRoutine()
+        planVM.initPlan()
 
         setTitle()
 
         when(itemMode) {
             ItemMode.PLAN -> {
-                setPlanDetailTextSpan()
-                planAdapter = PlanAdapter()
+                binding.tvActivityDetail.text = getText(R.string.plan_detail)
+                planAdapter = PlanAdapter(this)
                 initPlanRecyclerView()
                 setPlanAddButton()
                 setPlanAddButtonVisibility()
                 binding.tvAddItem.text = getString(R.string.plan_add)
             }
             ItemMode.ROUTINE -> {
-                setRoutineDetailTextSpan()
-                routineAdapter = RoutineAdapter()
+                binding.tvActivityDetail.text = getText(R.string.routine_detail)
+                routineAdapter = RoutineAdapter(this)
                 initRoutineRecyclerView()
                 setRoutineAddButton()
                 setRoutineAddButtonVisibility()
@@ -108,10 +114,20 @@ class PlanRoutineActivity() : AppCompatActivity() {
         planAdapter.setPlanItemClickListener(object : PlanAdapter.OnPlanItemClickListener {
             override fun onDoneButtonClick(v: View, plan: Plan) {
                 // 플랜 Done -> 리스트에서 사라지고 던리스트에 추가
-                planVM.donePlan(plan)
-                val idx = Random().nextInt(3)
-                val messages = resources.getStringArray(R.array.plan_message)
-                DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
+                if (NetworkManager.checkNetworkState(this@PlanRoutineActivity)) {
+                    // 네트워크 확인
+                    if (count < 8) {
+                        planVM.donePlan(plan, date)
+                        val idx = Random().nextInt(3)
+                        val messages = resources.getStringArray(R.array.plan_message)
+                        DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
+                        count += 1
+                    } else {
+                        DoneToast.createToast(this@PlanRoutineActivity, text = getString(R.string.full_list))?.show()
+                    }
+                } else {
+                    NetworkManager.showRequireNetworkToast(this@PlanRoutineActivity)
+                }
             }
 
             override fun onEditButtonClick(v: View, plan: Plan) {
@@ -126,7 +142,12 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
             override fun onDeleteButtonClick(v: View, plan: Plan) {
                 // 플랜 삭제
-                planVM.deletePlan(plan.planNo)
+                if (NetworkManager.checkNetworkState(this@PlanRoutineActivity)) {
+                    // 네트워크 확인
+                    planVM.deletePlan(plan.planNo)
+                } else {
+                    NetworkManager.showRequireNetworkToast(this@PlanRoutineActivity)
+                }
             }
         })
     }
@@ -154,8 +175,13 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
             override fun onDeleteButtonClick(v: View, routine: Routine) {
                 // 루틴 삭제
-                Log.d("routine", "${routine.routineNo}")
-                routineVM.deleteRoutine(routine.routineNo)
+                if (NetworkManager.checkNetworkState(this@PlanRoutineActivity)) {
+                    // 네트워크 확인
+                    Log.d("routine", "${routine.routineNo}")
+                    routineVM.deleteRoutine(routine.routineNo)
+                } else {
+                    NetworkManager.showRequireNetworkToast(this@PlanRoutineActivity)
+                }
             }
         })
     }
@@ -285,25 +311,47 @@ class PlanRoutineActivity() : AppCompatActivity() {
             binding.flItemWrite.visibility = View.GONE
             makeScreenOriginal()
         }
+        binding.scrollView.getChildAt(0).setOnClickListener {
+            hideKeyboard()
+            binding.flItemWrite.visibility = View.GONE
+            makeScreenOriginal()
+        }
+        binding.toolbar.setOnClickListener {
+            hideKeyboard()
+            binding.flItemWrite.visibility = View.GONE
+            makeScreenOriginal()
+        }
     }
 
     fun makeScreenLong() {
         binding.llSubRoot.setPadding(0, 0, 0, DoneApplication.pref.keyboard+util.dpToPx(110))
     }
 
-    fun makeScreenOriginal() {
+    private fun makeScreenOriginal() {
         binding.llSubRoot.setPadding(0, 0, 0, util.dpToPx(10))
     }
 
     fun planScrollingDown() {
-        planVM.planList.observe(this) {
-            binding.scrollView.smoothScrollTo(0, binding.rcItem.bottom)
+        val height = resources.getDimension(R.dimen.plan_routine_item_height)
+        planVM.planList.observe(this) { list ->
+            val dp = if (list.size <= 4) {
+                0
+            } else {
+                (height*(list.size - 4)).toInt()
+            }
+            binding.scrollView.smoothScrollTo(0, binding.rcItem.top+dp)
         }
     }
 
     fun routineScrollingDown() {
-        routineVM.routineList.observe(this) {
-            binding.scrollView.smoothScrollTo(0, binding.rcItem.bottom)
+        val height = resources.getDimension(R.dimen.plan_routine_item_height)
+        routineVM.routineList.observe(this) { list ->
+            val dp = if (list.size <= 4) {
+                0
+            } else {
+                (height*(list.size - 4)).toInt()
+            }
+            binding.scrollView.smoothScrollTo(0, binding.rcItem.top+dp)
         }
     }
 
@@ -320,24 +368,6 @@ class PlanRoutineActivity() : AppCompatActivity() {
         hideKeyboard()
         binding.flItemWrite.visibility = View.GONE
         makeScreenOriginal()
-    }
-
-    private fun setPlanDetailTextSpan() {
-        SpannableStringBuilder(getString(R.string.plan_detail)).apply {
-            setSpan(
-                StyleSpan(Typeface.BOLD), 0, 19, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-            binding.tvActivityDetail.text = this
-        }
-    }
-
-    private fun setRoutineDetailTextSpan() {
-        SpannableStringBuilder(getString(R.string.routine_detail)).apply {
-            setSpan(
-                StyleSpan(Typeface.BOLD), 0, 23, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-            binding.tvActivityDetail.text = this
-        }
     }
 
     private fun setBackButton() {

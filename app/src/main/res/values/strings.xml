@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Done</string>
+    <string name="app_name">해냄</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_version">1.0</string>
 
     <!-- 공통 -->
     <string name="all_hint_email">이메일 주소 입력</string>
@@ -16,6 +17,10 @@
 
     <string name="yes">네</string>
     <string name="no">아니요</string>
+    <string name="ok">확인</string>
+
+    <string name="network_error">연결 상태가 불안정하니 네트워크 상태를 확인해 주세요.</string>
+    <string name="full_list">오늘의 던리스트를 모두 채웠어요.</string>
 
     <!-- 랜딩페이지 -->
     <string name="landing_start">시작하기</string>
@@ -90,9 +95,17 @@
     <!-- 메인 페이지 -->
     <string name="main_btn_sticker">스티커</string>
     <string name="main_btn_my">MY</string>
+    <string name="main_year_month">%1$s.%2$s</string>
     <string name="main_title_count_done">이번달 Done&#160;</string>
     <string name="main_sub_title_cheer">대단해요</string>
     <string name="toast_after_today">오늘 이후의 날짜는 아직 작성할 수 없어요</string>
+
+    <string name="main_dialog_j_title">지금 바로 플랜을 작성하실래요?</string>
+    <string name="main_dialog_j_go_to_plan"><u>플랜 알아보기</u></string>
+    <string name="main_dialog_j_btn_plan">네! 플랜 작성할래요!</string>
+    <string name="main_dialog_j_btn_done">아니요, 던리스트 작성할래요!</string>
+    <string name="main_dialog_p_title">지금 바로\n오늘의 던리스트를 작성해 보세요!</string>
+    <string name="main_dialog_p_btn_done">던리스트 작성하러 가기</string>
 
     <!-- 던리스트 페이지 -->
     <string name="done_btn_plan">플랜</string>
@@ -102,7 +115,7 @@
     <string name="done_today_hint">오늘을 한마디로 정리하고 스티커로 꾸며보세요! (최대 45자)</string>
     <string name="done_btn_hash_tag">#</string>
     <string name="done_btn_write">입력</string>
-    <string name="done_list_write_hint">작은 일도 괜찮아요, 써보세요!</string>
+    <string name="done_list_write_hint">작은 일도 써보세요!(14자 이하)</string>
     <string name="done_list_write_title">오늘의&#160;</string>
     <string name="done_list_write_title2">번째 Done</string>
 
@@ -133,19 +146,19 @@
     <!-- 플랜 페이지 -->
     <string name="plan_title">플랜</string>
     <string name="plan_edit_title">플랜 편집</string>
-    <string name="plan_detail">잊지 말아야 할 중요한 플랜을 메모하고,\nDone List에 입력하세요.</string>
+    <string name="plan_detail"><b>잊지 말아야 할 중요한 플랜을 메모</b>하고,\nDone List에 입력하세요.</string>
     <string name="plan_add">플랜 추가</string>
     <string name="plan_item_edit">플랜 수정</string>
     <string name="plan_btn_done">Done</string>
-    <string name="plan_hint_add">플랜을 입력해보세요</string>
+    <string name="plan_hint_add">플랜을 입력해보세요.(10자 이하)</string>
 
     <!-- 루틴 페이지 -->
     <string name="routine_title">루틴</string>
     <string name="routine_edit_title">루틴 편집</string>
-    <string name="routine_detail">반복되는 Done List를 루틴으로 등록하고,\n쉽게 입력해보세요.</string>
+    <string name="routine_detail"><b>반복되는 Done List를 루틴으로 등록</b>하고,\n쉽게 입력해보세요.</string>
     <string name="routine_add">루틴 추가</string>
     <string name="routine_item_edit">루틴 수정</string>
-    <string name="routine_hint_add">루틴을 입력해보세요</string>
+    <string name="routine_hint_add">루틴을 입력해보세요.(10자 이하)</string>
 
     <!-- 마이 페이지 -->
     <string name="my_title">MY</string>
@@ -167,28 +180,75 @@
     <string name="my_edit_nickname_title">닉네임 수정</string>
     <string name="my_edit_type_title">기록유형 설정</string>
     <string name="my_edit_alarm_title">알림 설정</string>
-    <string name="my_edit_password_title">비밀번호 변경</string>
+    <string name="my_edit_pwd_title">비밀번호 변경</string>
+    <string name="my_edit_pwd_sub_title">새로운 비밀번호를\n입력해 주세요.</string>
     <string name="my_edit_log_out">로그아웃</string>
     <string name="my_dialog_log_out">로그아웃 하시겠어요?</string>
     <string name="my_edit_quit">회원탈퇴</string>
     <string name="my_dialog_quit">정말 탈퇴하실건가요?</string>
     <string name="my_dialog_quit_detail">그동안 저장된 데이터가 모두 사라집니다.</string>
 
-    <string name="my_level_left">개 Done이 남았어요! 화이팅 👍🏻</string>
-    <string name="level">LV.</string>
+    <string name="my_nickname_wrong_same">현재와 같은 닉네임을 입력했어요.</string>
+    <string name="my_pwd_wrong_same">현재 비밀번호와 같아요.</string>
 
-    <!-- My : 등급 안내 -->
-    <string name="level_title">등급 안내</string>
-    <string name="level_my">내 등급</string>
-    <string name="level_1_3">LV.1~LV.3</string>
-    <string name="level_1_3_detail">해냄과 함께 기록을 시작하는 단계네요:)</string>
-    <string name="level_4_6">LV.4~LV.6</string>
-    <string name="level_4_6_detail">기록 습관이 생기고 있는 해린이네요!👏🏻</string>
-    <string name="level_7_8">LV.7~LV.8</string>
-    <string name="level_7_8_detail">나만의 던리스트를 꾸준히 만들어가고 있어요!</string>
-    <string name="level_9_10">LV.9~LV.10</string>
-    <string name="level_9_10_detail">진정한 갓생러!</string>
+    <string name="my_grade_level">%1$s LV.%2$d</string>
+    <string name="level">LV.%1$d</string>
 
     <string name="nickname">닉네임</string>
     <string name="edit">수정하기</string>
+    <string name="my_edit_type_btn">수정 완료</string>
+
+    <!-- My : 등급 안내 -->
+    <string name="grade_title">등급 안내</string>
+    <string name="grade_my">내 등급</string>
+    <string name="grade_1">새싹해냄이</string>
+    <string name="grade_1_level">LV.1~LV.3</string>
+    <string name="grade_1_detail">해냄과 함께 기록을 시작하는 단계네요:)</string>
+    <string name="grade_2">해린이</string>
+    <string name="grade_2_level">LV.4~LV.6</string>
+    <string name="grade_2_detail">기록 습관이 생기고 있는 해린이네요!👏🏻</string>
+    <string name="grade_3">프로해냄러</string>
+    <string name="grade_3_level">LV.7~LV.8</string>
+    <string name="grade_3_detail">나만의 던리스트를 꾸준히 만들어가고 있어요!</string>
+    <string name="grade_4">갓생해린이</string>
+    <string name="grade_4_level">LV.9~LV.10</string>
+    <string name="grade_4_detail">진정한 갓생러!</string>
+
+    <!-- My: 프리미엄 -->
+    <string name="premium">프리미엄</string>
+    <string name="premium_title">추후 오픈 예정이에요 : )</string>
+    <string name="premium_sub_title">Premium 해냄으로\n더 많은 기능을 사용해보세요 </string>
+    <string name="premium_done_cnt_title">일별 던리스트 개수</string>
+    <string name="premium_category_cnt_title">카테고리 아이콘</string>
+    <string name="premium_not">일반</string>
+    <string name="premium_not_done_cnt">8개</string>
+    <string name="premium_not_category_cnt">6종</string>
+    <string name="premium_done_cnt">50개</string>
+    <string name="premium_category_cnt">+6종=12종</string>
+    <string name="premium_later">스티커, 달력스킨 등 추후 다양한 혜택이\n추가될 예정이니 기대해주세요! 😎</string>
+
+    <!-- 스티커 페이지 -->
+    <string name="sticker">스티커</string>
+    <string name="sticker_detail">획득한 스티커는\n‘오늘 한마디’에서 사용할 수 있어요!</string>
+    <string name="sticker_type_1">해냄 100% 즐기기</string>
+    <string name="sticker_type_1_detail">해냄의 다양한 기능을 적극적으로 활용해보세요!😎</string>
+    <string name="sticker_type_2">나도 이제 프로 기록러</string>
+    <string name="sticker_type_2_detail">프로 해냄러로 가는 길!🔥 </string>
+    <string name="sticker_type_3">스페셜</string>
+    <string name="sticker_type_3_detail">프로 해냄러로 가는 길!🔥 </string>
+    <string name="sticker_later">추가 예정이에요!\n기대해주세요🍀</string>
+
+    <string name="sticker_get_title">스티커 획득!</string>
+    <string name="sticker_get_btn">획득</string>
+
+    <!-- 가이드 -->
+    <string name="tutorial_plan_edit">1. 직접 플랜을 추가하거나 수정할 수 있어요!</string>
+    <string name="tutorial_plan_done">2. Done 버튼을 누르면\n당일 던리스트에 자동으로 입력돼요 💕</string>
+    <string name="tutorial_plan_done_cheer">3. Done 버튼을 누르면\n하단에 응원 메세지가 보여요 👍🏻 </string>
+    <string name="tutorial_plan_popup">[등록금 납부] 플랜 Done ! 👍🏻 해냈군요!</string>
+    <string name="tutorial_plan_back">선택화면으로 돌아가기</string>
+    <string name="tutorial_done_plan">미리 플랜을 세우고\nDone! 버튼 클릭하면 끝!</string>
+    <string name="tutorial_done_tag">해시태그와 루틴 클릭 한번이면\n던리스트 작성 완료!</string>
+    <string name="tutorial_done_category">직접 카테고리 아이콘을 선택하는 재미!</string>
+    <string name="tutorial_done_close">창 닫기</string>
 </resources>

@@ -16,16 +16,16 @@ object DoneToast {
 
     val util = Util()
 
-    fun createToast(context: Context, doneContent: String, cheerMsg: String): Toast? {
+    fun createToast(context: Context, doneContent: String? = null, text: String): Toast? {
         val inflater = LayoutInflater.from(context)
         val binding: ToastDoneBinding = DataBindingUtil.inflate(inflater, R.layout.toast_done, null, false)
 
-        binding.tvToastTitle.text = if (cheerMsg != "") {
+        binding.tvToastTitle.text = if (doneContent != null) {
             "[$doneContent]"
         } else {
-            "$doneContent"
+            ""
         }
-        binding.tvCheerUpMsg.text = cheerMsg
+        binding.tvCheerUpMsg.text = text
 
         return Toast(context).apply {
             setGravity(Gravity.BOTTOM or Gravity.FILL_HORIZONTAL, 0, 0)

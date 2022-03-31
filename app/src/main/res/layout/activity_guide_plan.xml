@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.notice.GuidePlanActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="0dp"
+            style="@style/all_toolbar_back_btn"/>
+
+        <TextView
+            android:id="@+id/tv_plan_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/plan_title"
+            style="@style/all_toolbar_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_edit_mode"
+        android:layout_width="58dp"
+        android:layout_height="31dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:elevation="2dp"
+        android:text="@string/btn_edit_mode"
+        style="@style/main_button_stroke"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"/>
+
+    <TextView
+        android:id="@+id/tv_activity_detail"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="14dp"
+        style="@style/done_activity_detail"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_toast_ex"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="190dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_back"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="23dp">
+
+            <TextView
+                android:id="@+id/tv_toast_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                android:text="[등록금 납부]"
+                style="@style/done_item_text"/>
+
+            <TextView
+                android:id="@+id/tv_cheer_up_msg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" 플랜 Done!👍해냈군요!"
+                style="@style/done_item_text"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/ll_plan_ex"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_activity_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_category"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/ic_category_1"
+                android:layout_marginEnd="5dp"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="등록금 납부"
+                style="@style/done_item_text"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/disableColor"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_done"
+        android:layout_width="49dp"
+        android:layout_height="32dp"
+        android:text="@string/plan_btn_done"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:elevation="2dp"
+        style="@style/done_button_solid"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="@id/ll_plan_ex"
+        app:layout_constraintBottom_toBottomOf="@id/ll_plan_ex"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back"
+        android:layout_width="match_parent"
+        style="@style/dialog_button"
+        android:text="@string/tutorial_plan_back"
+        android:elevation="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="43dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        android:elevation="3dp"
+        android:tint="@color/white"
+        android:layout_marginStart="75dp"
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        app:layout_constraintStart_toStartOf="@id/btn_back"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tutorial_plan_edit"
+        style="@style/guide_text"
+        android:elevation="2dp"
+        android:layout_marginBottom="-7dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@id/iv_arrow_1"
+        app:layout_constraintBottom_toBottomOf="@id/iv_arrow_1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tutorial_plan_done"
+        style="@style/guide_text"
+        android:gravity="end"
+        android:elevation="2dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/iv_arrow_2"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tutorial_plan_done_cheer"
+        style="@style/guide_text"
+        android:elevation="2dp"
+        android:layout_marginBottom="39dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/iv_arrow_3"
+        app:layout_constraintBottom_toTopOf="@id/cv_toast_ex"/>
+
+    <ImageView
+        android:id="@+id/iv_arrow_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_guide_arrow_plan_1"
+        android:elevation="2dp"
+        android:layout_marginEnd="45dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_edit_mode"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_arrow_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_guide_arrow_plan_2"
+        android:elevation="2dp"
+        android:layout_marginEnd="38dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_done"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_arrow_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_guide_arrow_plan_3"
+        android:elevation="2dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginBottom="-6dp"
+        app:layout_constraintBottom_toTopOf="@id/cv_toast_ex"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="1dp"
+        android:background="#B3000000"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".view.main.today.TodayStickerFragment">
 
@@ -21,25 +21,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
-        <ImageButton
-            android:id="@+id/btn_sticker_before"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_sticker_gained"
+            android:layout_width="306dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
-            android:background="@null"
-            android:padding="10dp"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_sticker"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:visibility="gone"/>
+            android:orientation="vertical"
+            android:layout_marginTop="17dp"
+            android:layout_gravity="top|center_horizontal"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_sticker_empty"
@@ -47,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,15 +60,6 @@
                 style="@style/today_hint_text"/>
 
         </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/btn_sticker_after"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX="-1"
-            android:src="@drawable/ic_back"
-            android:background="@null"
-            android:padding="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

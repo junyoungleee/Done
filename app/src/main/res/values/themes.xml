@@ -99,10 +99,39 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- MY -->
+    <style name="premium_text">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
+    </style>
 
+    <style name="premium_accent_text" parent="premium_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/done_tag_round_selector</item>
+        <item name="android:clickable">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:backgroundTint">@color/mainDoneColor</item>
+    </style>
+
+    <style name="all_later_add_text" parent="done_sub_title_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="guide_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
+    </style>
+
+    <!-- MY -->
     <style name="my_done_mini_text">
         <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
         <item name="android:textColor">@color/mainDoneColor</item>
     </style>
 
@@ -130,7 +159,7 @@
     </style>
 
     <style name="my_report_text">
-        <item name="fontFamily">@font/spoqa_han_sans_neo_bold</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
         <item name="android:textColor">@color/contextColor</item>
         <item name="android:textSize">22sp</item>
         <item name="android:gravity">center|center_horizontal</item>
@@ -151,7 +180,7 @@
     </style>
 
     <style name="done_item_text">
-        <item name="fontFamily">@font/spoqa_han_sans_neo_medium</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
     </style>
@@ -165,7 +194,7 @@
 
     <!-- CALENDAR -->
     <style name="calendar_header_legend">
-        <item name="fontFamily">@font/spoqa_han_sans_neo_light</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_light</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
@@ -174,18 +203,14 @@
 
     <!-- Toolbar -->
     <style name="all_toolbar_text">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">19sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/spoqa_han_sans_neo_bold</item>
-        <item name="android:layout_marginTop">31dp</item>
     </style>
 
     <style name="all_toolbar_back_btn">
         <item name="android:src">@drawable/ic_back</item>
         <item name="android:background">@null</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:layout_marginTop">33dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
     </style>
 
 
@@ -275,8 +300,17 @@
 
     <style name="dialog_button" parent="main_button_solid">
         <item name="android:textSize">18sp</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_neo_medium</item>
     </style>
 
+    <style name="my_next_button">
+        <item name="android:background">@null</item>
+        <item name="android:paddingStart">30dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:src">@drawable/ic_menu</item>
+    </style>
 
     <!-- Spinner -->
     <style name="ob_alarm_timepicker">
@@ -327,5 +361,11 @@
     <style name="dialog_sub_text" parent="dialog_main_text">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/dialogSubTextColor</item>
+    </style>
+
+    <!-- View -->
+    <style name="view_sticker_divider">
+        <item name="android:layout_height">12dp</item>
+        <item name="android:background">@color/stickerDividerColor</item>
     </style>
 </resources>

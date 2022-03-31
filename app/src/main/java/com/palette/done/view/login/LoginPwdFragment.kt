@@ -14,35 +14,47 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.palette.done.DoneApplication
 import com.palette.done.R
+import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.FragmentLoginPwdBinding
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.view.main.MainActivity
+import com.palette.done.view.my.MyEditActivity
 import com.palette.done.view.signin.OnBoardingActivity
-import com.palette.done.viewmodel.LoginViewModel
-import com.palette.done.viewmodel.LoginViewModelFactory
-import com.palette.done.viewmodel.PatternCheckViewModel
+import com.palette.done.view.util.NetworkManager
+import com.palette.done.viewmodel.*
 
-class LoginPwdFragment : Fragment() {
+class LoginPwdFragment(edit: Boolean = false) : Fragment() {
 
     private var _binding: FragmentLoginPwdBinding? = null
     private val binding get() = _binding!!
 
-    private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(
+    private val editMode: Boolean = edit
+
+    private val myEditVM: MyEditViewModel by activityViewModels { MyEditViewModelFactory(
         MemberRepository()
     ) }
+    private val loginVM : LoginViewModel by activityViewModels { LoginViewModelFactory(
+        MemberRepository(), DoneServerRepository(), (requireActivity().application as DoneApplication).doneRepository
+    ) }
+
     private val patternVM: PatternCheckViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentLoginPwdBinding.inflate(inflater, container, false)
 
-        loginVM.isNew.observe(viewLifecycleOwner) {
-            Log.d("loginVM_pwd1", "${loginVM.isNew.value}")
-            setNewUserUI(loginVM.isNew.value!!)
-            setButtonsDestination(loginVM.isNew.value!!)
-            checkBothPwd(loginVM.isNew.value!!)
+        if (!editMode) {
+            loginVM.isNew.observe(viewLifecycleOwner) {
+                Log.d("loginVM_pwd1", "${loginVM.isNew.value}")
+                setNewUserUI(loginVM.isNew.value!!)
+                setButtonsDestination(loginVM.isNew.value!!)
+                checkBothPwd(loginVM.isNew.value!!)
+            }
+        } else {
+            initEditPwdFragment()
+            checkEditPwd()
+            setEditButton()
         }
-        Log.d("loginVM_pwd2", "${loginVM.isNew.value}")
 
         return binding.root
     }
@@ -55,38 +67,47 @@ class LoginPwdFragment : Fragment() {
             startActivity(intent)
         }
         binding.btnNext.setOnClickListener {
-            if (new) {
-                // 신규 회원이라면 온보딩
-                intent = Intent(requireContext(), OnBoardingActivity::class.java)
-                loginVM.postSignUp(binding.etPwd.text.toString())
-                DoneApplication.pref.signup = "false"
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                if (new) {
+                    // 신규 회원이라면 온보딩
+                    intent = Intent(requireContext(), OnBoardingActivity::class.java)
+                    loginVM.postSignUp(binding.etPwd.text.toString())
+                    DoneApplication.pref.signup = "false"
 
-                // 이전 액티비티 스택 모두 제거
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    // 이전 액티비티 스택 모두 제거
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-                loginVM.isSignUpSuccess.observe(viewLifecycleOwner) {
-                    if (loginVM.isSignUpSuccess.value!!) {
-                        startActivity(intent)
+                    loginVM.isSignUpSuccess.observe(viewLifecycleOwner) {
+                        if (loginVM.isSignUpSuccess.value!!) {
+                            startActivity(intent)
+                        }
+                    }
+                    startActivity(intent)
+                } else {
+                    // 기존 회원이라면 메인화면
+                    intent = Intent(requireContext(), MainActivity::class.java)
+                    loginVM.postLogin(binding.etPwd.text.toString())
+
+                    // 이전 액티비티 스택 모두 제거
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                    // 로그인 성공과 데이터 response 성공 분리하기
+                    loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
+                        if (!it) {
+                            checkLogin(false)
+                        }
+                    }
+                    loginVM.isDataSaved.observe(viewLifecycleOwner) {
+                        if (it) {
+                            DoneApplication.pref.signup = "true"
+                            startActivity(intent)
+                        }
                     }
                 }
-                startActivity(intent)
             } else {
-                // 기존 회원이라면 메인화면
-                intent = Intent(requireContext(), MainActivity::class.java)
-                loginVM.postLogin(binding.etPwd.text.toString())
-
-                // 이전 액티비티 스택 모두 제거
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
-                    if (loginVM.isLoginSuccess.value!!) {
-                        startActivity(intent)
-                    } else {
-                        checkLogin(false)
-                    }
-                }
+                NetworkManager.showRequireNetworkToast(requireActivity())
             }
         }
     }
@@ -115,17 +136,22 @@ class LoginPwdFragment : Fragment() {
         }
     }
 
-    private fun checkPwdAgain(check: Boolean) {
+    private fun checkPwdAgain(check: Boolean, text: String) {
         if (!check) {
+            binding.etPwd.setBackgroundResource(R.drawable.all_et_background_error)
+            binding.etPwd.setTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
             binding.etPwdAgain.setBackgroundResource(R.drawable.all_et_background_error)
             binding.etPwdAgain.setTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
-            binding.tvWrongSign.setText(R.string.login_diff_pwd)
+            binding.tvWrongSign.text = text
         } else {
+            binding.etPwd.setBackgroundResource(R.drawable.all_et_background_selector)
+            binding.etPwd.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             binding.etPwdAgain.setBackgroundResource(R.drawable.all_et_background_selector)
             binding.etPwdAgain.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             binding.tvWrongSign.text = ""
         }
     }
+
 
     private fun checkBothPwd(new: Boolean) {
         binding.etPwd.setOnEditorActionListener{ view, action, event ->
@@ -152,7 +178,7 @@ class LoginPwdFragment : Fragment() {
         }
         // 신규유저인 경우 재입력까지 확인해야 함
         patternVM.pwd2Result.observe(viewLifecycleOwner) { result ->
-            checkPwdAgain(result)
+            checkPwdAgain(result, getString(R.string.login_diff_pwd))
             if (patternVM.pwdResult.value == false && result == false) {
                 // 비밀번호 형식이 잘못된 경우, 해당 사인 우선 표시
                 binding.tvWrongSign.setText(R.string.login_wrong_pwd)
@@ -185,6 +211,76 @@ class LoginPwdFragment : Fragment() {
             binding.tvTitle.text = getString(R.string.login_title_pwd_old)
             binding.etPwdAgain.visibility = View.GONE
             binding.tvFindPwd.visibility = View.VISIBLE
+        }
+    }
+
+    // 회원 정보 수정 --------------------------------------------------------------------------------
+    private fun initEditPwdFragment() {
+        with(binding) {
+            tvTitle.text = getString(R.string.my_edit_pwd_sub_title)
+            tvFindPwd.visibility = View.GONE
+        }
+    }
+
+    private fun checkEditPwd() {
+        binding.etPwd.setOnEditorActionListener{ view, action, event ->
+            val handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                patternVM.checkPwd(view.text.toString())
+            }
+            handled
+        }
+        binding.etPwdAgain.setOnEditorActionListener{ view, action, event ->
+            val handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                patternVM.checkPwd2(view.text.toString())
+                patternVM.checkEditPwd()
+            }
+            handled
+        }
+
+        patternVM.pwdResult.observe(viewLifecycleOwner) { result ->
+            checkPwd(result)
+            Log.d("pwd_result", "$result")
+            setEditButtonEnbaleCheck()
+        }
+        patternVM.pwd2Result.observe(viewLifecycleOwner) { result ->
+            Log.d("pwd2_result", "$result")
+            checkPwdAgain(result, getString(R.string.login_diff_pwd))
+            if (patternVM.pwdResult.value == false && result == false) {
+                // 비밀번호 형식이 잘못된 경우, 해당 사인 우선 표시
+                binding.tvWrongSign.setText(R.string.login_wrong_pwd)
+            }
+            setEditButtonEnbaleCheck()
+        }
+        patternVM.pwdEditNotSame.observe(viewLifecycleOwner) { result ->
+            if (patternVM.pwd2Result.value == true && patternVM.pwdResult.value == true) {
+                Log.d("pwd_same_result", "$result")
+                checkPwdAgain(result, getString(R.string.my_pwd_wrong_same))
+            }
+            setEditButtonEnbaleCheck()
+        }
+    }
+
+    private fun setEditButtonEnbaleCheck() {
+        binding.btnNext.isEnabled =
+            (patternVM.pwdResult.value == true) && (patternVM.pwd2Result.value == true) && (patternVM.pwdEditNotSame.value == true) &&
+                    (binding.etPwd.text.toString() != "") && (binding.etPwdAgain.text.toString() != "")
+    }
+
+    private fun setEditButton() {
+        binding.btnNext.setOnClickListener {
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                myEditVM.patchPassword(binding.etPwdAgain.text.toString())
+                myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
+                    if (response) {
+                        myEditVM.initResponseValue()
+                        (activity as MyEditActivity).finish()
+                    }
+                }
+            } else {
+                NetworkManager.showRequireNetworkToast(requireActivity())
+            }
         }
     }
 

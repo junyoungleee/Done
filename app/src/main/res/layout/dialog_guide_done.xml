@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:text="@string/tutorial_done_close"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_plan"
+                style="@style/done_button_solid"
+                android:layout_width="58dp"
+                android:layout_height="31dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                android:text="@string/done_btn_plan"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/right_margin"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tv_done_guide_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutorial_done_plan"
+            android:gravity="start"
+            style="@style/guide_text"
+            android:layout_marginEnd="-17dp"
+            android:layout_marginTop="-12dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_arrow_1"
+            app:layout_constraintEnd_toStartOf="@id/iv_arrow_1"/>
+
+        <TextView
+            android:id="@+id/tv_done_guide_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutorial_done_category"
+            android:gravity="start"
+            style="@style/guide_text"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toTopOf="@id/iv_arrow_2"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_done_guide_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutorial_done_tag"
+            android:gravity="start"
+            style="@style/guide_text"
+            android:layout_marginEnd="39dp"
+            android:layout_marginBottom="-8dp"
+            app:layout_constraintBottom_toTopOf="@id/iv_arrow_3"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_arrow_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="49dp"
+            android:layout_marginTop="-15dp"
+            android:src="@drawable/img_guide_arrow_done_1"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_arrow_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_guide_arrow_done_2"
+            android:elevation="1dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_category" />
+
+        <ImageView
+            android:id="@+id/iv_arrow_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_guide_arrow_done_3"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="-15dp"
+            android:elevation="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_category"/>
+
+        <View
+            android:id="@+id/ll_done_write_header"
+            android:layout_width="match_parent"
+            android:layout_height="118dp"
+            android:gravity="center"
+            android:background="@drawable/done_box_round_no_shadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_done_title_1"
+            style="@style/done_sub_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:lineSpacingExtra="13sp"
+            android:text="오늘의 첫번째 Done"
+            android:textSize="18sp"
+            android:layout_marginBottom="9dp"
+            app:layout_constraintBottom_toTopOf="@id/cl_edit_done"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/btn_category"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:tint="@color/mainDoneListColor"
+                android:src="@drawable/ic_category"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="27dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_edit_done"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_category"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/et_done"
+                    style="@style/done_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/done_list_write_hint"
+                    android:textColor="@color/doneHintColor"
+                    android:paddingEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:minWidth="32dp"
+                    android:text="@string/done_btn_hash_tag"
+                    android:textAlignment="center"
+                    android:layout_marginEnd="7dp"
+                    android:includeFontPadding="false"
+                    style="@style/done_button_solid"
+                    app:layout_constraintTop_toTopOf="@id/et_done"
+                    app:layout_constraintEnd_toEndOf="@id/et_done"
+                    app:layout_constraintBottom_toBottomOf="@id/et_done"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

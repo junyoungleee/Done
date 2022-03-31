@@ -14,6 +14,13 @@
         android:layout_height="match_parent"
         tools:context=".view.login.LoginActivity">
 
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
             <ImageButton
                 android:id="@+id/btn_back"
                 android:layout_width="21dp"
@@ -32,6 +39,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager_login"

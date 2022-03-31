@@ -5,15 +5,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
@@ -23,16 +19,20 @@ import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
 import com.palette.done.DoneApplication
 import com.palette.done.R
-import com.palette.done.data.db.entity.DoneCount
+import com.palette.done.data.remote.model.sticker.Stickers
 import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.data.remote.repository.MemberRepository
+import com.palette.done.data.remote.repository.StickerServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
 import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.main.notice.FirstVisitDialog
+import com.palette.done.view.main.notice.StickerGetDialog
 import com.palette.done.view.my.MyActivity
+import com.palette.done.view.my.sticker.StickerActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
-import com.palette.done.viewmodel.MainViewModel
-import com.palette.done.viewmodel.MainViewModelFactory
-import com.palette.done.viewmodel.RoutineViewModelFactory
+import com.palette.done.viewmodel.*
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.YearMonth
@@ -51,19 +51,50 @@ class MainActivity : AppCompatActivity() {
     private val mainVM: MainViewModel by viewModels() {
         MainViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
+    private val stickerVM: MainStickerViewModel by viewModels() {
+        MainStickerViewModelFactory(StickerServerRepository(), (application as DoneApplication).stickerRepository)
+    }
+    private val myVM: MyViewModel by viewModels() {
+        MyViewModelFactory(MemberRepository(), (application as DoneApplication).doneRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkNetworkState()
+
         mainVM.doneCountList.observe(this) {
             doneCountList = mainVM.getDoneCountMap()
             setCalendarView()
         }
+
         setCalendarSubHeader()
+        stickerVM.getAllSticker()
+        stickerVM.getNewSticker()
+        myVM.getUserProfile()
+
+        setFirstLoginDialog()
+        setNewStickerDialog()  // 스티커 다이얼로그 우선
 
         setButtonsDestination()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 화면에 다시 돌아올 때마다 체크
+        setNewStickerDialog()
+
+        checkNetworkState()
+        stickerVM.getNewSticker()
+        myVM.getUserProfile()
+    }
+
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(this)) {
+            NetworkManager.showRequireNetworkToast(this)
+        }
     }
 
     private fun setButtonsDestination() {
@@ -71,6 +102,36 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MyActivity::class.java)
             startActivity(intent)
         }
+        binding.btnSticker.setOnClickListener {
+            val intent = Intent(this, StickerActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setFirstLoginDialog() {
+        // pref의 TodayFirst가 어제 날짜인 경우, 띄우기
+        val visit = DoneApplication.pref.todayFirst  // 최근 방문 날짜
+        val today = LocalDate.now().toString()  // 오늘 날짜
+
+        if (visit != today && visit != "") {
+            // 아예 앱을 처음 실행한 경우가 아니며 하루 중 첫 진입인 경우
+            val dialog = FirstVisitDialog()
+            dialog.show(this.supportFragmentManager, "FirstLoginDialog")
+            DoneApplication.pref.todayFirst = today // 하루동안 안보이게 처리
+        }
+    }
+
+    private fun setNewStickerDialog() {
+        stickerVM.newStickers.observe(this) { stickers ->
+            for (sticker in stickers) {
+                val dialog = StickerGetDialog(sticker)
+                Log.d("sticker_dialog_for", "${stickers.size}")
+                dialog.show(this.supportFragmentManager, "NewStickerDialog")
+                dialog.isCancelable = false  // 버튼으로만 닫을 수 있음
+            }
+//            stickerVM._newStickers.call()
+        }
+
     }
 
     private fun setCalendarView() {
@@ -78,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         with(binding.calendarView) {
             itemAnimator = null  // 깜빡임 제거
             doOnPreDraw {
-                daySize = Size(binding.calendarView.width/7, util.dpToPx(86))
+                daySize = Size(binding.calendarView.width/7, util.dpToPx(84))
             }
 
             val currentMonth = YearMonth.now()
@@ -115,6 +176,11 @@ class MainActivity : AppCompatActivity() {
                                 visibility = View.INVISIBLE
                             }
                         }
+                        if (day.date.isAfter(today)) {
+                            container.view.setOnClickListener {
+                                DoneToast.createToast(this@MainActivity, text = getString(R.string.toast_after_today))?.show()
+                            }
+                        }
                     } else {
                         // 이번 달의 날짜인 경우
                         // '오늘' 체크
@@ -130,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                                 container.today.visibility = View.INVISIBLE
                                 if (day.date.isAfter(today)) {
                                     container.view.setOnClickListener {
-                                        DoneToast.createToast(this@MainActivity, getString(R.string.toast_after_today), "")?.show()
+                                        DoneToast.createToast(this@MainActivity, text = getString(R.string.toast_after_today))?.show()
                                     }
                                 }
                             }
@@ -159,12 +225,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        // 깜빡임 제거
-//        val animator = binding.calendarView.itemAnimator
-//        if (animator is SimpleItemAnimator) {
-//            animator.supportsChangeAnimations = false
-//        }
-
     }
 
     private fun setCalendarHeader() {
@@ -181,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             }
             calendarView.monthScrollListener = { month ->
                 val year= month.yearMonth.year.toString().substring(2)
-                binding.tvCalendarMonth.text = "${year}.${df.format(month.yearMonth.monthValue)}"
+                binding.tvCalendarMonth.text = getString(R.string.main_year_month, year, df.format(month.yearMonth.monthValue))
                 // 현재 yyyy-MM 값
                 mainVM._yearMonth.value = "${month.yearMonth.year}-${df.format(month.yearMonth.monthValue)}"
             }

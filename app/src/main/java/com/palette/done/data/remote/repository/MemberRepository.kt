@@ -38,8 +38,37 @@ class MemberRepository {
     }
 
     // 유저 정보
+    fun getMemberInfo(): Call<MemberInfoResponse> {
+        return profileApi.getMemberInfo()
+    }
+
     fun patchMemberProfile(profile: MemberProfile): Call<MemberProfileResponse> {
         return profileApi.patchMemberProfile(profile)
     }
 
+    fun getMemberType(): Call<MemberTypeResponse> {
+        return profileApi.getMemberType()
+    }
+
+    fun getMemberAlarm(): Call<MemberAlarmResponse> {
+        return profileApi.getMemberAlarm()
+    }
+
+    // 유저 정보 수정
+    fun patchNewNickName(new: MemberNickname): Call<MemberProfileResponse> {
+        return profileApi.patchMemberNickname(new)
+    }
+
+    fun patchNewType(): Call<MemberTypeResponse> {
+        return profileApi.patchMemberType()
+    }
+
+    fun patchNewPwd(new: MemberPwd): Call<MemberChangePwdResponse> {
+        return profileApi.patchMemberPwd(new)
+    }
+
+    // 회원 탈퇴
+    fun deleteMember(): Call<MemberDeleteResponse> {
+        return profileApi.deleteMember()
+    }
 }

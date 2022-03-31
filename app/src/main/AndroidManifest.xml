@@ -3,21 +3,27 @@
     package="com.palette.done">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".DoneApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Done">
-        <activity android:name=".view.my.MyEditActivity"></activity>
+        <activity android:name=".view.main.notice.GuidePlanActivity"/>
+        <activity android:name=".view.my.sticker.StickerActivity" />
+        <activity android:name=".view.my.MyEditActivity" />
+        <activity android:name=".view.my.MyMenuActivity" />
         <activity android:name=".view.my.MyActivity" />
         <activity android:name=".view.main.today.TodayRecordActivity" />
-        <activity android:name=".view.main.PlanRoutineActivity"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".view.main.DoneActivity"
+        <activity
+            android:name=".view.main.PlanRoutineActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".view.main.DoneActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.SplashActivity"

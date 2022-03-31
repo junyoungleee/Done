@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
@@ -12,32 +11,26 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.db.entity.Done
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityDoneBinding
-import com.palette.done.databinding.LayoutDoneEmptyBinding
 import com.palette.done.view.adapter.DoneAdapter
 import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.main.notice.FirstVisitDoneDialog
 import com.palette.done.view.main.done.DoneFragment
 import com.palette.done.view.main.today.TodayRecordActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
@@ -50,16 +43,10 @@ class DoneActivity : AppCompatActivity() {
         DoneDateViewModelFactory((application as DoneApplication).doneRepository)
     }
     private val doneVM: DoneEditViewModel by viewModels() {
-        DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
-    }
-    private val planVM: PlanViewModel by viewModels() {
-        PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
-    }
-    private val routineVM: RoutineViewModel by viewModels() {
-        RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        DoneEditViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val categoryVM: CategoryViewModel by viewModels() {
-        CategoryViewModelFactory(DoneApplication().doneRepository)
+        CategoryViewModelFactory((application as DoneApplication).doneRepository)
     }
 
     val PREMIUM_DONELIST_SIZE = 50
@@ -86,8 +73,7 @@ class DoneActivity : AppCompatActivity() {
         dateVM.setTitleDate(clickedDate!!)
         dateVM.transStringToCalendar(clickedDate)
 
-        routineVM.initRoutine()
-        planVM.initPlan()
+        setFirstVisitDialog()
 
         setTitleDate()
         setButtonsDestination()
@@ -109,8 +95,10 @@ class DoneActivity : AppCompatActivity() {
             btnPlan.setOnClickListener {
                 val intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
                 val date = dateVM.getTitleDate()
+                val count = dateVM.doneList.value!!.size
                 intent.putExtra("mode", ItemMode.PLAN.name)
                 intent.putExtra("date", date)  // 현재 던리스트의 날짜
+                intent.putExtra("count", count) // 현재 던리스트 숫자
                 startActivity(intent)
             }
             llTodayRecord.setOnClickListener {
@@ -126,6 +114,18 @@ class DoneActivity : AppCompatActivity() {
         }
     }
 
+    private fun setFirstVisitDialog() {
+        val visit = DoneApplication.pref.todayFirst  // 최근 방문 날짜
+        val today = LocalDate.now().toString()  // 오늘 날짜
+
+        if (visit == "") {
+            // 앱 첫 방문인 경우에만 보여줌
+            val dialog = FirstVisitDoneDialog()
+            dialog.show(this.supportFragmentManager, "FirstDoneDialog")
+            dialog.isCancelable = false
+            DoneApplication.pref.todayFirst = today
+        }
+    }
 
     private fun checkEmptyAndPremium() {
         dateVM.doneList.observe(this) {
@@ -235,8 +235,13 @@ class DoneActivity : AppCompatActivity() {
                             }
                             1 -> {
                                 // 삭제
-                                doneVM.deleteDoneList(done.doneId)
-                                popup.dismiss()
+                                if (NetworkManager.checkNetworkState(this@DoneActivity)) {
+                                    // 네트워크 연결 확인
+                                    doneVM.deleteDoneList(done.doneId)
+                                    popup.dismiss()
+                                } else {
+                                    NetworkManager.showRequireNetworkToast(this@DoneActivity)
+                                }
                             }
                         }
                     }
@@ -273,7 +278,7 @@ class DoneActivity : AppCompatActivity() {
                         viewTodayStickerTopMargin.visibility = View.VISIBLE
                         viewTodayStickerBottomMargin.visibility = View.VISIBLE
 
-                        val stickerName = "img_sticker_${tr.todaySticker}"
+                        val stickerName = "sticker_${tr.todaySticker}"
                         val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
                         ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
 
@@ -292,9 +297,9 @@ class DoneActivity : AppCompatActivity() {
                         viewTodayStickerTopMargin.visibility = View.GONE
                         viewTodayStickerBottomMargin.visibility = View.GONE
 
-//                        val stickerName = "img_sticker_${tr.todaySticker}"
-//                        val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
-//                        ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
+                        val stickerName = "sticker_${tr.todaySticker}"
+                        val stickerId = resources.getIdentifier(stickerName, "drawable", this@DoneActivity.packageName)
+                        ivTodayRecordSticker.setImageDrawable(ContextCompat.getDrawable(this@DoneActivity, stickerId))
 
                         tvTodayRecordText.visibility = View.VISIBLE
                         tvTodayRecordText.text = tr.todayWord
@@ -314,7 +319,7 @@ class DoneActivity : AppCompatActivity() {
             btnDayAfter.setOnClickListener {
                 closeEditFrame()
                 if (dateVM.isDateToday()) {
-                    DoneToast.createToast(this@DoneActivity, getString(R.string.toast_after_today), "")?.show()
+                    DoneToast.createToast(this@DoneActivity, text = getString(R.string.toast_after_today))?.show()
                 } else {
                     dateVM.clickedForwardDay()
                 }
@@ -361,6 +366,13 @@ class DoneActivity : AppCompatActivity() {
                 binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
             }
         }
+        binding.toolbar.setOnClickListener {
+            closeEditFrame()
+            makeScreenOriginal()
+            binding.scrollView.post {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
+            }
+        }
         binding.flDoneWrite.isClickable = false
         binding.flDoneWrite.setOnClickListener {
 
@@ -378,7 +390,7 @@ class DoneActivity : AppCompatActivity() {
     fun scrollingDown() {
         val height = resources.getDimension(R.dimen.done_item_height)
         dateVM.doneList.observe(this) { list ->
-            var dp = if (list.size <= 4) {
+            val dp = if (list.size <= 4) {
                 0
             } else {
                 (height*(list.size - 4)).toInt()

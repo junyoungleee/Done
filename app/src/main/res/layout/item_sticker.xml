@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="40dp">
+    <ImageView
+        android:id="@+id/iv_sticker"
+        android:layout_width="@dimen/sticker_size"
+        android:layout_height="@dimen/sticker_size"
+        android:src="@drawable/sticker_14"
+        android:tint="@color/stickerDisableColor"/>
+
+    <TextView
+        android:id="@+id/tv_sticker_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:text="플랜 오늘함x10"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/spoqa_han_sans_neo_medium"/>
+</LinearLayout>

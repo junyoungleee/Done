@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.palette.done.data.db.dao.DoneDAO
+import com.palette.done.data.db.dao.StickerDAO
 import com.palette.done.data.db.entity.*
 import kotlinx.coroutines.CoroutineScope
 
@@ -14,9 +15,10 @@ import kotlinx.coroutines.CoroutineScope
  * <doneDB>
  * Done, TodayRecord, Plan, Routine 관리 DB
  */
-@Database(entities = [Done::class, Plan::class, Routine::class, TodayRecord::class, Category::class], version = 4)
+@Database(entities = [Done::class, Plan::class, Routine::class, TodayRecord::class, Category::class, Sticker::class], version = 5)
 abstract class DoneDatabase: RoomDatabase() {
     abstract fun doneDao(): DoneDAO
+    abstract fun stickerDao(): StickerDAO
 
     companion object {
         private var INSTANCE: DoneDatabase? = null
@@ -28,6 +30,7 @@ abstract class DoneDatabase: RoomDatabase() {
                     .addMigrations(MIGRATION_1_2)
                     .addMigrations(MIGRATION_2_3)
                     .addMigrations(MIGRATION_3_4)
+                    .addMigrations(MIGRATION_4_5)
                     .build()
                 INSTANCE = instance
                 instance
@@ -50,6 +53,11 @@ abstract class DoneDatabase: RoomDatabase() {
                 database.execSQL("CREATE TABLE Today ('todayNo' INTEGER NOT NULL, 'date' TEXT NOT NULL, todayWord TEXT, todaySticker INTEGER, PRIMARY KEY('todayNo'))")
                 database.execSQL("DROP TABLE TodayRecord")
                 database.execSQL("ALTER TABLE Today RENAME TO TodayRecord")
+            }
+        }
+        val MIGRATION_4_5 = object: Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE Sticker ('stickerNo' INTEGER NOT NULL, 'name' TEXT NOT NULL, 'explanation' TEXT NOT NULL, 'term' TEXT NOT NULL, 'classify' INTEGER NOT NULL, 'get' INTEGER NOT NULL DEFAULT 0, PRIMARY KEY('stickerNo'))")
             }
         }
     }

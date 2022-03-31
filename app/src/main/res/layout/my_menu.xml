@@ -21,9 +21,7 @@
             android:id="@+id/btn_menu_premium"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            style="@style/my_next_button"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -45,9 +43,7 @@
             android:id="@+id/btn_menu_notice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            style="@style/my_next_button"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -69,9 +65,7 @@
             android:id="@+id/btn_menu_inquiry"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            style="@style/my_next_button"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -93,9 +87,7 @@
             android:id="@+id/btn_menu_use"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            style="@style/my_next_button"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -117,9 +109,7 @@
             android:id="@+id/btn_menu_privacy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            style="@style/my_next_button"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -137,12 +127,11 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_version"
             style="@style/my_menu_text"/>
-        <ImageButton
-            android:id="@+id/btn_menu_version"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="65dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu"
-            android:background="@null"
-            android:padding="20dp"/>
+            android:gravity="center"
+            android:text="@string/app_version"
+            style="@style/my_menu_text"/>
     </LinearLayout>
 </LinearLayout>

@@ -22,12 +22,21 @@ class DoneRepository(private val doneDao: DoneDAO) {
     }
 
     fun getDoneCountCountEachDayInMonth(): Flow<List<DoneCount>> {
-        return doneDao.getDoneCountCountEachDayInMonth()
+        return doneDao.getDoneCountEachDayInMonth()
     }
 
     fun getAllDoneCountInMonth(date: String): Flow<Int> {
         return doneDao.getAllDoneCountInMonth(date)
     }
+
+    suspend fun getDoneWriteDays(): Int {
+        return doneDao.getDoneWriteDays()
+    }
+
+    suspend fun getAllDoneCount(): Int {
+        return doneDao.getAllDoneCount()
+    }
+
 
     // 오늘한마디 ---------------------------------------------------------------------
     suspend fun insertTodayRecord(today: TodayRecord) {
@@ -77,4 +86,20 @@ class DoneRepository(private val doneDao: DoneDAO) {
         return doneDao.getCategory()
     }
 
+    // 로그아웃 시 ----------------------------------------------------------------------
+    fun deleteAllDone() {
+        return doneDao.deleteAllDone()
+    }
+
+    fun deleteAllTodayRecord() {
+        return doneDao.deleteAllTodayRecord()
+    }
+
+    fun deleteAllRoutine() {
+        return doneDao.deleteAllRoutine()
+    }
+
+    fun deleteAllPlan() {
+        return doneDao.deleteAllPlan()
+    }
 }

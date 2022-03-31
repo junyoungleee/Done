@@ -32,7 +32,7 @@ class DoneServerRepository {
         return doneApi.deleteDones(doneNo)
     }
 
-    fun getDoneAndTodayRecord(date: String): Call<DonesAndTodayResponse> {
+    fun getDoneAndTodayRecord(date: String?): Call<DonesAndTodayResponse> {
         return doneApi.getDoneListAndTodayRecord(date)
     }
 
@@ -58,8 +58,8 @@ class DoneServerRepository {
         return doneApi.deletePlans(planNo)
     }
 
-    fun donePlan(planNo: Int): Call<DonesResponse> {
-        return doneApi.donePlans(planNo)
+    fun donePlan(date: PlanDone, planNo: Int): Call<DonesResponse> {
+        return doneApi.donePlans(date, planNo)
     }
 
     fun getPlanList(): Call<PlanListResponse> {

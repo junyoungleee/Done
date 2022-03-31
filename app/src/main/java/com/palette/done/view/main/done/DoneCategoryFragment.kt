@@ -28,11 +28,7 @@ class DoneCategoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val categoryVM: CategoryViewModel by activityViewModels() {
-        CategoryViewModelFactory(DoneApplication().doneRepository)
-    }
-
-    private val doneVM: DoneEditViewModel by activityViewModels() {
-        DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        CategoryViewModelFactory((requireActivity().application as DoneApplication).doneRepository)
     }
 
     private lateinit var categoryAdapter : CategoryAdapter

@@ -21,6 +21,8 @@ class OnBoardingActivity : AppCompatActivity() {
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        DoneApplication.pref.level = 1
+
         setBackButtonAndIndicator()
         setViewPager()
     }
