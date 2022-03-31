@@ -20,6 +20,7 @@ import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.view.main.MainActivity
 import com.palette.done.view.my.MyEditActivity
 import com.palette.done.view.signin.OnBoardingActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.*
 
 class LoginPwdFragment(edit: Boolean = false) : Fragment() {
@@ -66,43 +67,47 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
             startActivity(intent)
         }
         binding.btnNext.setOnClickListener {
-            if (new) {
-                // 신규 회원이라면 온보딩
-                intent = Intent(requireContext(), OnBoardingActivity::class.java)
-                loginVM.postSignUp(binding.etPwd.text.toString())
-                DoneApplication.pref.signup = "false"
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                if (new) {
+                    // 신규 회원이라면 온보딩
+                    intent = Intent(requireContext(), OnBoardingActivity::class.java)
+                    loginVM.postSignUp(binding.etPwd.text.toString())
+                    DoneApplication.pref.signup = "false"
 
-                // 이전 액티비티 스택 모두 제거
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    // 이전 액티비티 스택 모두 제거
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-                loginVM.isSignUpSuccess.observe(viewLifecycleOwner) {
-                    if (loginVM.isSignUpSuccess.value!!) {
-                        startActivity(intent)
+                    loginVM.isSignUpSuccess.observe(viewLifecycleOwner) {
+                        if (loginVM.isSignUpSuccess.value!!) {
+                            startActivity(intent)
+                        }
+                    }
+                    startActivity(intent)
+                } else {
+                    // 기존 회원이라면 메인화면
+                    intent = Intent(requireContext(), MainActivity::class.java)
+                    loginVM.postLogin(binding.etPwd.text.toString())
+
+                    // 이전 액티비티 스택 모두 제거
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                    // 로그인 성공과 데이터 response 성공 분리하기
+                    loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
+                        if (!it) {
+                            checkLogin(false)
+                        }
+                    }
+                    loginVM.isDataSaved.observe(viewLifecycleOwner) {
+                        if (it) {
+                            DoneApplication.pref.signup = "true"
+                            startActivity(intent)
+                        }
                     }
                 }
-                startActivity(intent)
             } else {
-                // 기존 회원이라면 메인화면
-                intent = Intent(requireContext(), MainActivity::class.java)
-                loginVM.postLogin(binding.etPwd.text.toString())
-
-                // 이전 액티비티 스택 모두 제거
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                // 로그인 성공과 데이터 response 성공 분리하기
-                loginVM.isLoginSuccess.observe(viewLifecycleOwner) {
-                    if (!it) {
-                        checkLogin(false)
-                    }
-                }
-                loginVM.isDataSaved.observe(viewLifecycleOwner) {
-                    if (it) {
-                        DoneApplication.pref.signup = "true"
-                        startActivity(intent)
-                    }
-                }
+                NetworkManager.showRequireNetworkToast(requireActivity())
             }
         }
     }
@@ -265,12 +270,16 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
 
     private fun setEditButton() {
         binding.btnNext.setOnClickListener {
-            myEditVM.patchPassword(binding.etPwdAgain.text.toString())
-            myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
-                if (response) {
-                    myEditVM.initResponseValue()
-                    (activity as MyEditActivity).finish()
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                myEditVM.patchPassword(binding.etPwdAgain.text.toString())
+                myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
+                    if (response) {
+                        myEditVM.initResponseValue()
+                        (activity as MyEditActivity).finish()
+                    }
                 }
+            } else {
+                NetworkManager.showRequireNetworkToast(requireActivity())
             }
         }
     }

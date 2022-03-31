@@ -21,6 +21,7 @@ import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.data.remote.model.sticker.Stickers
 import com.palette.done.data.remote.repository.DoneServerRepository
+import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.data.remote.repository.StickerServerRepository
 import com.palette.done.databinding.ActivityMainBinding
 import com.palette.done.databinding.CalendarDayLayoutBinding
@@ -29,6 +30,7 @@ import com.palette.done.view.main.notice.FirstVisitDialog
 import com.palette.done.view.main.notice.StickerGetDialog
 import com.palette.done.view.my.MyActivity
 import com.palette.done.view.my.sticker.StickerActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import java.text.DecimalFormat
@@ -50,13 +52,18 @@ class MainActivity : AppCompatActivity() {
         MainViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val stickerVM: MainStickerViewModel by viewModels() {
-        MainStickerViewModelFactory(StickerServerRepository(), DoneApplication().stickerRepository)
+        MainStickerViewModelFactory(StickerServerRepository(), (application as DoneApplication).stickerRepository)
+    }
+    private val myVM: MyViewModel by viewModels() {
+        MyViewModelFactory(MemberRepository(), (application as DoneApplication).doneRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        checkNetworkState()
 
         mainVM.doneCountList.observe(this) {
             doneCountList = mainVM.getDoneCountMap()
@@ -66,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         setCalendarSubHeader()
         stickerVM.getAllSticker()
         stickerVM.getNewSticker()
+        myVM.getUserProfile()
 
         setFirstLoginDialog()
         setNewStickerDialog()  // 스티커 다이얼로그 우선
@@ -76,8 +84,17 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // 화면에 다시 돌아올 때마다 체크
-        stickerVM.getNewSticker()
         setNewStickerDialog()
+
+        checkNetworkState()
+        stickerVM.getNewSticker()
+        myVM.getUserProfile()
+    }
+
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(this)) {
+            NetworkManager.showRequireNetworkToast(this)
+        }
     }
 
     private fun setButtonsDestination() {
@@ -108,10 +125,13 @@ class MainActivity : AppCompatActivity() {
         stickerVM.newStickers.observe(this) { stickers ->
             for (sticker in stickers) {
                 val dialog = StickerGetDialog(sticker)
+                Log.d("sticker_dialog_for", "${stickers.size}")
                 dialog.show(this.supportFragmentManager, "NewStickerDialog")
                 dialog.isCancelable = false  // 버튼으로만 닫을 수 있음
             }
+//            stickerVM._newStickers.call()
         }
+
     }
 
     private fun setCalendarView() {
@@ -158,7 +178,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         if (day.date.isAfter(today)) {
                             container.view.setOnClickListener {
-                                DoneToast.createToast(this@MainActivity, "", getString(R.string.toast_after_today))?.show()
+                                DoneToast.createToast(this@MainActivity, text = getString(R.string.toast_after_today))?.show()
                             }
                         }
                     } else {
@@ -176,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                                 container.today.visibility = View.INVISIBLE
                                 if (day.date.isAfter(today)) {
                                     container.view.setOnClickListener {
-                                        DoneToast.createToast(this@MainActivity, "", getString(R.string.toast_after_today),)?.show()
+                                        DoneToast.createToast(this@MainActivity, text = getString(R.string.toast_after_today))?.show()
                                     }
                                 }
                             }

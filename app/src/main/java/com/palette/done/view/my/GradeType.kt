@@ -7,7 +7,7 @@ object GradeType {
     var gradeName = ""
     fun getGradeName(lv: Int): String {
         gradeName = when(lv) {
-            in(1..3) -> grade[0]
+            in(0..3) -> grade[0]
             in(4..6) -> grade[1]
             in(7..8) -> grade[2]
             in(9..10) -> grade[3]
@@ -19,7 +19,7 @@ object GradeType {
     var gradeNum = 1
     fun getGrade(lv: Int): Int {
         gradeNum = when(lv) {
-            in(1..3) -> 1
+            in(0..3) -> 1
             in(4..6) -> 2
             in(7..8) -> 3
             in(9..10) -> 4

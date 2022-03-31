@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.palette.done.R
 import com.palette.done.databinding.ActivityMyEditBinding
+import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.login.LoginPwdFragment
 import com.palette.done.view.my.MyEditMode
 import com.palette.done.view.my.MyMode
 import com.palette.done.view.signin.ObNicknameFragment
 import com.palette.done.view.signin.ObTypeFragment
+import com.palette.done.view.util.NetworkManager
 
 class MyEditActivity : AppCompatActivity() {
 
@@ -20,6 +22,7 @@ class MyEditActivity : AppCompatActivity() {
         binding = ActivityMyEditBinding.inflate(layoutInflater)
 
         mode = MyEditMode.valueOf(intent!!.getStringExtra("mode")!!)
+        checkNetworkState()
 
         setFragment()
         setContentView(binding.root)
@@ -28,6 +31,12 @@ class MyEditActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(this)) {
+            NetworkManager.showRequireNetworkToast(this)
+        }
     }
 
     private fun setFragment() {

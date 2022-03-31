@@ -20,6 +20,7 @@ import com.palette.done.R
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.DialogOutBinding
 import com.palette.done.view.StartActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.*
 
 class OutDialog(var outMode: Out) : DialogFragment() {
@@ -54,13 +55,17 @@ class OutDialog(var outMode: Out) : DialogFragment() {
                     btnRight.text = getString(R.string.yes)
                     btnRight.setOnClickListener {
                         // 로그아웃 - DB 초기화
-                        outVM.logOut()
-                        outVM.isResponse.observe(viewLifecycleOwner) {
-                            val intent = Intent(requireActivity(), StartActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            dismiss()
-                            startActivity(intent)
+                        if (NetworkManager.checkNetworkState(requireActivity())) {
+                            outVM.logOut()
+                            outVM.isResponse.observe(viewLifecycleOwner) {
+                                val intent = Intent(requireActivity(), StartActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                dismiss()
+                                startActivity(intent)
+                            }
+                        } else {
+                            NetworkManager.showRequireNetworkToast(requireActivity())
                         }
                     }
                    btnLeft.setOnClickListener {
@@ -80,15 +85,19 @@ class OutDialog(var outMode: Out) : DialogFragment() {
                     }
                     btnLeft.setOnClickListener {
                         // 탈퇴
-                        outVM.deleteMemberInServer()
-                        outVM.isResponse.observe(viewLifecycleOwner) {
-                            if (it) {
-                                val intent = Intent(requireActivity(), StartActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                dismiss()
-                                startActivity(intent)
+                        if (NetworkManager.checkNetworkState(requireActivity())) {
+                            outVM.deleteMemberInServer()
+                            outVM.isResponse.observe(viewLifecycleOwner) {
+                                if (it) {
+                                    val intent = Intent(requireActivity(), StartActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    dismiss()
+                                    startActivity(intent)
+                                }
                             }
+                        } else {
+                            NetworkManager.showRequireNetworkToast(requireActivity())
                         }
                     }
                 }

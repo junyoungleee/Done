@@ -25,6 +25,7 @@ import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.notice.FirstVisitDoneDialog
 import com.palette.done.view.main.done.DoneFragment
 import com.palette.done.view.main.today.TodayRecordActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import com.skydoves.powermenu.MenuAnimation
@@ -42,10 +43,10 @@ class DoneActivity : AppCompatActivity() {
         DoneDateViewModelFactory((application as DoneApplication).doneRepository)
     }
     private val doneVM: DoneEditViewModel by viewModels() {
-        DoneEditViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        DoneEditViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val categoryVM: CategoryViewModel by viewModels() {
-        CategoryViewModelFactory(DoneApplication().doneRepository)
+        CategoryViewModelFactory((application as DoneApplication).doneRepository)
     }
 
     val PREMIUM_DONELIST_SIZE = 50
@@ -72,8 +73,6 @@ class DoneActivity : AppCompatActivity() {
         dateVM.setTitleDate(clickedDate!!)
         dateVM.transStringToCalendar(clickedDate)
 
-
-
         setFirstVisitDialog()
 
         setTitleDate()
@@ -96,8 +95,10 @@ class DoneActivity : AppCompatActivity() {
             btnPlan.setOnClickListener {
                 val intent = Intent(this@DoneActivity, PlanRoutineActivity::class.java)
                 val date = dateVM.getTitleDate()
+                val count = dateVM.doneList.value!!.size
                 intent.putExtra("mode", ItemMode.PLAN.name)
                 intent.putExtra("date", date)  // 현재 던리스트의 날짜
+                intent.putExtra("count", count) // 현재 던리스트 숫자
                 startActivity(intent)
             }
             llTodayRecord.setOnClickListener {
@@ -234,8 +235,13 @@ class DoneActivity : AppCompatActivity() {
                             }
                             1 -> {
                                 // 삭제
-                                doneVM.deleteDoneList(done.doneId)
-                                popup.dismiss()
+                                if (NetworkManager.checkNetworkState(this@DoneActivity)) {
+                                    // 네트워크 연결 확인
+                                    doneVM.deleteDoneList(done.doneId)
+                                    popup.dismiss()
+                                } else {
+                                    NetworkManager.showRequireNetworkToast(this@DoneActivity)
+                                }
                             }
                         }
                     }
@@ -313,7 +319,7 @@ class DoneActivity : AppCompatActivity() {
             btnDayAfter.setOnClickListener {
                 closeEditFrame()
                 if (dateVM.isDateToday()) {
-                    DoneToast.createToast(this@DoneActivity, "", getString(R.string.toast_after_today))?.show()
+                    DoneToast.createToast(this@DoneActivity, text = getString(R.string.toast_after_today))?.show()
                 } else {
                     dateVM.clickedForwardDay()
                 }

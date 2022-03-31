@@ -33,6 +33,8 @@ class StickerAdapter(val context: Context): ListAdapter<Sticker, StickerAdapter.
             if (sticker.get) {
                 // 획득한 스티커
                 ivSticker.imageTintList = null
+            } else {
+                ivSticker.imageTintList = ContextCompat.getColorStateList(context, R.color.stickerDisableColor)
             }
             root.setOnClickListener {
                 stickerClickListener.onStickerClick(it, sticker)

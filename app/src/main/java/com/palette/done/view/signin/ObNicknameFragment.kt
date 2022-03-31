@@ -18,7 +18,9 @@ import com.palette.done.DoneApplication
 import com.palette.done.R
 import com.palette.done.databinding.FragmentObNicknameBinding
 import com.palette.done.data.remote.repository.MemberRepository
+import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.my.MyEditActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.MyEditViewModel
 import com.palette.done.viewmodel.MyEditViewModelFactory
@@ -62,6 +64,12 @@ class ObNicknameFragment(edit: Boolean = false) : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(requireActivity())) {
+            DoneToast.createToast(requireActivity(), text = getString(R.string.network_error))?.show()
+        }
     }
 
     // 온보딩 ---------------------------------------------------------------------------------------
@@ -122,7 +130,6 @@ class ObNicknameFragment(edit: Boolean = false) : Fragment() {
             }
             handled
         }
-        // 닉네임 체크
     }
 
     private fun afterCheckEditedNickName(result: Boolean) {
@@ -145,12 +152,16 @@ class ObNicknameFragment(edit: Boolean = false) : Fragment() {
     private fun setEditButton() {
         // 닉네임 변경
         binding.btnNext.setOnClickListener {
-            myEditVM.patchNickname(binding.etNickname.text.toString())
-            myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
-                if (response) {
-                    myEditVM.initResponseValue()
-                    (activity as MyEditActivity).finish()
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                myEditVM.patchNickname(binding.etNickname.text.toString())
+                myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
+                    if (response) {
+                        myEditVM.initResponseValue()
+                        (activity as MyEditActivity).finish()
+                    }
                 }
+            } else {
+                NetworkManager.showRequireNetworkToast(requireActivity())
             }
         }
     }

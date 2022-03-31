@@ -26,6 +26,7 @@ import com.palette.done.view.adapter.PlanAdapter
 import com.palette.done.view.adapter.RoutineAdapter
 import com.palette.done.view.decoration.DoneToast
 import com.palette.done.view.main.done.DoneFragment
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.view.util.Util
 import com.palette.done.viewmodel.*
 import java.util.*
@@ -35,17 +36,18 @@ class PlanRoutineActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityPlanRoutineBinding
 
     private val planVM: PlanViewModel by viewModels() {
-        PlanViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        PlanViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val routineVM: RoutineViewModel by viewModels() {
-        RoutineViewModelFactory(DoneServerRepository(), DoneApplication().doneRepository)
+        RoutineViewModelFactory(DoneServerRepository(), (application as DoneApplication).doneRepository)
     }
     private val categoryVM: CategoryViewModel by viewModels() {
-        CategoryViewModelFactory(DoneApplication().doneRepository)
+        CategoryViewModelFactory((application as DoneApplication).doneRepository)
     }
 
     private lateinit var itemMode: ItemMode  // 플랜, 루틴 모드
     private lateinit var date: String  // Plan을 던리스트로 저장할 날짜
+    private var count: Int = 0
     private var isEditMode: Boolean = false  // 편집 모드
 
     private var util = Util()
@@ -60,6 +62,7 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
         itemMode = ItemMode.valueOf(intent!!.getStringExtra("mode")!!)
         date = intent.getStringExtra("date").toString()
+        count = intent.getIntExtra("count", 0)
 
         routineVM.initRoutine()
         planVM.initPlan()
@@ -111,10 +114,20 @@ class PlanRoutineActivity() : AppCompatActivity() {
         planAdapter.setPlanItemClickListener(object : PlanAdapter.OnPlanItemClickListener {
             override fun onDoneButtonClick(v: View, plan: Plan) {
                 // 플랜 Done -> 리스트에서 사라지고 던리스트에 추가
-                planVM.donePlan(plan, date)
-                val idx = Random().nextInt(3)
-                val messages = resources.getStringArray(R.array.plan_message)
-                DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
+                if (NetworkManager.checkNetworkState(this@PlanRoutineActivity)) {
+                    // 네트워크 확인
+                    if (count < 8) {
+                        planVM.donePlan(plan, date)
+                        val idx = Random().nextInt(3)
+                        val messages = resources.getStringArray(R.array.plan_message)
+                        DoneToast.createToast(this@PlanRoutineActivity, plan.content, messages.get(idx))?.show()
+                        count += 1
+                    } else {
+                        DoneToast.createToast(this@PlanRoutineActivity, text = getString(R.string.full_list))?.show()
+                    }
+                } else {
+                    NetworkManager.showRequireNetworkToast(this@PlanRoutineActivity)
+                }
             }
 
             override fun onEditButtonClick(v: View, plan: Plan) {
@@ -129,7 +142,12 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
             override fun onDeleteButtonClick(v: View, plan: Plan) {
                 // 플랜 삭제
-                planVM.deletePlan(plan.planNo)
+                if (NetworkManager.checkNetworkState(this@PlanRoutineActivity)) {
+                    // 네트워크 확인
+                    planVM.deletePlan(plan.planNo)
+                } else {
+                    NetworkManager.showRequireNetworkToast(this@PlanRoutineActivity)
+                }
             }
         })
     }
@@ -157,8 +175,13 @@ class PlanRoutineActivity() : AppCompatActivity() {
 
             override fun onDeleteButtonClick(v: View, routine: Routine) {
                 // 루틴 삭제
-                Log.d("routine", "${routine.routineNo}")
-                routineVM.deleteRoutine(routine.routineNo)
+                if (NetworkManager.checkNetworkState(this@PlanRoutineActivity)) {
+                    // 네트워크 확인
+                    Log.d("routine", "${routine.routineNo}")
+                    routineVM.deleteRoutine(routine.routineNo)
+                } else {
+                    NetworkManager.showRequireNetworkToast(this@PlanRoutineActivity)
+                }
             }
         })
     }

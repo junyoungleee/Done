@@ -7,6 +7,7 @@ import com.palette.done.data.db.entity.Sticker
 import com.palette.done.data.remote.model.sticker.StickerResponse
 import com.palette.done.data.remote.model.sticker.Stickers
 import com.palette.done.data.remote.repository.StickerServerRepository
+import com.palette.done.view.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +17,7 @@ class MainStickerViewModel (private val serverRepo: StickerServerRepository,
                             private val dbRepo: StickerRepository
 ) : ViewModel() {
 
-    var _newStickers: MutableLiveData<List<Stickers>> = MutableLiveData(listOf())
+    val _newStickers = SingleLiveEvent<List<Stickers>>()
     val newStickers: LiveData<List<Stickers>> get() = _newStickers
 
     fun updateGainedSticker(stickerNo: Int) {
@@ -40,8 +41,8 @@ class MainStickerViewModel (private val serverRepo: StickerServerRepository,
                             when (response.code()) {
                                 200 -> {
                                     val newList =  response.body()!!.item?.stickers
-                                    if (newList != null) {
-                                        _newStickers.value = newList!!
+                                    if (newList!!.isNotEmpty()) {
+                                        _newStickers.value = newList.toMutableList()
                                     }
                                 }
                                 400 -> {

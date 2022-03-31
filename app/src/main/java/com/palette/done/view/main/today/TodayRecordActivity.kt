@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.palette.done.DoneApplication
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.ActivityTodayRecordBinding
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.TodayRecordViewModel
 import com.palette.done.viewmodel.TodayRecordViewModelFactory
 import com.palette.done.viewmodel.TodayStickerViewModel
@@ -148,7 +149,11 @@ class TodayRecordActivity : AppCompatActivity() {
     private fun setBackButtonAction() {
         binding.btnBack.setOnClickListener {
             // 내용 저장
-            saveAndUpdateTodayRecord()
+            if (NetworkManager.checkNetworkState(this)) {
+                saveAndUpdateTodayRecord()
+            } else {
+                NetworkManager.showRequireNetworkToast(this)
+            }
         }
     }
 
@@ -167,23 +172,31 @@ class TodayRecordActivity : AppCompatActivity() {
                 finish()
             } else {
                 // 처음 저장하는 경우
-                todayVM.postTodayRecord(date, text, sticker)
-                todayVM.isSaved.observe(this) { result ->
-                    if (result) {
-                        finish()
+                if (NetworkManager.checkNetworkState(this)) {
+                    todayVM.postTodayRecord(date, text, sticker)
+                    todayVM.isSaved.observe(this) { result ->
+                        if (result) {
+                            finish()
+                        }
                     }
+                } else {
+                    NetworkManager.showRequireNetworkToast(this)
                 }
             }
         } else {
             // 내용이 있는 경우
             if (todayVM.isExistingEdited(stickerVM.getTodaySticker())) {
-                // 바뀐 내용이 있다면 수정 내용 저장
-                Log.d("today_edit_check", "${todayVM.isExistingEdited(stickerVM.getTodaySticker())}")
-                todayVM.patchTodayRecord(date, todayVM.getTodayRecordId()!!, text, sticker)
-                todayVM.isSaved.observe(this) { result ->
-                    if (result) {
-                        finish()
+                if (NetworkManager.checkNetworkState(this)) {
+                    // 바뀐 내용이 있다면 수정 내용 저장
+                    Log.d("today_edit_check", "${todayVM.isExistingEdited(stickerVM.getTodaySticker())}")
+                    todayVM.patchTodayRecord(date, todayVM.getTodayRecordId()!!, text, sticker)
+                    todayVM.isSaved.observe(this) { result ->
+                        if (result) {
+                            finish()
+                        }
                     }
+                } else {
+                    NetworkManager.showRequireNetworkToast(this)
                 }
             } else {
                 // 바뀐 내용이 없는 경우

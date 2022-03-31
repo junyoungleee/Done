@@ -12,6 +12,7 @@ import com.palette.done.R
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityFindPwdBinding
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.LoginViewModel
 import com.palette.done.viewmodel.LoginViewModelFactory
 import com.palette.done.viewmodel.PatternCheckViewModel
@@ -22,7 +23,7 @@ class FindPwdActivity : AppCompatActivity() {
 
     private val patternVM : PatternCheckViewModel by viewModels()
     private val loginVM : LoginViewModel by viewModels { LoginViewModelFactory(
-        MemberRepository(), DoneServerRepository(), DoneApplication().doneRepository
+        MemberRepository(), DoneServerRepository(), (application as DoneApplication).doneRepository
     ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +39,17 @@ class FindPwdActivity : AppCompatActivity() {
         lateinit var intent: Intent
         // 이메일 전송 버튼
         binding.btnSendEmail.setOnClickListener {
-            loginVM.postEmailPwd(binding.etEmail.text.toString())
-            loginVM.isPwdEmailSent.observe(this) { sent ->
-                if(sent) {
-                    intent = Intent(this, AfterFindPwdActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+            if (NetworkManager.checkNetworkState(this)) {
+                loginVM.postEmailPwd(binding.etEmail.text.toString())
+                loginVM.isPwdEmailSent.observe(this) { sent ->
+                    if(sent) {
+                        intent = Intent(this, AfterFindPwdActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
                 }
+            } else {
+                NetworkManager.showRequireNetworkToast(this)
             }
         }
 

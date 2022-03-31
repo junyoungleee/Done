@@ -21,6 +21,7 @@ import com.palette.done.databinding.FragmentDoneHashtagBinding
 import com.palette.done.databinding.FragmentObNicknameBinding
 import com.palette.done.view.adapter.HashTagAdapter
 import com.palette.done.view.adapter.RoutineTagAdapter
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.*
 import okhttp3.internal.notify
 
@@ -40,6 +41,8 @@ class DoneHashtagFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDoneHashtagBinding.inflate(inflater, container, false)
+
+        checkNetworkState()
 
         hashTagVM.get6Tags()
         setRandomButton()
@@ -81,11 +84,21 @@ class DoneHashtagFragment : Fragment() {
         }
     }
 
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(requireActivity())) {
+            NetworkManager.showRequireNetworkToast(requireActivity())
+        }
+    }
+
     private fun setRandomButton() {
         binding.llHashTagRandom.setOnClickListener {
-            tagAdapter.initClickedPosition()
-            tagAdapter.notifyDataSetChanged()
-            hashTagVM.get6Tags()
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                tagAdapter.initClickedPosition()
+                tagAdapter.notifyDataSetChanged()
+                hashTagVM.get6Tags()
+            } else {
+                NetworkManager.showRequireNetworkToast(requireActivity())
+            }
         }
     }
 

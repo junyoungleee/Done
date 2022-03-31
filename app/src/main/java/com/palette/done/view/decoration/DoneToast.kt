@@ -16,11 +16,11 @@ object DoneToast {
 
     val util = Util()
 
-    fun createToast(context: Context, doneContent: String, text: String): Toast? {
+    fun createToast(context: Context, doneContent: String? = null, text: String): Toast? {
         val inflater = LayoutInflater.from(context)
         val binding: ToastDoneBinding = DataBindingUtil.inflate(inflater, R.layout.toast_done, null, false)
 
-        binding.tvToastTitle.text = if (doneContent != "") {
+        binding.tvToastTitle.text = if (doneContent != null) {
             "[$doneContent]"
         } else {
             ""

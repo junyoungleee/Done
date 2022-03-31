@@ -16,6 +16,7 @@ import com.palette.done.databinding.FragmentObTypeBinding
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.view.main.MainActivity
 import com.palette.done.view.my.MyEditActivity
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.MyEditViewModel
 import com.palette.done.viewmodel.MyEditViewModelFactory
 import com.palette.done.viewmodel.OnBoardingViewModel
@@ -92,14 +93,18 @@ class ObTypeFragment(edit: Boolean = false) : Fragment() {
     private fun setNextButton() {
         // 기존 스택 없애고 메인 화면이 루트
         binding.btnNext.setOnClickListener {
-            onBoardingVM.patchMemberProfile()
-            onBoardingVM.patchSuccess.observe(viewLifecycleOwner) {
-                if (it) {
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                onBoardingVM.patchMemberProfile()
+                onBoardingVM.patchSuccess.observe(viewLifecycleOwner) {
+                    if (it) {
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
                 }
+            } else {
+                NetworkManager.showRequireNetworkToast(requireActivity())
             }
         }
     }
@@ -151,12 +156,16 @@ class ObTypeFragment(edit: Boolean = false) : Fragment() {
         }
         binding.btnNext.setOnClickListener {
             if (type != myEditVM.type) {
-                myEditVM.patchType()
-                myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
-                    if (response) {
-                        myEditVM.initResponseValue()
-                        (activity as MyEditActivity).finish()
+                if (NetworkManager.checkNetworkState(requireActivity())) {
+                    myEditVM.patchType()
+                    myEditVM.isResponse.observe(viewLifecycleOwner) { response ->
+                        if (response) {
+                            myEditVM.initResponseValue()
+                            (activity as MyEditActivity).finish()
+                        }
                     }
+                } else {
+                    NetworkManager.showRequireNetworkToast(requireActivity())
                 }
             } else {
                 (activity as MyEditActivity).finish()

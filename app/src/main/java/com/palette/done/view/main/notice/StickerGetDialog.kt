@@ -15,6 +15,7 @@ import com.palette.done.DoneApplication
 import com.palette.done.data.remote.model.sticker.Stickers
 import com.palette.done.data.remote.repository.StickerServerRepository
 import com.palette.done.databinding.DialogStickerGetBinding
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.MainStickerViewModel
 import com.palette.done.viewmodel.MainStickerViewModelFactory
 
@@ -53,8 +54,12 @@ class StickerGetDialog(val sticker: Stickers) : DialogFragment() {
     private fun getSticker() {
         binding.btnGet.setOnClickListener {
             // 획득하기 POST & DB 저장
-            stickerVM.postGainedSticker(sticker.sticker_no)
-            dismiss()
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                stickerVM.postGainedSticker(sticker.sticker_no)
+                dismiss()
+            } else {
+                NetworkManager.showRequireNetworkToast(requireActivity())
+            }
         }
     }
 

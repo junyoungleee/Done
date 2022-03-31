@@ -11,6 +11,7 @@ import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityLoginBinding
 import com.palette.done.view.StartActivity
 import com.palette.done.view.adapter.ViewPagerAdapter
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.LoginViewModel
 import com.palette.done.viewmodel.LoginViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,8 +25,15 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkNetworkState()
         setViewPager()
         setButtonsDestination()
+    }
+
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(this)) {
+            NetworkManager.showRequireNetworkToast(this)
+        }
     }
 
     private fun setButtonsDestination() {

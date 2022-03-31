@@ -13,6 +13,8 @@ import com.palette.done.R
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.data.remote.repository.MemberRepository
 import com.palette.done.databinding.ActivityMyBinding
+import com.palette.done.view.decoration.DoneToast
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.*
 
 class MyActivity : AppCompatActivity() {
@@ -31,7 +33,8 @@ class MyActivity : AppCompatActivity() {
         binding = ActivityMyBinding.inflate(layoutInflater)
 
         setButtonsDestination()
-
+        
+        checkNetworkState()
         myVM.getUserProfile()
 
         setProfile()
@@ -48,6 +51,12 @@ class MyActivity : AppCompatActivity() {
             View.VISIBLE
         } else {
             View.INVISIBLE
+        }
+    }
+
+    private fun checkNetworkState() {
+        if (!NetworkManager.checkNetworkState(this)) {
+            NetworkManager.showRequireNetworkToast(this)
         }
     }
 
@@ -155,5 +164,6 @@ class MyActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setProfile()
+        checkNetworkState()
     }
 }

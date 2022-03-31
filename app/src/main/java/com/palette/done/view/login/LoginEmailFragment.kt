@@ -18,6 +18,7 @@ import com.palette.done.R
 import com.palette.done.data.remote.repository.DoneServerRepository
 import com.palette.done.databinding.FragmentLoginEmailBinding
 import com.palette.done.data.remote.repository.MemberRepository
+import com.palette.done.view.util.NetworkManager
 import com.palette.done.viewmodel.LoginViewModel
 import com.palette.done.viewmodel.LoginViewModelFactory
 import com.palette.done.viewmodel.PatternCheckViewModel
@@ -44,12 +45,16 @@ class LoginEmailFragment : Fragment() {
         // 다음 fragment 이동
         val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_login)
         binding.btnNext.setOnClickListener {
-            loginVM.postEmailCheck(binding.etEmail.text.toString())
-            loginVM.isResponse.observe(viewLifecycleOwner) { is_response ->
-                if (is_response) {
-                    Log.d("loginVM_is_response", "$is_response")
-                    viewPager?.currentItem = 1
+            if (NetworkManager.checkNetworkState(requireActivity())) {
+                loginVM.postEmailCheck(binding.etEmail.text.toString())
+                loginVM.isResponse.observe(viewLifecycleOwner) { is_response ->
+                    if (is_response) {
+                        Log.d("loginVM_is_response", "$is_response")
+                        viewPager?.currentItem = 1
+                    }
                 }
+            } else {
+                NetworkManager.checkNetworkState(requireActivity())
             }
         }
         setNextButtonEnable()
