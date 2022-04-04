@@ -19,11 +19,11 @@ class DoneDateViewModel(val dbRepo: DoneRepository) : ViewModel() {
     var calDate: MutableLiveData<String> = MutableLiveData("")  // YYYY-MM-DD
     var titleDate: MutableLiveData<String> = MutableLiveData("")  // YY.MM.DD
 
-    private val todayDate = LocalDate.now()
-    val today = "${todayDate.year}-${dc.format(todayDate.month.value)}-${todayDate.dayOfMonth}"
+    private val todayDate = LocalDate.now().toString()
 
     fun isDateToday(): Boolean {
-        return today == calDate.value
+        Log.d("오늘날짜", "today: $todayDate, calDate: ${calDate.value}")
+        return todayDate == calDate.value
     }
 
     var doneList: LiveData<List<Done>> = Transformations.switchMap(calDate) {

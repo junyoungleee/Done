@@ -127,31 +127,31 @@ class MyActivity : AppCompatActivity() {
             }
         }
         with(binding.layoutMyMenu) {
-            btnMenuPremium.setOnClickListener {
+            llMenuPremium.setOnClickListener {
                 // 프리미엄
                 val intent = Intent(this@MyActivity, MyMenuActivity::class.java)
                 intent.putExtra("mode", MyMode.PREMIUM.name)
                 startActivity(intent)
             }
-            btnMenuNotice.setOnClickListener {
+            llMenuNotice.setOnClickListener {
                 // 공지사항
                 val intentUrl = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://spark-myth-3c9.notion.site/f6a726345199494cbd2225ea8dfdd898"))
                 startActivity(intentUrl)
             }
-            btnMenuInquiry.setOnClickListener {
+            llMenuInquiry.setOnClickListener {
                 // 문의하기
                 val intentUrl = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://spark-myth-3c9.notion.site/59aa9d72a8104a4eb73daa31a77cdb82"))
                 startActivity(intentUrl)
             }
-            btnMenuUse.setOnClickListener {
+            llMenuTermOfUse.setOnClickListener {
                 // 이용약관
                 val intentUrl = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://spark-myth-3c9.notion.site/f7c405f9a9a644a8964ad6046530d08f"))
                 startActivity(intentUrl)
             }
-            btnMenuPrivacy.setOnClickListener {
+            llMenuPrivacy.setOnClickListener {
                 // 개인정보 보호약관
                 val intentUrl = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://spark-myth-3c9.notion.site/95812922d5cc4f9aa47f32936f5e9919"))
