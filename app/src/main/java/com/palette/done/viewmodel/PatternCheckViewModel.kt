@@ -34,7 +34,7 @@ class PatternCheckViewModel: ViewModel(){
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                _emailResult.value = inputForm.checkEmailPattern(s.toString())
+                _emailResult.value = inputForm.checkEmailPattern(s.toString())
             }
             override fun afterTextChanged(s: Editable?) {
                 _emailResult.value = inputForm.checkEmailPattern(s.toString())
@@ -47,12 +47,12 @@ class PatternCheckViewModel: ViewModel(){
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                _pwdResult.value = inputForm.checkPwdPattern(s.toString())
-//                _pwd.value = s.toString()
-//                // 재입력이 이미 입력되어 있는 상태에서 비밀번호가 바뀐 경우
-//                if (!_pwd2.value.equals("")) {
-//                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
-//                }
+                _pwdResult.value = inputForm.checkPwdPattern(s.toString())
+                _pwd.value = s.toString()
+                // 재입력이 이미 입력되어 있는 상태에서 비밀번호가 바뀐 경우
+                if (!_pwd2.value.equals("")) {
+                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
+                }
             }
             override fun afterTextChanged(s: Editable?) {
                 _pwdResult.value = inputForm.checkPwdPattern(s.toString())
@@ -72,21 +72,6 @@ class PatternCheckViewModel: ViewModel(){
         }
     }
 
-    fun checkPwd2(pwd2: String) {
-        _pwd2Result.value = (pwd.value.toString() == (pwd2))
-        _pwd2.value = pwd2
-    }
-
-    fun checkEditPwd() {
-        val old = DoneApplication.pref.pwd
-        val notSame = !(pwd.value == old || pwd2.value == old) // 같지 않으면 true
-        _pwdEditNotSame.value = notSame && _pwd2Result.value!! && _pwdResult.value!!
-    }
-
-    fun checkEmail(email: String) {
-        _emailResult.value = inputForm.checkEmailPattern(email)
-    }
-
     fun onPwd2TextWatcher(): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -100,6 +85,33 @@ class PatternCheckViewModel: ViewModel(){
             override fun afterTextChanged(s: Editable?) {
                 _pwd2Result.value = (pwd.value.toString() == (s.toString()))
                 _pwd2.value = s.toString()
+            }
+        }
+    }
+
+    fun onEditPwdTextWatcher(): TextWatcher {
+        return object : TextWatcher {
+            val old = DoneApplication.pref.pwd
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                _pwdResult.value = inputForm.checkPwdPattern(s.toString())
+                _pwd.value = s.toString()
+
+                _pwdEditNotSame.value = old != s.toString()
+                // 재입력이 이미 입력되어 있는 상태에서 비밀번호가 바뀐 경우
+                if (!_pwd2.value.equals("")) {
+                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+                _pwdResult.value = inputForm.checkPwdPattern(s.toString())
+                _pwd.value = s.toString()
+
+                _pwdEditNotSame.value = old != s.toString()
+                if (!_pwd2.value.equals("")) {
+                    _pwd2Result.value = (pwd2.value.toString() == (s.toString()))
+                }
             }
         }
     }
