@@ -209,8 +209,8 @@
     </style>
 
     <style name="all_toolbar_back_btn">
-        <item name="android:layout_height">@dimen/btn_back</item>
-        <item name="android:layout_width">@dimen/btn_back</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:src">@drawable/ic_back</item>
         <item name="android:background">@null</item>
     </style>
