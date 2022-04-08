@@ -27,7 +27,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_sticker_gained"
-            android:layout_width="306dp"
+            android:layout_width="@dimen/today_record_sticker_rc_width"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="17dp"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/today_sticker_empty"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/margin_20"
                 android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 style="@style/today_hint_text"/>
 

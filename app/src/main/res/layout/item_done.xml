@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/iv_done_category"
-        android:layout_width="68dp"
+        android:layout_width="@dimen/done_category"
         android:layout_height="match_parent"
-        android:paddingEnd="14dp"
-        android:paddingStart="29dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingEnd="@dimen/margin_15"
+        android:paddingStart="@dimen/margin_30"
+        android:paddingTop="@dimen/margin_5"
+        android:paddingBottom="@dimen/margin_5"
         android:src="@null"
         android:background="@null"/>
 
@@ -31,6 +31,6 @@
         android:layout_height="match_parent"
         android:src="@drawable/ic_done_edit"
         android:background="@null"
-        android:paddingStart="5dp"
-        android:paddingEnd="20dp"/>
+        android:paddingStart="@dimen/margin_10"
+        android:paddingEnd="@dimen/margin_20"/>
 </LinearLayout>

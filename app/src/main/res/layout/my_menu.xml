@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/ll_menu_premium"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -34,7 +34,7 @@
     <LinearLayout
         android:id="@+id/ll_menu_notice"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -59,7 +59,7 @@
     <LinearLayout
         android:id="@+id/ll_menu_inquiry"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -84,7 +84,7 @@
     <LinearLayout
         android:id="@+id/ll_menu_term_of_use"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -109,7 +109,7 @@
     <LinearLayout
         android:id="@+id/ll_menu_privacy"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -133,7 +133,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"

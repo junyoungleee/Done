@@ -18,13 +18,11 @@
 
         <ImageButton
             android:id="@+id/btn_calendar_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/main_btn_width"
+            android:layout_height="@dimen/main_btn_height"
             android:src="@drawable/ic_calendar"
             android:background="@null"
-            android:layout_marginStart="7dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
+            android:layout_marginStart="@dimen/margin_20"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/left_margin"/>
 
@@ -75,18 +73,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_left_arrow"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
+                    android:padding="@dimen/margin_10"
                     android:background="@null"/>
 
                 <TextView
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="50dp"
-                    android:paddingLeft="50dp"
+                    android:paddingStart="@dimen/margin_50"
+                    android:paddingEnd="@dimen/margin_50"
                     style="@style/start_title_text"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/text_calendar_title"
+                    android:translationY="0sp"
                     android:layout_marginTop="0dp"/>
 
                 <ImageButton
@@ -94,8 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_right_arrow"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
+                    android:padding="@dimen/margin_10"
                     android:background="@null"/>
             </LinearLayout>
 
@@ -104,8 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/done_list_title"
-                android:layout_marginTop="52dp"
-                android:paddingBottom="16dp"
+                android:layout_marginTop="@dimen/margin_50"
+                android:paddingBottom="@dimen/margin_15"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_date"
@@ -117,7 +114,7 @@
                 android:layout_height="27.4dp"
                 android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_done"
                 android:background="@drawable/ic_count_done"
                 android:gravity="center"
                 android:includeFontPadding="false"
@@ -144,9 +141,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:minHeight="280dp"
+                android:paddingTop="@dimen/margin_20"
+                android:paddingBottom="@dimen/margin_20"
+                android:minHeight="@dimen/done_container"
                 android:background="@drawable/done_box_round"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -167,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/done_today_title"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="@dimen/margin_40"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rc_done_list"
@@ -177,7 +174,7 @@
                 android:id="@+id/ll_today_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_15"
                 android:minHeight="110dp"
                 android:padding="8dp"
                 android:background="@drawable/done_box_round"
@@ -253,13 +250,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="@dimen/margin_20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
+        app:layout_constraintGuide_end="@dimen/margin_20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

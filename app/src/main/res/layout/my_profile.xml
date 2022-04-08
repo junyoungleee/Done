@@ -8,10 +8,11 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="@dimen/my_profile_dd"
+        android:layout_height="@dimen/my_profile_dd"
         android:layout_marginEnd="30dp"
-        android:padding="11dp"
+        android:padding="@dimen/my_profile_dd_padding"
+        android:layout_gravity="center_vertical"
         android:src="@drawable/img_profile_done"
         android:background="@drawable/my_oval_stroke_oragne"/>
 
@@ -28,7 +29,7 @@
             android:background="@drawable/my_rec_stroke_orange"
             android:layout_marginBottom="7dp"
             android:gravity="center"
-            android:padding="4dp"
+            android:padding="@dimen/margin_5"
             android:includeFontPadding="false"
             android:textAlignment="center"
             style="@style/my_done_mini_text"/>
@@ -37,19 +38,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="6dp">
+            android:layout_marginBottom="@dimen/margin_5">
             <TextView
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/margin_5"
                 android:includeFontPadding="false"
                 style="@style/done_sub_title_text"/>
 
             <ImageView
                 android:id="@+id/iv_premium_badge"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/premium_badge"
+                android:layout_height="@dimen/premium_badge"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:src="@drawable/img_premium_badge"
@@ -71,6 +72,6 @@
         android:src="@drawable/ic_back"
         android:background="@null"
         android:scaleX="-1"
-        android:padding="6dp"
-        android:paddingEnd="16dp"/>
+        android:padding="@dimen/margin_5"
+        android:paddingEnd="@dimen/margin_15"/>
 </LinearLayout>

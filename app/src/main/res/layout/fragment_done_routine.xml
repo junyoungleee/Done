@@ -30,11 +30,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="@dimen/margin_40">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/add_icon_btn"
+                android:layout_height="@dimen/add_icon_btn"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_plus"
                 android:background="@null"/>
@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/tv_add_item"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/routine_add"
                 style="@style/done_add_button"/>

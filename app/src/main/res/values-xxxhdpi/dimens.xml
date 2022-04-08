@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="day_cell_height">84dp</dimen>
+    <dimen name="day_today">5dp</dimen>
+    <dimen name="day_today_margin_top">8dp</dimen>
+    <dimen name="day_date">15dp</dimen>
+    <dimen name="day_date_text">15sp</dimen>
+    <dimen name="day_done_icon">30dp</dimen>
+    <dimen name="day_done_text">14sp</dimen>
+    <dimen name="day_done_margin_top">7dp</dimen>
+    <dimen name="day_done_margin_bottom">19dp</dimen>
+    <dimen name="calendar_height">504dp</dimen>
+    <dimen name="calendar_margin_bottom">20dp</dimen>
+    <dimen name="calendar_day">45dp</dimen>
+
+    <dimen name="text_super_mini">13sp</dimen>
+    <dimen name="text_mini">14sp</dimen>
+    <dimen name="text_big_title">26sp</dimen>
+    <dimen name="text_calendar_title">24sp</dimen>
+    <dimen name="text_sub_title">20sp</dimen>
+    <dimen name="edit_text">19sp</dimen>
+    <dimen name="text_main_title_content">18sp</dimen>
+    <dimen name="text_button">18sp</dimen>
+    <dimen name="text_page_button">14sp</dimen>
+    <dimen name="text_done">16sp</dimen>
+    <dimen name="text_level">12sp</dimen>
+    <dimen name="text_level_detail">10sp</dimen>
+    <dimen name="text_report">22sp</dimen>
+    <dimen name="text_menu">15sp</dimen>
+
+    <dimen name="text_dialog">18sp</dimen>
+    <dimen name="dialog_size">320dp</dimen>
+
+    <dimen name="edit_text_height">45dp</dimen>
+    <dimen name="edit_text_done_height">44dp</dimen>
+
+    <dimen name="done_item_height">35dp</dimen>
+    <dimen name="done_container">280dp</dimen>
+    <dimen name="plan_routine_item">45dp</dimen>
+    <dimen name="plan_routine_item_height">46dp</dimen>
+    <dimen name="today_record_height">110dp</dimen>
+    <dimen name="today_record_sticker_rc_width">306dp</dimen>
+
+    <dimen name="sticker_divider">12dp</dimen>
+    <dimen name="menu_height">49dp</dimen>
+    <dimen name="report_title_height">25dp</dimen>
+    <dimen name="report_value_height">32dp</dimen>
+
+    <dimen name="divider">1dp</dimen>
+
+    <!-- 버튼 -->
+    <dimen name="btn_back">21dp</dimen>
+    <dimen name="add_icon_btn">22dp</dimen>
+    <dimen name="done_write_btn_hash_tag">32dp</dimen>
+    <dimen name="done_write_btn_tag_padding">8dp</dimen>
+    <dimen name="done_write_btn_write">49dp</dimen>
+    <dimen name="done_category_btn">51dp</dimen>
+
+    <dimen name="tag_mini_btn">14dp</dimen>
+    <dimen name="main_btn_height">31dp</dimen>
+    <dimen name="main_btn_width">58dp</dimen>
+    <dimen name="dialog_btn_height">54dp</dimen>
+
+    <!-- 토스트 -->
+    <dimen name="toast_margin_start">23dp</dimen>
+    <dimen name="toast_margin_top">18dp</dimen>
+    <dimen name="toast_margin_bottom">18dp</dimen>
+    <dimen name="toast_view_margin_top">10dp</dimen>
+    <dimen name="toast_view_margin_end">20dp</dimen>
+    <dimen name="toast_view_margin_start">20dp</dimen>
+    <dimen name="toast_view_margin_bottom">25dp</dimen>
+
+    <!-- 이미지 -->
+    <dimen name="my_level_dd">95dp</dimen>
+    <dimen name="my_level_explain_dd">62dp</dimen>
+    <dimen name="my_profile_dd">75dp</dimen>
+    <dimen name="my_profile_dd_padding">11dp</dimen>
+    <dimen name="sticker_size">90dp</dimen>
+    <dimen name="all_sticker_size">115dp</dimen>
+    <dimen name="list_front_img_size">26dp</dimen>
+    <dimen name="empty_dd_height">135dp</dimen>
+    <dimen name="empty_dd_width">143dp</dimen>
+    <dimen name="premium_badge">25dp</dimen>
+    <dimen name="done_category">68dp</dimen>
+
+    <!-- 마진 -->
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="margin_minus_15">-15dp</dimen>
+    <dimen name="margin_18">18dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="margin_35">35dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_45">45dp</dimen>
+    <dimen name="margin_50">50dp</dimen>
+    <dimen name="margin_75">75dp</dimen>
+    <dimen name="margin_12">12dp</dimen>
+    <dimen name="margin_100">100dp</dimen>
+    <dimen name="margin_120">120dp</dimen>
+    <dimen name="size_120">120dp</dimen>
+    <dimen name="size_140">140dp</dimen>
+    <dimen name="size_150">150dp</dimen>
+    <dimen name="size_40">40dp</dimen>
+    <dimen name="size_60">60dp</dimen>
+
+    <dimen name="radius_10">10dp</dimen>
+    <dimen name="radius_15">15dp</dimen>
+    <dimen name="radius_30">30dp</dimen>
+</resources>

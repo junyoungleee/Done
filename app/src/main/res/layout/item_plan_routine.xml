@@ -6,23 +6,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/plan_routine_item"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/btn_delete"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="@dimen/list_front_img_size"
+            android:layout_height="@dimen/list_front_img_size"
             android:background="@drawable/ic_delete"
             android:layout_marginEnd="7dp"
             android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/iv_category"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginEnd="5dp"/>
+            android:layout_width="@dimen/list_front_img_size"
+            android:layout_height="@dimen/list_front_img_size"
+            android:layout_marginEnd="@dimen/margin_5"/>
 
         <TextView
             android:id="@+id/tv_content"
@@ -33,17 +33,17 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_done"
-            android:layout_width="49dp"
-            android:layout_height="32dp"
+            style="@style/done_button_solid"
+            android:layout_width="@dimen/done_write_btn_write"
+            android:layout_height="@dimen/done_write_btn_hash_tag"
             android:text="@string/plan_btn_done"
             android:textAllCaps="false"
-            android:textSize="14sp"
-            style="@style/done_button_solid"/>
+            android:textSize="@dimen/text_page_button" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit"
-            android:layout_width="49dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/done_write_btn_write"
+            android:layout_height="@dimen/done_write_btn_hash_tag"
             android:text="@string/btn_item_edit"
             style="@style/plan_edit_button"
             android:visibility="gone"/>
@@ -51,6 +51,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider"
         android:background="@color/disableColor"/>
 </LinearLayout>
