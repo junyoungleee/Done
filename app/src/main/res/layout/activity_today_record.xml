@@ -17,8 +17,6 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             style="@style/all_toolbar_back_btn"/>
@@ -42,7 +40,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:src="@drawable/ic_delete_img"
-        android:padding="12dp"
+        android:padding="@dimen/margin_12"
         android:elevation="1dp"
         app:layout_constraintTop_toTopOf="@id/ll_today_record_edit"
         app:layout_constraintEnd_toEndOf="@id/ll_today_record_edit"
@@ -52,9 +50,9 @@
         android:id="@+id/ll_today_record_edit"
         android:layout_width="match_parent"
         android:layout_height="276dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_35"
         android:orientation="vertical"
         android:background="@drawable/done_box_round"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -71,13 +69,13 @@
                 android:id="@+id/ll_add_sticker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
+                android:padding="@dimen/margin_15"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/add_icon_btn"
+                    android:layout_height="@dimen/add_icon_btn"
                     android:src="@drawable/ic_plus"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -113,14 +111,14 @@
                 android:id="@+id/ll_add_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="15dp"
+                android:padding="@dimen/margin_15"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/add_icon_btn"
+                    android:layout_height="@dimen/add_icon_btn"
                     android:src="@drawable/ic_plus"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,9 +132,9 @@
                 android:id="@+id/et_today_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_20"
                 android:maxLength="45"
                 android:gravity="top|start"
                 style="@style/today_edittext"

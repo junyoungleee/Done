@@ -1,5 +1,6 @@
 package com.palette.done.view.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -54,6 +56,10 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
             initEditPwdFragment()
             checkEditPwd()
             setEditButton()
+        }
+
+        binding.root.setOnClickListener {
+            hideKeyboard()
         }
 
         return binding.root
@@ -154,22 +160,24 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
 
 
     private fun checkBothPwd(new: Boolean) {
-        binding.etPwd.setOnEditorActionListener{ view, action, event ->
-            val handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                patternVM.checkPwd(view.text.toString())
-            }
-            handled
-        }
-        binding.etPwdAgain.setOnEditorActionListener{ view, action, event ->
-            val handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                patternVM.checkPwd2(view.text.toString())
-            }
-            handled
-        }
-//        binding.etPwd.addTextChangedListener(patternVM.onPwdTextWatcher())
-//        binding.etPwdAgain.addTextChangedListener(patternVM.onPwd2TextWatcher())
+//        binding.etPwd.setOnEditorActionListener{ view, action, event ->
+//            val handled = false
+//            if (action == EditorInfo.IME_ACTION_DONE) {
+//                patternVM.checkPwd(view.text.toString())
+//            }
+//            handled
+//        }
+//        binding.etPwdAgain.setOnEditorActionListener{ view, action, event ->
+//            val handled = false
+//            if (action == EditorInfo.IME_ACTION_DONE) {
+//                patternVM.checkPwd2(view.text.toString())
+//            }
+//            handled
+//        }
+
+        // 1.2 업데이트
+        binding.etPwd.addTextChangedListener(patternVM.onPwdTextWatcher())
+        binding.etPwdAgain.addTextChangedListener(patternVM.onPwd2TextWatcher())
 
         // 기존유저인 경우 비밀번호만 확인함
         patternVM.pwdResult.observe(viewLifecycleOwner) {
@@ -223,46 +231,50 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
     }
 
     private fun checkEditPwd() {
-        binding.etPwd.setOnEditorActionListener{ view, action, event ->
-            val handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                patternVM.checkPwd(view.text.toString())
-            }
-            handled
-        }
-        binding.etPwdAgain.setOnEditorActionListener{ view, action, event ->
-            val handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                patternVM.checkPwd2(view.text.toString())
-                patternVM.checkEditPwd()
-            }
-            handled
-        }
+//        binding.etPwd.setOnEditorActionListener{ view, action, event ->
+//            val handled = false
+//            if (action == EditorInfo.IME_ACTION_DONE) {
+//                patternVM.checkPwd(view.text.toString())
+//            }
+//            handled
+//        }
+//        binding.etPwdAgain.setOnEditorActionListener{ view, action, event ->
+//            val handled = false
+//            if (action == EditorInfo.IME_ACTION_DONE) {
+//                patternVM.checkPwd2(view.text.toString())
+//                patternVM.checkEditPwd()
+//            }
+//            handled
+//        }
+
+        // 1.2 업데이트
+        binding.etPwd.addTextChangedListener(patternVM.onEditPwdTextWatcher())
+        binding.etPwdAgain.addTextChangedListener(patternVM.onPwd2TextWatcher())
 
         patternVM.pwdResult.observe(viewLifecycleOwner) { result ->
             checkPwd(result)
             Log.d("pwd_result", "$result")
-            setEditButtonEnbaleCheck()
+            setEditButtonEnableCheck()
         }
         patternVM.pwd2Result.observe(viewLifecycleOwner) { result ->
             Log.d("pwd2_result", "$result")
             checkPwdAgain(result, getString(R.string.login_diff_pwd))
-            if (patternVM.pwdResult.value == false && result == false) {
+            if (patternVM.pwdResult.value == false && patternVM.pwdEditNotSame.value == true && result == false) {
                 // 비밀번호 형식이 잘못된 경우, 해당 사인 우선 표시
                 binding.tvWrongSign.setText(R.string.login_wrong_pwd)
             }
-            setEditButtonEnbaleCheck()
+            setEditButtonEnableCheck()
         }
         patternVM.pwdEditNotSame.observe(viewLifecycleOwner) { result ->
-            if (patternVM.pwd2Result.value == true && patternVM.pwdResult.value == true) {
+            if (result == false) {
                 Log.d("pwd_same_result", "$result")
                 checkPwdAgain(result, getString(R.string.my_pwd_wrong_same))
             }
-            setEditButtonEnbaleCheck()
+            setEditButtonEnableCheck()
         }
     }
 
-    private fun setEditButtonEnbaleCheck() {
+    private fun setEditButtonEnableCheck() {
         binding.btnNext.isEnabled =
             (patternVM.pwdResult.value == true) && (patternVM.pwd2Result.value == true) && (patternVM.pwdEditNotSame.value == true) &&
                     (binding.etPwd.text.toString() != "") && (binding.etPwdAgain.text.toString() != "")
@@ -281,6 +293,14 @@ class LoginPwdFragment(edit: Boolean = false) : Fragment() {
             } else {
                 NetworkManager.showRequireNetworkToast(requireActivity())
             }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    private fun hideKeyboard() {
+        if (activity != null && requireActivity().currentFocus != null) {
+            val inputManager: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
 

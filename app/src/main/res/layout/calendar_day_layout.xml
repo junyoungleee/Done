@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/day_cell_height">
 
     <View
         android:id="@+id/divider"
@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/iv_today_dot"
-        android:layout_width="5dp"
-        android:layout_height="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/day_today"
+        android:layout_height="@dimen/day_today"
+        android:layout_marginTop="@dimen/day_today_margin_top"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/ic_calendar_dot"
         android:visibility="invisible"/>
@@ -22,22 +22,24 @@
     <TextView
         android:id="@+id/calendarDayText"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="@dimen/day_date"
         android:includeFontPadding="false"
         android:text="8"
         android:fontFamily="@font/spoqa_han_sans_neo_light"
         android:textColor="@color/calendarColor"
         android:gravity="center_horizontal"
-        android:textSize="15sp"/>
+        android:textSize="@dimen/day_done_text"/>
 
     <TextView
         android:id="@+id/doneIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/day_done_icon"
+        android:layout_height="@dimen/day_done_icon"
         android:textColor="@color/white"
         android:background="@drawable/ic_calendar_done_icon"
         android:gravity="center"
+        android:textSize="@dimen/day_done_text"
+        android:text="1"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="19dp"/>
+        android:layout_marginTop="@dimen/day_done_margin_top"
+        android:layout_marginBottom="@dimen/day_done_margin_bottom"/>
 </LinearLayout>

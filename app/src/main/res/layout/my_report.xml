@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_profile"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:padding="15dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_15"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/tv_topic_1"
             android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_height="@dimen/report_title_height"
             style="@style/my_report_topic_text"
             android:text="@string/my_report_all_done"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/tv_topic_2"
             android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_height="@dimen/report_title_height"
             style="@style/my_report_topic_text"
             android:text="@string/my_report_plan"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +38,7 @@
         <TextView
             android:id="@+id/tv_topic_3"
             android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_height="@dimen/report_title_height"
             style="@style/my_report_topic_text"
             android:text="@string/my_report_this_month_done"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,9 +48,8 @@
         <TextView
             android:id="@+id/tv_report_1"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/report_value_height"
             style="@style/my_report_text"
-            android:text="143개"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@id/tv_topic_1"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,9 +58,8 @@
         <TextView
             android:id="@+id/tv_report_2"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/report_value_height"
             style="@style/my_report_text"
-            android:text="80%"
             app:layout_constraintTop_toTopOf="@id/tv_report_1"
             app:layout_constraintStart_toEndOf="@id/tv_topic_1"
             app:layout_constraintEnd_toStartOf="@id/tv_topic_3"/>
@@ -69,19 +67,18 @@
         <TextView
             android:id="@+id/tv_report_3"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/report_value_height"
             style="@style/my_report_text"
-            android:text="86개"
             app:layout_constraintTop_toTopOf="@id/tv_report_1"
             app:layout_constraintStart_toEndOf="@id/tv_topic_2"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/margin_40"
             style="@style/main_button_solid"
             android:text="@string/my_report_btn"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="@dimen/margin_15"
             app:layout_constraintTop_toBottomOf="@id/tv_report_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

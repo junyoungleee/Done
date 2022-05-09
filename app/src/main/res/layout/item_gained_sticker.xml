@@ -8,5 +8,5 @@
         android:id="@+id/iv_gained_sticker"
         android:layout_width="@dimen/sticker_size"
         android:layout_height="@dimen/sticker_size"
-        android:layout_marginBottom="18dp"/>
+        android:layout_marginBottom="@dimen/margin_18"/>
 </LinearLayout>

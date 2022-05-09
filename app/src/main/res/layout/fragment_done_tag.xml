@@ -13,7 +13,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         app:tabBackground="@color/white"
         app:tabIndicatorColor="@color/mainDoneListColor"
         app:tabSelectedTextColor="@color/mainDoneListColor"

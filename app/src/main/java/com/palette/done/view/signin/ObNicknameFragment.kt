@@ -54,6 +54,7 @@ class ObNicknameFragment(edit: Boolean = false) : Fragment() {
             setEditButton()
         }
 
+        checkNetworkState()
         binding.root.setOnClickListener {
             hideKeyboard()
         }
@@ -122,14 +123,22 @@ class ObNicknameFragment(edit: Boolean = false) : Fragment() {
 
     private fun checkEditedNickName() {
         // 닉네임 체크 입력
-        binding.etNickname.setOnEditorActionListener{ view, action, event ->
-            val handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                myEditVM.checkNickname(view.text.toString())
-                afterCheckEditedNickName(myEditVM.nickResult.value!!)
+
+        // 1.2 업데이트
+        val old = DoneApplication.pref.nickname
+        binding.etNickname.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                var result = old != s.toString() && s.toString().isNotEmpty()
+                binding.btnNext.isEnabled = result
+                afterCheckEditedNickName(result)
             }
-            handled
-        }
+            override fun afterTextChanged(s: Editable?) {
+                var result = old != s.toString() && s.toString().isNotEmpty()
+                binding.btnNext.isEnabled = result
+                afterCheckEditedNickName(result)
+            }
+        })
     }
 
     private fun afterCheckEditedNickName(result: Boolean) {

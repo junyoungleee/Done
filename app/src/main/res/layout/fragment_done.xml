@@ -10,7 +10,7 @@
         <LinearLayout
             android:id="@+id/ll_done_write_header"
             android:layout_width="match_parent"
-            android:layout_height="59dp"
+            android:layout_height="@dimen/size_60"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/done_list_write_title"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_main_title_content" />
 
             <TextView
                 android:id="@+id/tv_done_index"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="첫"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_main_title_content" />
 
             <TextView
                 android:id="@+id/tv_done_title_2"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/done_list_write_title2"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_main_title_content" />
         </LinearLayout>
 
     <LinearLayout
@@ -51,9 +51,9 @@
 
         <ImageButton
             android:id="@+id/btn_category"
-            android:layout_width="51dp"
+            android:layout_width="@dimen/done_category_btn"
             android:layout_height="match_parent"
-            android:paddingStart="20dp"
+            android:paddingStart="@dimen/margin_20"
             android:paddingEnd="6dp"
             android:background="@null"
             android:scaleType="fitCenter"
@@ -68,7 +68,7 @@
                 android:id="@+id/et_done"
                 style="@style/done_edittext"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="@dimen/edit_text_done_height"
                 android:layout_weight="1"
                 android:focusable="true"
                 android:gravity="center_vertical"
@@ -84,8 +84,8 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_write"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:minWidth="32dp"
+                android:layout_height="@dimen/done_write_btn_hash_tag"
+                android:minWidth="@dimen/done_write_btn_hash_tag"
                 android:text="@string/done_btn_hash_tag"
                 android:textAlignment="center"
                 android:layout_marginEnd="7dp"
@@ -98,14 +98,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:layout_width="20dp"
+            android:layout_width="@dimen/margin_20"
             android:layout_height="match_parent"
             android:background="@color/white"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="@dimen/margin_15"
         android:background="@color/white"/>
 
     <FrameLayout

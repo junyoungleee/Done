@@ -7,8 +7,9 @@
     android:paddingBottom="20dp">
 
     <LinearLayout
+        android:id="@+id/ll_menu_premium"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -17,20 +18,23 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_premium"
             style="@style/my_menu_text"/>
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu_premium"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/my_next_button"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="20dp"
         android:background="@color/disableColor"/>
+
     <LinearLayout
+        android:id="@+id/ll_menu_notice"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -39,20 +43,23 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_notice"
             style="@style/my_menu_text"/>
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu_notice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/my_next_button"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="20dp"
         android:background="@color/disableColor"/>
+
     <LinearLayout
+        android:id="@+id/ll_menu_inquiry"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -61,20 +68,23 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_inquiry"
             style="@style/my_menu_text"/>
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu_inquiry"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/my_next_button"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="20dp"
         android:background="@color/disableColor"/>
+
     <LinearLayout
+        android:id="@+id/ll_menu_term_of_use"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -83,20 +93,23 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_term_of_use"
             style="@style/my_menu_text"/>
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu_use"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/my_next_button"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="20dp"
         android:background="@color/disableColor"/>
+
     <LinearLayout
+        android:id="@+id/ll_menu_privacy"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -105,20 +118,22 @@
             android:gravity="center_vertical"
             android:text="@string/my_menu_privacy"
             style="@style/my_menu_text"/>
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu_privacy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/my_next_button"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="20dp"
         android:background="@color/disableColor"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="@dimen/menu_height"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"

@@ -16,8 +16,7 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            style="@style/all_toolbar_back_btn"
             android:src="@drawable/ic_back"
             android:background="@null"
             android:tint="@color/black"/>
@@ -110,13 +109,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="@dimen/margin_20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
+        app:layout_constraintGuide_end="@dimen/margin_20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

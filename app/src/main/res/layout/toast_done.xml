@@ -9,10 +9,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginTop="@dimen/toast_view_margin_top"
+            android:layout_marginEnd="@dimen/toast_view_margin_end"
+            android:layout_marginStart="@dimen/toast_view_margin_start"
+            android:layout_marginBottom="@dimen/toast_view_margin_bottom"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="30dp"
@@ -23,9 +23,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginStart="23dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="18dp">
+                android:layout_marginStart="@dimen/toast_margin_start"
+                android:layout_marginTop="@dimen/toast_margin_top"
+                android:layout_marginBottom="@dimen/toast_margin_bottom">
 
                 <TextView
                     android:id="@+id/tv_toast_title"

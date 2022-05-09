@@ -75,7 +75,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp"
+                android:layout_margin="@dimen/margin_15"
                 android:src="@drawable/img_dd_type_j"
                 android:background="@color/white"/>
 
@@ -97,8 +97,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ob_type_j_subtitle"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="36dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_35"
                     android:textSize="16sp"
                     android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:textColor="@color/contextColor"
@@ -106,10 +106,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="@dimen/margin_15"
                     android:text="@string/ob_type_j_content"
                     style="@style/all_mini_text"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/text_mini"
                     android:lineSpacingExtra="4sp"
                     android:includeFontPadding="false"/>
             </LinearLayout>
@@ -134,7 +134,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp"
+                android:layout_margin="@dimen/margin_15"
                 android:src="@drawable/img_dd_type_p"
                 android:background="@color/white"/>
 
@@ -156,8 +156,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ob_type_p_subtitle"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="54dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_35"
                     android:textSize="16sp"
                     android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:textColor="@color/contextColor"
@@ -167,11 +167,11 @@
                     style="@style/all_mini_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="@dimen/margin_15"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="4sp"
                     android:text="@string/ob_type_p_content"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/text_mini" />
             </LinearLayout>
         </LinearLayout>
 
@@ -187,7 +187,7 @@
                 android:id="@+id/tv_type_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/margin_20"
                 android:layout_gravity="center"
                 android:visibility="visible"
                 android:text="@string/ob_hint_type"/>
@@ -214,14 +214,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
+            app:layout_constraintGuide_begin="@dimen/margin_20" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="20dp" />
+            app:layout_constraintGuide_end="@dimen/margin_20" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

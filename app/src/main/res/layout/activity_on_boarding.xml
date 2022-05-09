@@ -15,8 +15,6 @@
         <ImageButton
             android:id="@+id/btn_back"
             style="@style/all_toolbar_back_btn"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

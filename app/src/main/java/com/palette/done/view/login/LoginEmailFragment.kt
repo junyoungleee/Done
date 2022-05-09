@@ -75,14 +75,15 @@ class LoginEmailFragment : Fragment() {
     }
 
     private fun setNextButtonEnable() {
-        binding.etEmail.setOnEditorActionListener{ view, action, event ->
-            val handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                patternVM.checkEmail(view.text.toString())
-            }
-            handled
-        }
-//        binding.etEmail.addTextChangedListener(patternVM.onEmailTextWatcher())
+//        binding.etEmail.setOnEditorActionListener{ view, action, event ->
+//            val handled = false
+//            if (action == EditorInfo.IME_ACTION_DONE) {
+//                patternVM.checkEmail(view.text.toString())
+//            }
+//            handled
+//        }
+        // 1.2 업데이트
+        binding.etEmail.addTextChangedListener(patternVM.onEmailTextWatcher())
         patternVM.emailResult.observe(viewLifecycleOwner) {
             checkEmail(it)
             binding.btnNext.isEnabled = (patternVM.emailResult.value == true) && (binding.etEmail.text.toString() != "")

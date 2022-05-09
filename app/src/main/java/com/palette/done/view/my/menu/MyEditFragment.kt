@@ -37,12 +37,12 @@ class MyEditFragment : Fragment() {
                 intent.putExtra("mode", MyEditMode.NICKNAME.name)
                 startActivity(intent)
             }
-            btnEditType.setOnClickListener {
+            llType.setOnClickListener {
                 // 기록 유형 변경 화면
                 intent.putExtra("mode", MyEditMode.TPYE.name)
                 startActivity(intent)
             }
-            btnEditPwd.setOnClickListener {
+            llPwdChange.setOnClickListener {
                 // 비밀번호 변경 화면
                 intent.putExtra("mode", MyEditMode.PWD.name)
                 startActivity(intent)

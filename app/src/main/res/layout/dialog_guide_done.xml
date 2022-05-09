@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,22 +20,22 @@
                 android:id="@+id/tv_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="@dimen/margin_10"
                 android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_button"
                 android:textColor="@color/white"
                 android:text="@string/tutorial_done_close"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_plan"
                 style="@style/done_button_solid"
-                android:layout_width="58dp"
-                android:layout_height="31dp"
+                android:layout_width="@dimen/main_btn_width"
+                android:layout_height="@dimen/main_btn_height"
                 android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="@dimen/margin_20"
                 android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:text="@string/done_btn_plan"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_page_button"
                 app:layout_constraintEnd_toEndOf="@id/right_margin"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.appcompat.widget.Toolbar>
@@ -60,8 +59,8 @@
             android:text="@string/tutorial_done_category"
             android:gravity="start"
             style="@style/guide_text"
-            android:layout_marginStart="30dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginBottom="@dimen/margin_12"
             app:layout_constraintBottom_toTopOf="@id/iv_arrow_2"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -72,7 +71,7 @@
             android:text="@string/tutorial_done_tag"
             android:gravity="start"
             style="@style/guide_text"
-            android:layout_marginEnd="39dp"
+            android:layout_marginEnd="@dimen/margin_40"
             android:layout_marginBottom="-8dp"
             app:layout_constraintBottom_toTopOf="@id/iv_arrow_3"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -81,7 +80,7 @@
             android:id="@+id/iv_arrow_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="49dp"
+            android:layout_marginEnd="@dimen/margin_50"
             android:layout_marginTop="-15dp"
             android:src="@drawable/img_guide_arrow_done_1"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -93,8 +92,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/img_guide_arrow_done_2"
             android:elevation="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginBottom="@dimen/margin_5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_category" />
 
@@ -103,8 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/img_guide_arrow_done_3"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="-15dp"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_minus_15"
             android:elevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_category"/>
@@ -112,7 +111,7 @@
         <View
             android:id="@+id/ll_done_write_header"
             android:layout_width="match_parent"
-            android:layout_height="118dp"
+            android:layout_height="@dimen/size_120"
             android:gravity="center"
             android:background="@drawable/done_box_round_no_shadow"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,25 +122,25 @@
             android:id="@+id/tv_done_title_1"
             style="@style/done_sub_title_text"
             android:layout_width="wrap_content"
-            android:layout_height="39dp"
+            android:layout_height="@dimen/size_40"
             android:lineSpacingExtra="13sp"
             android:text="오늘의 첫번째 Done"
-            android:textSize="18sp"
-            android:layout_marginBottom="9dp"
+            android:textSize="@dimen/text_main_title_content"
+            android:layout_marginBottom="@dimen/margin_10"
             app:layout_constraintBottom_toTopOf="@id/cl_edit_done"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
             <ImageButton
                 android:id="@+id/btn_category"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/add_icon_btn"
+                android:layout_height="@dimen/add_icon_btn"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:tint="@color/mainDoneListColor"
                 android:src="@drawable/ic_category"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="27dp"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_25"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -161,12 +160,12 @@
                     android:id="@+id/et_done"
                     style="@style/done_edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="@dimen/edit_text_done_height"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/done_list_write_hint"
                     android:textColor="@color/doneHintColor"
-                    android:paddingEnd="20dp"
+                    android:paddingEnd="@dimen/margin_20"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -174,8 +173,8 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_write"
                     android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:minWidth="32dp"
+                    android:layout_height="@dimen/done_write_btn_hash_tag"
+                    android:minWidth="@dimen/done_write_btn_hash_tag"
                     android:text="@string/done_btn_hash_tag"
                     android:textAlignment="center"
                     android:layout_marginEnd="7dp"

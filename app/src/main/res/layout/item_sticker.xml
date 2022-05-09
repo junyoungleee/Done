@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="40dp">
+    android:layout_marginBottom="@dimen/margin_40">
     <ImageView
         android:id="@+id/iv_sticker"
         android:layout_width="@dimen/sticker_size"
@@ -16,10 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="12dp"
-        android:text="플랜 오늘함x10"
+        android:layout_marginTop="@dimen/margin_12"
         android:letterSpacing="-0.02"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_mini"
         android:fontFamily="@font/spoqa_han_sans_neo_medium"/>
 </LinearLayout>

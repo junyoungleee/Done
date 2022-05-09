@@ -139,7 +139,8 @@ class MainActivity : AppCompatActivity() {
         with(binding.calendarView) {
             itemAnimator = null  // 깜빡임 제거
             doOnPreDraw {
-                daySize = Size(binding.calendarView.width/7, util.dpToPx(84))
+                val cellHeight = resources.getDimension(R.dimen.day_cell_height).toInt()
+                daySize = Size(binding.calendarView.width/7, cellHeight)
             }
 
             val currentMonth = YearMonth.now()
@@ -224,6 +225,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            itemAnimator = null  // 깜빡임 제거
         }
     }
 

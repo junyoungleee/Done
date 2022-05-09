@@ -3,13 +3,13 @@
     <item android:state_enabled="true">
         <shape>
             <solid android:color="@color/mainDoneListColor"/>
-            <corners android:radius="30dp"/>
+            <corners android:radius="@dimen/radius_30"/>
         </shape>
     </item>
     <item android:state_enabled="false">
         <shape>
             <solid android:color="@color/disableColor"/>
-            <corners android:radius="30dp"/>
+            <corners android:radius="@dimen/radius_30"/>
         </shape>
     </item>
 </selector>

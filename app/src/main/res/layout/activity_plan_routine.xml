@@ -17,8 +17,6 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="0dp"
@@ -37,8 +35,6 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit_mode"
-            android:layout_width="58dp"
-            android:layout_height="31dp"
             android:layout_gravity="end"
             android:layout_marginEnd="20dp"
             android:text="@string/btn_edit_mode"
@@ -49,11 +45,11 @@
     <TextView
         android:id="@+id/tv_activity_detail"
         android:layout_width="wrap_content"
-        android:layout_height="43dp"
+        android:layout_height="@dimen/size_40"
         android:layout_gravity="center"
         android:text="@string/plan_detail"
-        android:layout_marginTop="23dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_15"
         style="@style/done_activity_detail"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_20"
         app:layout_constraintTop_toBottomOf="@id/tv_activity_detail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +79,7 @@
                 android:id="@+id/rc_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/margin_20"
                 android:overScrollMode="never"
                 android:nestedScrollingEnabled="false"/>
 
@@ -92,12 +88,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_10">
                 <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/add_icon_btn"
+                    android:layout_height="@dimen/add_icon_btn"
+                    android:layout_marginEnd="@dimen/margin_10"
                     android:src="@drawable/ic_plus"
                     android:background="@null"/>
                 <TextView
